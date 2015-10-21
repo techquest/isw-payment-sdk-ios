@@ -26,7 +26,7 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm.swiftmodule</key>
 		<data>
-		B/cznxGBSVDEGeQDbCPMGFelrN8=
+		sTp8pfb9oKmuqs57Wb2mY2zfTQc=
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -34,15 +34,11 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		XHbSj58rIoGZo3IQW0ZmJsgKIWQ=
+		hw63SbjeTMJ5QwfL27s4Qb1w2pw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		QsznLj72VKfs4ZGNeQdjlYzVTpA=
-		</data>
-		<key>public_key.pem</key>
-		<data>
-		ikMBpNAm9xmLL2X8rpotxzUxo04=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -65,7 +61,7 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm.swiftmodule</key>
 		<data>
-		B/cznxGBSVDEGeQDbCPMGFelrN8=
+		sTp8pfb9oKmuqs57Wb2mY2zfTQc=
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -73,15 +69,11 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		XHbSj58rIoGZo3IQW0ZmJsgKIWQ=
+		hw63SbjeTMJ5QwfL27s4Qb1w2pw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		QsznLj72VKfs4ZGNeQdjlYzVTpA=
-		</data>
-		<key>public_key.pem</key>
-		<data>
-		ikMBpNAm9xmLL2X8rpotxzUxo04=
 		</data>
 	</dict>
 	<key>rules</key>
