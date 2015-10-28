@@ -44,7 +44,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 * Next, enter this command
 
-    $ pod init
+    ```$ pod init```
 
 This creates a Podfile for your project
 
@@ -87,6 +87,7 @@ Integrating client project
 
 ```
 * Open `YourProject.xcworkspace`
+
 ###Step 4. Add SDK to your Xcode Project
 
 Open **~/Documents/PaymentSDK**
