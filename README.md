@@ -9,9 +9,9 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 
 **Note: Only iOS 8 and later are supported by the SDK**
 
-Install **Xcode 7.0.1** or later.
+Install **Xcode 7.0.1** or later<br/>
 
-Install the latest **CocoaPods**.
+Install the latest **CocoaPods**
 
     $ sudo gem install cocoapods
 
