@@ -106,7 +106,7 @@ Make Payment with Card Details
 
 Import PaymentSDK and use the following code snippet
 
-```
+```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
  
