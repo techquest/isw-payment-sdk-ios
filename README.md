@@ -5,9 +5,9 @@
 Interswitch payment SDK allows you accept payments from customers within your mobile application.
 The first step to ​using the ​iOS SDK is to register as a merchant. This is described [here]. (http://merchantxuat.interswitchng.com/paymentgateway/getting-started/overview/sign-up-as-a-merchant)
 
-Before you begin
+###Before you begin
 
-Note: Only iOS 8 and later are supported by the SDK
+**Note: Only iOS 8 and later are supported by the SDK**
 
 Install **Xcode 7.0.1** or later
 Install the latest **CocoaPods**.
@@ -15,14 +15,14 @@ Install the latest **CocoaPods**.
 
 Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK. (Optional)
  
-Step 1. Download the SDK
+###Step 1. Download the SDK
 
 Download the SDK from link below and unzip the archive to ~/Documents/PaymentSDK.
 
 https://github.com/techquest/isw-payment-sdk-ios/releases
 
 
-Step 2. Create a Swift Payment App
+###Step 2. Create a Swift Payment App
 
 Create a payment app using **Xcode** with Swift as the language.
 
@@ -31,7 +31,7 @@ Alternatively, you can also create an Objective-C project.
 If you haven’t registered your app on DevConsole register the app and get your Client ID and Client Secret
 
 
-Step 3 Add the SDK dependencies to your Xcode project
+###Step 3 Add the SDK dependencies to your Xcode project
 
 Close the **Xcode** project
 Open Terminal and navigate to the directory that contains your project by using cd command
