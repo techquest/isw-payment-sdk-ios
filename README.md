@@ -41,12 +41,16 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 * Open Terminal and navigate to the directory that contains your project by using cd command
  
-    ```$ cd ~/Path/To/Folder/Containing/YourProject```
+    ```terminal
+	$ cd ~/Path/To/Folder/Containing/YourProject
+	```
 
 
 * Next, enter this command
 
-    ```$ pod init```
+    ```terminal
+	$ pod init
+	```
 
 This creates a Podfile for your project
 
@@ -67,8 +71,9 @@ pod 'OpenSSL'
 ```
 
 Enter the following command:
-
+	```terminal
     $ pod install
+	```
 
 
 You should see output similar to the following:
