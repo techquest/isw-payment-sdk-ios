@@ -7,15 +7,15 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 
 ###Before you begin
 
-**Note: Only iOS 8 and later are supported by the SDK**
 
-Install **Xcode 7.0.1** or later 
+* Install **Xcode 7.0.1** or later 
 
-Install the latest **CocoaPods**
+* Install the latest **CocoaPods**
 
     $ sudo gem install cocoapods
 
-Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK. (Optional)
+* (Optional) Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK.
+* **Note: Only iOS 8 and later are supported by the SDK**
  
 ###Step 1. Download the SDK
 
@@ -35,20 +35,20 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 ###Step 3 Add the SDK dependencies to your Xcode project
 
-Close the **Xcode** project
+* Close the **Xcode** project
 
-Open Terminal and navigate to the directory that contains your project by using cd command
+* Open Terminal and navigate to the directory that contains your project by using cd command
  
     $ cd ~/Path/To/Folder/Containing/YourProject
 
 
-Next, enter this command
+* Next, enter this command
 
     $ pod init
 
 This creates a Podfile for your project
 
-Open the Podfile and replace the two commented lines with the following
+* Open the Podfile and replace the two commented lines with the following
  
 ```
 source 'https://github.com/CocoaPods/Specs.git'
@@ -56,7 +56,7 @@ platform :ios, "8.0"
 use_frameworks!
 ```
 
-Add the following to your Podfile, inside the first target block:
+* Add the following to your Podfile, inside the first target block:
 ```
 pod 'CryptoSwift'
 pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git'
@@ -86,14 +86,25 @@ Integrating client project
 [!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
 
 ```
-Open `YourProject.xcworkspace`
+* Open `YourProject.xcworkspace`
 ###Step 4. Add SDK to your Xcode Project
 
 Open **~/Documents/PaymentSDK**
 Drag the ​ **PaymentSDK.framework** to Embedded Binaries section of your app target setting. Make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
-###Step ​5  Accepting Payments 
+
+###Next Steps
+
+Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
+
+1.	Make Payment with Card Details
+2.	Make Payment with Wallet Item
+3.	Authorize OTP
+4.	Get Payment Status
+
+Make Payment with Card Details
 
 Import PaymentSDK and use the following code snippet
+
 ```
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
