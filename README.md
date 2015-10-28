@@ -11,8 +11,9 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 
 Install **Xcode 7.0.1** or later
 Install the latest **CocoaPods**.
-              ```$ sudo gem install cocoapods```
-
+              ```
+			  $ sudo gem install cocoapods
+			  ```
 Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK. (Optional)
  
 ###Step 1. Download the SDK
@@ -35,10 +36,14 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 Close the **Xcode** project
 Open Terminal and navigate to the directory that contains your project by using cd command
-               ```$ cd ~/Path/To/Folder/Containing/YourProject```
+               ```
+			   $ cd ~/Path/To/Folder/Containing/YourProject
+			   ```
 
 Next, enter this command
-              ```$ pod init```
+              ```
+			  $ pod init
+			  ```
 
 This creates a Podfile for your project
 
