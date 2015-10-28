@@ -39,7 +39,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 * Open Terminal and navigate to the directory that contains your project by using cd command
  
-    $ cd ~/Path/To/Folder/Containing/YourProject
+    ```$ cd ~/Path/To/Folder/Containing/YourProject```
 
 
 * Next, enter this command
