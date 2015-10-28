@@ -19,7 +19,7 @@ Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK.
  
 ###Step 1. Download the SDK
 
-Download the SDK from link below and unzip the archive to ~/Documents/PaymentSDK.
+Download the SDK from link below and unzip the archive to **~/Documents/PaymentSDK**.
 
 https://github.com/techquest/isw-payment-sdk-ios/releases
 
@@ -36,6 +36,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 ###Step 3 Add the SDK dependencies to your Xcode project
 
 Close the **Xcode** project
+
 Open Terminal and navigate to the directory that contains your project by using cd command
  
     $ cd ~/Path/To/Folder/Containing/YourProject
