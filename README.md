@@ -12,7 +12,9 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 
 * Install the latest **CocoaPods**
 
-    ```$ sudo gem install cocoapods```
+    ```terminal
+	$ sudo gem install cocoapods
+	```
 
 * (Optional) Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK.
 * **Note: Only iOS 8 and later are supported by the SDK**
