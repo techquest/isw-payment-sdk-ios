@@ -2,14 +2,15 @@
 
 ##Payment SDK for ​iOS
 
-Interswitch payment SDK allows you accept payments from customers within your mobile application.
+Interswitch payment SDK allows you to accept payments from customers within your mobile application.
 The first step to ​using the ​iOS SDK is to register as a merchant. This is described [here] (http://merchantxuat.interswitchng.com/paymentgateway/getting-started/overview/sign-up-as-a-merchant)
 
 ###Before you begin
 
 **Note: Only iOS 8 and later are supported by the SDK**
 
-Install **Xcode 7.0.1** or later
+Install **Xcode 7.0.1** or later.
+
 Install the latest **CocoaPods**.
 
     $ sudo gem install cocoapods
