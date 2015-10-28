@@ -37,8 +37,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 * Close the **Xcode** project
 
-* Open Terminal and navigate to the directory that contains your project by using cd command ```$ cd ~/Path/To/Folder/Containing/YourProject```
-
+* Open Terminal and navigate to the directory that contains your project by using cd command 
 
 * Next, enter this command
 
