@@ -36,14 +36,13 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 Close the **Xcode** project
 Open Terminal and navigate to the directory that contains your project by using cd command
-               ```
-			   $ cd ~/Path/To/Folder/Containing/YourProject
-			   ```
+ 
+    $ cd ~/Path/To/Folder/Containing/YourProject
+
 
 Next, enter this command
-              ```
-			  $ pod init
-			  ```
+
+    $ pod init
 
 This creates a Podfile for your project
 
@@ -64,7 +63,8 @@ pod 'OpenSSL'
 ```
 
 Enter the following command:
-           ```$ pod install``` 
+
+    $ pod install
 
 
 You should see output similar to the following:
@@ -84,12 +84,12 @@ Integrating client project
 [!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
 
 ```
-Open the `YourProject.xcworkspace`
-Step 4. Add SDK to your Xcode Project
+Open `YourProject.xcworkspace`
+###Step 4. Add SDK to your Xcode Project
 
 Open **~/Documents/PaymentSDK**
 Drag the ​ **PaymentSDK.framework** to Embedded Binaries section of your app target setting. Make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
-Step ​5  Accepting Payments 
+###Step ​5  Accepting Payments 
 
 Import PaymentSDK and use the following code snippet
 ```
