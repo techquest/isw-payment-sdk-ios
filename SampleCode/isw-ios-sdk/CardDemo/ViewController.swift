@@ -101,8 +101,8 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         }else if !expiry.hasText(){
             showError("Expiry is required")
         }else{
-            Passport.overrideApiBase("http://172.25.20.91:6060/passport")
-            Payment.overrideApiBase("http://172.25.20.56:9080")
+            Passport.overrideApiBase("https://qa.interswitchng.com/passport")
+            Payment.overrideApiBase("https://qa.interswitchng.com")
             let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: pan.text!, pin: pin.text!, expiryDate: expiry.text!, cvv2: "", transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
             
             

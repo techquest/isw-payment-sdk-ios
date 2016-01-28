@@ -98,6 +98,17 @@ Integrating client project
 Open **~/Documents/PaymentSDK**
 Drag the ​ **PaymentSDK.framework** to Embedded Binaries section of your app target setting. Make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
 
+###USING THE SDK IN SANDBOX MODE
+
+The procedure to use the SDK on sandbox mode is just as easy,
+
+* Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 
+* Override the api base as follows
+    Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
+    Payment.overrideApiBase("https://sandbox.interswitchng.com"); 
+* Follow the remaining steps in the documentation
+
+
 ###Next Steps
 
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:

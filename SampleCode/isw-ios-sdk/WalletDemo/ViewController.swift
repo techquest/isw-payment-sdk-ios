@@ -236,8 +236,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func loadWallet(){
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         activityIndicator.startAnimating()
-        Passport.overrideApiBase("http://172.25.20.91:6060/passport")
-        Payment.overrideApiBase("http://172.25.20.56:9080")
+        Passport.overrideApiBase("http://qa.interswitchng.com/passport")
+        Payment.overrideApiBase("http://qa.interswitchng.com")
         sdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
             guard error == nil else {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
