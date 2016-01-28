@@ -104,8 +104,10 @@ The procedure to use the SDK on sandbox mode is just as easy,
 
 * Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 
 * Override the api base as follows
+```swift
     Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
-    Payment.overrideApiBase("https://sandbox.interswitchng.com"); 
+    Payment.overrideApiBase("https://sandbox.interswitchng.com");
+```
 * Follow the remaining steps in the documentation
 
 
@@ -118,7 +120,7 @@ Now that you created and configured your Xcode project, you can add your choice 
 3.	Authorize OTP
 4.	Get Payment Status
 
-Make Payment with Card Details
+1. Make Payment with Card Details
 
 Import PaymentSDK and use the following code snippet
 
@@ -165,3 +167,14 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
                  
             })
 ```
+
+
+
+2.	Make Payment with Wallet Item
+Import PaymentSDK and use the following code snippet
+
+3.	Authorize OTP
+Import PaymentSDK and use the following code snippet
+
+4. Get Payment Status
+Import PaymentSDK and use the following code snippet
