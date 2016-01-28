@@ -172,12 +172,60 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
 
 *	Make Payment with Wallet Item
 
-Import PaymentSDK and use the following code snippet
+    * First set your client id and client secret
+```swift
+    Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
+    Payment.overrideApiBase("https://sandbox.interswitchng.com")
+```
+    
+    * To load Verve wallet, add this code 
+```swift
+    let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+                sdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
+                    guard error == nil else {
+                        print("error getting payment methods")
+                        print(error)
+                        return
+                    }
+                    
+                    guard let walletResponse = response else {
+                        print("error getting payment methods")
+                        return
+                    }
+                    if !walletResponse.paymentMethods.isEmpty{
+                        print(walletResponse.paymentMethods[0].cardProduct)
+                    }
+                })
+```
+    
 
 *	Authorize OTP
 
 Import PaymentSDK and use the following code snippet
 
 * Get Payment Status
+    * First set your client id and client secret
 
-Import PaymentSDK and use the following code snippet
+```swift
+    Passport.overrideApiBase("https://sandbox.interswitch.com/passport")
+    Payment.overrideApiBase("https://sandbox.interswitch.com")
+```
+    * use the code below to check payment status
+```swift
+            let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
+            sdk.getPaymentStatus("441469400958", amount: "100", completionHandler: {(paymentStatusResponse: PaymentStatusResponse?, error: NSError?) in
+                guard error == nil else {
+                    print("error getting payment status")
+                    print(error)
+                    return
+                }
+                
+                guard let statusResponse = paymentStatusResponse else {
+                    print("error getting payment status")
+                    return
+                }
+                print(statusResponse.message)
+                
+            })
+
+```
