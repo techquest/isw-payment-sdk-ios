@@ -120,7 +120,7 @@ Now that you created and configured your Xcode project, you can add your choice 
 3.	Authorize OTP
 4.	Get Payment Status
 
-1. Make Payment with Card Details
+* Make Payment with Card Details
 
 Import PaymentSDK and use the following code snippet
 
@@ -170,14 +170,14 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
 
 
 
-2.	Make Payment with Wallet Item
+*	Make Payment with Wallet Item
 
 Import PaymentSDK and use the following code snippet
 
-3.	Authorize OTP
+*	Authorize OTP
 
 Import PaymentSDK and use the following code snippet
 
-4. Get Payment Status
+* Get Payment Status
 
 Import PaymentSDK and use the following code snippet
