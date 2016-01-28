@@ -1,5 +1,3 @@
-# isw-payment-sdk-ios
-
 ##Payment SDK for ​iOS
 
 Interswitch payment SDK allows you to accept payments from customers within your mobile application.
@@ -118,8 +116,8 @@ Import PaymentSDK and use the following code snippet
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
  
 //Override API bases for testing
-Passport.overrideApiBase("https://qa.interswitchng.com/passport")
-Payment.overrideApiBase("https://qa.interswitchng.com")
+Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
+Payment.overrideApiBase("https://sandbox.interswitchng.com")
  
 let request = PurchaseRequest(customerId: "1407002510", amount: "100", pan: "5060990580000217499", pin: "1111", expiryDate: "2004", cvv2: "", transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
         l
