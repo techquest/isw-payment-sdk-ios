@@ -171,10 +171,13 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
 
 
 2.	Make Payment with Wallet Item
+
 Import PaymentSDK and use the following code snippet
 
 3.	Authorize OTP
+
 Import PaymentSDK and use the following code snippet
 
 4. Get Payment Status
+
 Import PaymentSDK and use the following code snippet
