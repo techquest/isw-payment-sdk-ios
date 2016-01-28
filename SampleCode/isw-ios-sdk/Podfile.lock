@@ -1,0 +1,33 @@
+PODS:
+  - Alamofire (3.0.0-beta.3)
+  - CryptoSwift (0.0.15)
+  - OpenSSL (1.0.204.1)
+  - SwiftyJSON (2.3.0)
+
+DEPENDENCIES:
+  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`)
+  - CryptoSwift
+  - OpenSSL
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+
+EXTERNAL SOURCES:
+  Alamofire:
+    :git: https://github.com/Alamofire/Alamofire.git
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: f129adb21d7d9d3747eab8ad1e4a372fbcde67dd
+    :git: https://github.com/Alamofire/Alamofire.git
+  SwiftyJSON:
+    :commit: 3b5d0d4e0c19173b1bf0dc823bde25ad870f70c0
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+SPEC CHECKSUMS:
+  Alamofire: c89149e58431f6f94527e8c01f920456afe39bd0
+  CryptoSwift: a5940ddcee39f249f4eee368305179704861982c
+  OpenSSL: 7f853fcada78e5162c2183b4d90ebbd0aa02f5ac
+  SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
+
+COCOAPODS: 0.38.2
