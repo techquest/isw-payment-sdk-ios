@@ -149,7 +149,7 @@ guard let response = purchaseResponse else {
  }
  
 guard let otpId = response.otpTransactionIdentifier else {
-    // OTP not required, payment successful          
+    // OTP not required, payment successful. A token for the card details is returned in the response       
     return
  }
  
