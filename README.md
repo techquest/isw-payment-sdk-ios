@@ -120,7 +120,7 @@ Now that you created and configured your Xcode project, you can add your choice 
 3.	Authorize OTP
 4.	Get Payment Status
 
-* Make Payment with Card Details
+* Make Payment with Card / Token
 
 Import PaymentSDK and use the following code snippet
 
@@ -132,6 +132,8 @@ let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", c
 Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
 Payment.overrideApiBase("https://sandbox.interswitchng.com")
  
+//You can pay with Pan or Token 
+//Optional card pin for card payment
 let request = PurchaseRequest(customerId: "1407002510", amount: "100", pan: "5060990580000217499", pin: "1111", expiryDate: "2004", cvv2: "", transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
         l
 sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
