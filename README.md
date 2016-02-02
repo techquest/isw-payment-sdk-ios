@@ -127,11 +127,6 @@ Import PaymentSDK and use the following code snippet
 ```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
- 
-//Override API bases for testing
-Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
-Payment.overrideApiBase("https://sandbox.interswitchng.com")
- 
 //You can pay with Pan or Token 
 //Optional card pin for card payment
 //Card or Token expiry
@@ -173,16 +168,10 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
 
 
 
-*	Make Payment with Wallet Item
-
-    * First set your client id and client secret
-```swift
-    Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
-    Payment.overrideApiBase("https://sandbox.interswitchng.com")
-```
-    
+*	Make Payment with Wallet Item    
     * To load Verve wallet, add this code 
 ```swift
+    //Replace with your own client id and secret
     let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
                 sdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
                     guard error == nil else {
@@ -206,15 +195,27 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
 
 Import PaymentSDK and use the following code snippet
 
-* Get Payment Status
-    * First set your client id and client secret
-
 ```swift
-    Passport.overrideApiBase("https://sandbox.interswitch.com/passport")
-    Payment.overrideApiBase("https://sandbox.interswitch.com")
+    let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: otpId, otp: "123456", transactionRef: Payment.randomStringWithLength(12))
+     
+    sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
+                    guard error == nil else {
+                        // handle error
+                        return
+                    }
+                     
+                    guard let otpResponse = authorizeOtpResponse else {
+                        //handle error
+                        return
+                    }
+                    //OTP successful
+                     
+                })
 ```
+* Get Payment Status
     * use the code below to check payment status
 ```swift
+            //Replace with your own client id and secret
             let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
             sdk.getPaymentStatus("441469400958", amount: "100", completionHandler: {(paymentStatusResponse: PaymentStatusResponse?, error: NSError?) in
                 guard error == nil else {
