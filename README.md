@@ -134,6 +134,7 @@ Payment.overrideApiBase("https://sandbox.interswitchng.com")
  
 //You can pay with Pan or Token 
 //Optional card pin for card payment
+//Card or Token expiry
 let request = PurchaseRequest(customerId: "1407002510", amount: "100", pan: "5060990580000217499", pin: "1111", expiryDate: "2004", cvv2: "", transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
         l
 sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
