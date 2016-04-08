@@ -114,11 +114,11 @@ Abort trap: 6
 
 You may have to
 ```
-  * run 'gem list --local | grep cocoapods' to find all cocoa pods installed on machine
-  * 'gem uninstall' each pod returned by step1
-  * '[sudo] gem uninstall cocoapods'
-  * '[sudo] gem install cocoapods'
-  * Now try to run: pod install 
+run 'gem list --local | grep cocoapods' to find all cocoa pods installed on machine
+'gem uninstall' each pod returned by step1
+'[sudo] gem uninstall cocoapods'
+'[sudo] gem install cocoapods'
+Now try to run: pod install 
 ```
 
 * Open `YourProject.xcworkspace`
