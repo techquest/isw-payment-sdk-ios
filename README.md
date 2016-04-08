@@ -125,8 +125,12 @@ Now try to run: pod install
 
 ###Step 4. Add SDK to your Xcode Project
 
-Open **~/Documents/PaymentSDK**
-Drag the ​ **PaymentSDK.framework** to Embedded Binaries section of your app target setting. Make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
+Open the **~/Documents/PaymentSDK** directory
+
+Drag the ​ **PaymentSDK.framework** file to the ``Embedded Binaries`` section of your app's **TARGETS** settings(`General` tab). A dialog will appear. 
+
+Make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
+
 
 ###USING THE SDK IN SANDBOX MODE
 
