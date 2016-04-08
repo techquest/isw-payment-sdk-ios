@@ -127,9 +127,9 @@ Now try to run: pod install
 
 Open the **~/Documents/PaymentSDK** directory
 
-Drag the ​ **PaymentSDK.framework** file to the ``Embedded Binaries`` section of your app's **TARGETS** settings(`General` tab). A dialog will appear. 
+Drag the ​ **PaymentSDK.framework** file to the ``Embedded Binaries`` section of your app's **TARGETS** settings(`General` tab).
 
-Make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
+In the dialog that appears, make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
 
 
 ###USING THE SDK IN SANDBOX MODE
