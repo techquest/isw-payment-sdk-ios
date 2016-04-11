@@ -10,13 +10,13 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 
 * Install the latest **CocoaPods**
 
-    ```terminal
-	$ sudo gem install cocoapods
-	```
+  ```terminal
+  $ sudo gem install cocoapods
+  ```
 
 * (Optional) Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK.
 * **Note: Only iOS 8 and later are supported by the SDK**
- 
+
 ###Step 1. Download the SDK
 
 Download the SDK from link below and unzip the archive to **~/Documents/PaymentSDK**.
@@ -38,22 +38,22 @@ If you haven’t registered your app on DevConsole register the app and get your
 * Close the **Xcode** project
 
 * Open Terminal and navigate to the directory that contains your project by using cd command
- 
-    ```terminal
-	$ cd ~/Path/To/Folder/Containing/YourProject
-	```
+
+  ```terminal
+  $ cd ~/Path/To/Folder/Containing/YourProject
+  ```
 
 
 * Next, enter this command
 
-    ```terminal
-	$ pod init
-	```
+  ```terminal
+  $ pod init
+  ```
 
 This creates a Podfile for your project
 
 * Open the Podfile and replace the two commented lines with the following
- 
+
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, "8.0"
@@ -69,10 +69,9 @@ pod 'OpenSSL'
 ```
 
 Enter the following command:
-	```terminal
-    $ pod install
-	```
-
+	​```terminal
+	$ pod install
+	​```
 
 You should see output similar to the following:
 
@@ -89,10 +88,9 @@ Generating Pods project
 Integrating client project
  
 [!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
-
 ```
 
-If you experience an error similar to the below
+If you experience an error similar to what's below
 
 ```
 [MT] DVTAssertions: ASSERTION FAILURE in /Library/Caches/com.apple.xbs/Sources/IDEFrameworks/IDEFrameworks-8227/IDEFoundation/Initialization/IDEInitialization.m:590
@@ -112,7 +110,7 @@ Backtrace:
 Abort trap: 6
 ```
 
-You may have to
+you may have to
 ```
 run 'gem list --local | grep cocoapods' to find all cocoa pods installed on machine
 'gem uninstall' each pod returned by step1
@@ -150,9 +148,14 @@ The procedure to use the SDK on sandbox mode is just as easy,
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
 
 1.	Make Payment with Card Details
+
 2.	Make Payment with Wallet Item
+
 3.	Authorize OTP
+
 4.	Get Payment Status
+
+   ​
 
 * Make Payment with Card / Token
 
@@ -161,17 +164,19 @@ Import PaymentSDK and use the following code snippet
 ```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+
 //You can pay with Pan or Token 
 //Optional card pin for card payment
 //Card or Token expiry
 let request = PurchaseRequest(customerId: "1407002510", amount: "100", pan: "5060990580000217499", pin: "1111", expiryDate: "2004", cvv2: "", transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
-        l
+
 sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
      
 guard error == nil else {
     //handle error
     return
  }
+
 guard let response = purchaseResponse else {
     //handle error
     return
@@ -195,15 +200,15 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
                     //handle error
                     return
                 }
-                //OTP successful
-                 
+                //OTP successful   
             })
+})
 ```
 
 
 
 *	Make Payment with Wallet Item    
-    * To load Verve wallet, add this code 
+  * To load Verve wallet, add this code 
 ```swift
     //Replace with your own client id and secret
     let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
@@ -223,7 +228,7 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
                     }
                 })
 ```
-    
+
 
 *	Authorize OTP
 
@@ -247,7 +252,7 @@ Import PaymentSDK and use the following code snippet
                 })
 ```
 * Get Payment Status
-    * use the code below to check payment status
+  * use the code below to check payment status
 ```swift
             //Replace with your own client id and secret
             let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
