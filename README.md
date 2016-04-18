@@ -90,35 +90,6 @@ Integrating client project
 [!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
 ```
 
-If you experience an error similar to what's below
-
-```
-[MT] DVTAssertions: ASSERTION FAILURE in /Library/Caches/com.apple.xbs/Sources/IDEFrameworks/IDEFrameworks-8227/IDEFoundation/Initialization/IDEInitialization.m:590
-Details: Assertion failed: _initializationCompletedSuccessfully
-Function: BOOL IDEIsInitializedForUserInteraction()
-Thread: {number = 1, name = main}
-Hints: None
-Backtrace:
-0 0x000000010462aa5c -DVTAssertionHandler handleFailureInFunction:fileName:lineNumber:assertionSignature:messageFormat:arguments:
-1 0x000000010462a1e9 _DVTAssertionHandler (in DVTFoundation)
-2 0x000000010462a455 _DVTAssertionFailureHandler (in DVTFoundation)
-3 0x000000010462a3b7 _DVTAssertionFailureHandler (in DVTFoundation)
-4 0x0000000107191f5c IDEIsInitializedForUserInteraction (in IDEFoundation)
-5 0x0000000109da8eb9 +PBXProject projectWithFile:errorHandler:readOnly:
-6 0x0000000109daaa3e +PBXProject projectWithFile:errorHandler:
-7 0x00007fff8bc68f44 ffi_call_unix64 (in libffi.dylib)
-Abort trap: 6
-```
-
-you may have to
-```
-run 'gem list --local | grep cocoapods' to find all cocoa pods installed on machine
-'gem uninstall' each pod returned by step1
-'[sudo] gem uninstall cocoapods'
-'[sudo] gem install cocoapods'
-Now try to run: pod install 
-```
-
 * Open `YourProject.xcworkspace`
 
 ###Step 4. Add SDK to your Xcode Project
