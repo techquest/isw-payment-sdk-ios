@@ -6,7 +6,7 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 ###Before you begin
 
 
-* Install **Xcode 7.0.1** or later 
+* Install **Xcode 7.3** or later 
 
 * Install the latest **CocoaPods**
 
