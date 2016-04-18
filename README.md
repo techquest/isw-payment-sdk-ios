@@ -6,17 +6,17 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 ###Before you begin
 
 
-* Install **Xcode 7.0.1** or later 
+* Install **Xcode 7.3** or later 
 
 * Install the latest **CocoaPods**
 
-    ```terminal
-	$ sudo gem install cocoapods
-	```
+  ```terminal
+  $ sudo gem install cocoapods
+  ```
 
 * (Optional) Try the PaymentDemoApp project, which is in the SampleCode directory in the SDK.
 * **Note: Only iOS 8 and later are supported by the SDK**
- 
+
 ###Step 1. Download the SDK
 
 Download the SDK from link below and unzip the archive to **~/Documents/PaymentSDK**.
@@ -38,22 +38,22 @@ If you haven’t registered your app on DevConsole register the app and get your
 * Close the **Xcode** project
 
 * Open Terminal and navigate to the directory that contains your project by using cd command
- 
-    ```terminal
-	$ cd ~/Path/To/Folder/Containing/YourProject
-	```
+
+  ```terminal
+  $ cd ~/Path/To/Folder/Containing/YourProject
+  ```
 
 
 * Next, enter this command
 
-    ```terminal
-	$ pod init
-	```
+  ```terminal
+  $ pod init
+  ```
 
 This creates a Podfile for your project
 
 * Open the Podfile and replace the two commented lines with the following
- 
+
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, "8.0"
@@ -69,10 +69,9 @@ pod 'OpenSSL'
 ```
 
 Enter the following command:
-	```terminal
-    $ pod install
-	```
-
+	​```terminal
+	$ pod install
+	​```
 
 You should see output similar to the following:
 
@@ -89,14 +88,18 @@ Generating Pods project
 Integrating client project
  
 [!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
-
 ```
+
 * Open `YourProject.xcworkspace`
 
 ###Step 4. Add SDK to your Xcode Project
 
-Open **~/Documents/PaymentSDK**
-Drag the ​ **PaymentSDK.framework** to Embedded Binaries section of your app target setting. Make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
+Open the **~/Documents/PaymentSDK** directory
+
+Drag the ​ **PaymentSDK.framework** file to the ``Embedded Binaries`` section of your app's **TARGETS** settings(`General` tab).
+
+In the dialog that appears, make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
+
 
 ###USING THE SDK IN SANDBOX MODE
 
@@ -116,9 +119,14 @@ The procedure to use the SDK on sandbox mode is just as easy,
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
 
 1.	Make Payment with Card Details
+
 2.	Make Payment with Wallet Item
+
 3.	Authorize OTP
+
 4.	Get Payment Status
+
+
 
 * Make Payment with Card / Token
 
@@ -127,28 +135,78 @@ Import PaymentSDK and use the following code snippet
 ```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+
 //You can pay with Pan or Token 
 //Optional card pin for card payment
 //Card or Token expiry
 let request = PurchaseRequest(customerId: "1407002510", amount: "100", pan: "5060990580000217499", pin: "1111", expiryDate: "2004", cvv2: "", transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
-        l
+
 sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
      
-guard error == nil else {
-    //handle error
-    return
- }
-guard let response = purchaseResponse else {
-    //handle error
-    return
- }
+	guard error == nil else {
+	    //handle error
+	    return
+	}
+
+	guard let response = purchaseResponse else {
+	    //handle error
+	    return
+	}
+	 
+	guard let otpId = response.otpTransactionIdentifier else {
+	    // OTP not required, payment successful. A token for the card details is returned in the response       
+	    return
+	}
  
-guard let otpId = response.otpTransactionIdentifier else {
-    // OTP not required, payment successful. A token for the card details is returned in the response       
-    return
- }
- 
-//OTP required, ask user for OTP and authorize OTP
+	//OTP required, ask user for OTP and authorize OTP
+	let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: otpId, otp: "123456", transactionRef: Payment.randomStringWithLength(12))
+	 
+	sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
+	                guard error == nil else {
+	                    // handle error
+	                    return
+	                }
+	                 
+	                guard let otpResponse = authorizeOtpResponse else {
+	                    //handle error
+	                    return
+	                }
+	                //OTP successful   
+	            })
+})
+```
+
+
+*	Make Payment with Wallet Item    
+
+To load Verve wallet, add this code 
+
+```swift
+//Replace with your own client id and secret
+let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+            sdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
+                guard error == nil else {
+                    print("error getting payment methods")
+                    print(error)
+                    return
+                }
+                
+                guard let walletResponse = response else {
+                    print("error getting payment methods")
+                    return
+                }
+                if !walletResponse.paymentMethods.isEmpty{
+                    print(walletResponse.paymentMethods[0].cardProduct)
+                }
+            })
+```
+
+
+*	Authorize OTP
+
+Import PaymentSDK and use the following code snippet
+
+```swift
 let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: otpId, otp: "123456", transactionRef: Payment.randomStringWithLength(12))
  
 sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
@@ -165,71 +223,25 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
                  
             })
 ```
+*	Get Payment Status
 
+Use the code below to check payment status
 
-
-*	Make Payment with Wallet Item    
-    * To load Verve wallet, add this code 
 ```swift
-    //Replace with your own client id and secret
-    let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
-                sdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
-                    guard error == nil else {
-                        print("error getting payment methods")
-                        print(error)
-                        return
-                    }
-                    
-                    guard let walletResponse = response else {
-                        print("error getting payment methods")
-                        return
-                    }
-                    if !walletResponse.paymentMethods.isEmpty{
-                        print(walletResponse.paymentMethods[0].cardProduct)
-                    }
-                })
-```
+//Replace with your own client id and secret
+let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
+
+sdk.getPaymentStatus("441469400958", amount: "100", completionHandler: {(paymentStatusResponse: PaymentStatusResponse?, error: NSError?) in
+    guard error == nil else {
+        print("error getting payment status")
+        print(error)
+        return
+    }
     
-
-*	Authorize OTP
-
-Import PaymentSDK and use the following code snippet
-
-```swift
-    let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: otpId, otp: "123456", transactionRef: Payment.randomStringWithLength(12))
-     
-    sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
-                    guard error == nil else {
-                        // handle error
-                        return
-                    }
-                     
-                    guard let otpResponse = authorizeOtpResponse else {
-                        //handle error
-                        return
-                    }
-                    //OTP successful
-                     
-                })
-```
-* Get Payment Status
-    * use the code below to check payment status
-```swift
-            //Replace with your own client id and secret
-            let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
-            sdk.getPaymentStatus("441469400958", amount: "100", completionHandler: {(paymentStatusResponse: PaymentStatusResponse?, error: NSError?) in
-                guard error == nil else {
-                    print("error getting payment status")
-                    print(error)
-                    return
-                }
-                
-                guard let statusResponse = paymentStatusResponse else {
-                    print("error getting payment status")
-                    return
-                }
-                print(statusResponse.message)
-                
-            })
-
+    guard let statusResponse = paymentStatusResponse else {
+        print("error getting payment status")
+        return
+    }
+    print(statusResponse.message)        
+})
 ```
