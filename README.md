@@ -19,7 +19,7 @@ The first step to ​using the ​iOS SDK is to register as a merchant. This is 
 
 ###Step 1. Download the SDK
 
-Download the SDK from link below and unzip the archive to **~/Documents/PaymentSDK**.
+Download the SDK from the link below and unzip the archive to **~/Documents/PaymentSDK**.
 
 https://github.com/techquest/isw-payment-sdk-ios/releases
 
@@ -37,7 +37,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 
 * Close the **Xcode** project
 
-* Open Terminal and navigate to the directory that contains your project by using cd command
+* Open Terminal and navigate to the directory that contains your project by using the **cd** command
 
   ```terminal
   $ cd ~/Path/To/Folder/Containing/YourProject
@@ -103,32 +103,203 @@ In the dialog that appears, make sure ‘Copy items if needed’ is checked in t
 
 ###USING THE SDK IN SANDBOX MODE
 
-The procedure to use the SDK on sandbox mode is just as easy,
+The procedure to use the SDK in sandbox mode is just as easy,
 
 * Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 
 * Override the api base as follows
 ```swift
-    Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
-    Payment.overrideApiBase("https://sandbox.interswitchng.com");
+Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
+Payment.overrideApiBase("https://sandbox.interswitchng.com");
+```
+* Make sure you include the following import statement
+```swift
+import PaymentSDK
 ```
 * Follow the remaining steps in the documentation
 
 
-###Next Steps
 
+## Using the SDK with UI (In PCI-DSS Scope: No )
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
 
-1.	Make Payment with Card Details
+1.  Pay with Card
 
-2.	Make Payment with Wallet Item
+2.  Pay With Wallet
 
-3.	Authorize OTP
+3.  Validate Card
 
-4.	Get Payment Status
+4.  Pay with Token
+
+### Pay with Card
+    
+* To allow for Payment with Card only
+* Create a Pay button
+* In the onClick listener of the Pay button, use this code.
+
+  Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+```swift
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+let theCustomerId = "**use-a-valid-value-here**";
+let paymentDescription = "Payment for goods";
+let theAmount = "200"
+
+let payWithCard = PayWithCard(clientId: yourClientId, clientSecret: yourClientSecret,
+                      customerId: theCustomerId, description: paymentDescription,
+                      amount: theAmount, currency: "NGN")
+let viewCtrl = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+    guard error == nil else {
+        //let errMsg = (error?.localizedDescription)!                
+        // Handle error.
+        // Payment not successful.
+        
+        return
+    }
+    guard let response = purchaseResponse else {
+        //let failureMsg = (error?.localizedFailureReason)!
+        // Handle error.
+        // Payment not successful.
+        
+        return
+    }
+    /*  Handle success
+        Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+        Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+     */
+})
+```
+
+
+### Pay With Wallet
+
+* To allow for Payment with Wallet only
+* Create a Pay button
+* In the onClick listener of the Pay button, use this code.
+
+  Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+```swift
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+let theCustomerId = "**use-a-valid-value-here**";
+let paymentDescription = "Payment for goods";
+let theAmount = "200"
+
+let payWithWallet = PayWithWallet(clientId: yourClientId, clientSecret: yourClientSecret,
+                        customerId: theCustomerId, description: paymentDescription,
+                        amount: theAmount, currency: "NGN")
+let viewCtrl = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+    guard error == nil else {
+        //let errMsg = (error?.localizedDescription)!
+        // Handle error
+        // Payment not successful.
+        
+        return
+    }
+    
+    guard let response = purchaseResponse else {
+        //let failureMsg = (error?.localizedFailureReason)!
+        // Handle error
+        // Payment not successful.
+        
+        return
+    }
+    /*  Handle success
+        Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier and transactionRef.
+        Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+     */
+})
+```
+
+
+### Validate Card
+
+* Validate card is used to check if a card is a valid card, it returns the card balance and token
+* To call validate card, use this code.
+
+  Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+```swift
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+let theCustomerId = "**use-a-valid-value-here**";
+
+let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
+                       customerId: theCustomerId)
+let viewCtrl = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: NSError?) in
+    guard error == nil else {
+        //let errMsg = (error?.localizedDescription)!
+        // Handle error.
+        // Card validation not successful
+        
+        return
+    }
+    
+    guard let response = validateCardResponse else {
+        //let failureMsg = (error?.localizedFailureReason)!
+        // Handle error.
+        // Card validation not successful
+        
+        return
+    }
+    /*  Handle success.
+        Card validation successful. The response object contains fields token, tokenExpiryDate, panLast4Digits and transactionRef.
+        Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+     */
+})
+```
+
+
+### Pay with Token
+
+* To allow for Payment with Token only
+* Create a Pay button
+* In the onClick listener of the Pay button, use this code.
+
+  Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+```swift
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+let theCustomerId = "**use-a-valid-value-here**";
+let paymentDescription = "Payment for goods";
+let theAmount = "200"
+let theToken = "**use-a-valid-token-here**"
+let theCardType = "**-use-a-valid-value-here**"
+
+let payWithToken = PayWithToken(clientId: yourClientId, clientSecret: yourClientSecret,
+                       customerId: theCustomerId, description: paymentDescription,
+                       amount: theAmount, token: theToken, currency: "NGN",
+                       expiryDate: "2004", cardType: theCardType, last4Digits: "7499")
+let viewCtrl = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+    guard error == nil else {
+        //let errMsg = (error?.localizedDescription)!
+        // Handle error
+        // Payment not successful.
+        
+        return
+    }
+    
+    guard let response = purchaseResponse else {
+        //let failureMsg = (error?.localizedFailureReason)!
+        // Handle error
+        // Payment not successful.
+        
+        return
+    }
+    /*  Handle success
+        Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+        Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+     */
+})
+```
 
 
 
-* Make Payment with Card / Token
+## Using the SDK without UI (In PCI-DSS Scope: Yes)
+
+### Pay with Card / Token
 
 Import PaymentSDK and use the following code snippet
 
@@ -162,22 +333,22 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
 	let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: otpId, otp: "123456", transactionRef: Payment.randomStringWithLength(12))
 	 
 	sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
-	                guard error == nil else {
-	                    // handle error
-	                    return
-	                }
-	                 
-	                guard let otpResponse = authorizeOtpResponse else {
-	                    //handle error
-	                    return
-	                }
-	                //OTP successful   
-	            })
+        guard error == nil else {
+            // handle error
+            return
+        }
+         
+        guard let otpResponse = authorizeOtpResponse else {
+            //handle error
+            return
+        }
+        //OTP successful   
+	})
 })
 ```
 
 
-*	Make Payment with Wallet Item    
+###	Pay with Wallet
 
 To load Verve wallet, add this code 
 
@@ -202,7 +373,7 @@ let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", cl
 ```
 
 
-*	Authorize OTP
+###	Authorize Transaction With OTP
 
 Import PaymentSDK and use the following code snippet
 
@@ -223,7 +394,7 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
                  
             })
 ```
-*	Get Payment Status
+###	Get Payment Status
 
 Use the code below to check payment status
 
