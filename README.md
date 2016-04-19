@@ -133,22 +133,22 @@ Now that you created and configured your Xcode project, you can add your choice 
 ### Pay with Card
     
 * To allow for Payment with Card only
-* Create a Pay button
-* In the onClick listener of the Pay button, use this code.
+* Create a Pay UIButton
+* Add a target to the button that will call the below code.
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = "**use-a-valid-value-here**";
+let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
 let paymentDescription = "Payment for goods";
 let theAmount = "200"
 
 let payWithCard = PayWithCard(clientId: yourClientId, clientSecret: yourClientSecret,
                       customerId: theCustomerId, description: paymentDescription,
                       amount: theAmount, currency: "NGN")
-let viewCtrl = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
     guard error == nil else {
         //let errMsg = (error?.localizedDescription)!                
         // Handle error.
@@ -174,22 +174,22 @@ let viewCtrl = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: N
 ### Pay With Wallet
 
 * To allow for Payment with Wallet only
-* Create a Pay button
-* In the onClick listener of the Pay button, use this code.
+* Create a Pay UIButton
+* Add a target to the button that will call the below code.
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = "**use-a-valid-value-here**";
+let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
 let paymentDescription = "Payment for goods";
 let theAmount = "200"
 
 let payWithWallet = PayWithWallet(clientId: yourClientId, clientSecret: yourClientSecret,
                         customerId: theCustomerId, description: paymentDescription,
                         amount: theAmount, currency: "NGN")
-let viewCtrl = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
     guard error == nil else {
         //let errMsg = (error?.localizedDescription)!
         // Handle error
@@ -215,19 +215,20 @@ let viewCtrl = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error:
 
 ### Validate Card
 
-* Validate card is used to check if a card is a valid card, it returns the card balance and token
-* To call validate card, use this code.
+Validate card is used to check if a card is a valid card. It returns the card balance and token.
+
+* To validate a card, use the below code.
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
-let theCustomerId = "**use-a-valid-value-here**";
+let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
 
 let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
                        customerId: theCustomerId)
-let viewCtrl = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: NSError?) in
+let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: NSError?) in
     guard error == nil else {
         //let errMsg = (error?.localizedDescription)!
         // Handle error.
@@ -254,25 +255,25 @@ let viewCtrl = validateCard.start({(validateCardResponse: ValidateCardResponse?,
 ### Pay with Token
 
 * To allow for Payment with Token only
-* Create a Pay button
-* In the onClick listener of the Pay button, use this code.
+* Create a Pay UIButton
+* Add a target to the button that will call the below code.
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = "**use-a-valid-value-here**";
+let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
 let paymentDescription = "Payment for goods";
 let theAmount = "200"
-let theToken = "**use-a-valid-token-here**"
-let theCardType = "**-use-a-valid-value-here**"
+let theToken = ""       //This should be a valid token value that was stored after a previously successful payment
+let theCardType = ""   //This should be a valid card type e.g mastercard, verve, visa etc
 
 let payWithToken = PayWithToken(clientId: yourClientId, clientSecret: yourClientSecret,
                        customerId: theCustomerId, description: paymentDescription,
                        amount: theAmount, token: theToken, currency: "NGN",
                        expiryDate: "2004", cardType: theCardType, last4Digits: "7499")
-let viewCtrl = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+let vc = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
     guard error == nil else {
         //let errMsg = (error?.localizedDescription)!
         // Handle error
