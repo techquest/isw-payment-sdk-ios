@@ -1,10 +1,25 @@
 ##Payment SDK for ​iOS
 
 Interswitch payment SDK allows you to accept payments from customers within your mobile application.
-The first step to ​using the ​iOS SDK is to register as a merchant. This is described [here] (http://merchantxuat.interswitchng.com/paymentgateway/getting-started/overview/sign-up-as-a-merchant)
 
-###Before you begin
+### Outline
+- [Before you begin](#BeforeYouBegin)
+- [Using the SDK in Sandbox Mode](#UsingSDKInSandboxMode)
+- [Using the SDK with UI](#UsingSDKWithUi)
+  *  [Pay with Card](#PayWithCardNoUi)
+  *  [Pay With Wallet](#PayWithWalletNoUi)
+  *  [Validate Card](#ValidateCardNoUi)
+  *  [Pay with Token](#PayWithTokenNoUi)
+- [Using the SDK without UI](#UsingSDKWithoutUi)
+    * [Pay with Card / Token](#PayWithCardOrTokenWithoutUi)
+    * [Pay with Wallet](#PayWithWalletWithoutUi)
+    * [Authorize Transaction With OTP](#AuthorizeOtpWithoutUi)
+    * [Get Payment Status](#GetPaymentStatusWithoutUi)
 
+### <a id='BeforeYouBegin'></a>Before you begin
+
+
+* The first step to ​using the ​iOS SDK is to register as a merchant. This is described [here] (http://merchantxuat.interswitchng.com/paymentgateway/getting-started/overview/sign-up-as-a-merchant)
 
 * Install **Xcode 7.3** or later 
 
@@ -101,7 +116,7 @@ Drag the ​ **PaymentSDK.framework** file to the ``Embedded Binaries`` section 
 In the dialog that appears, make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
 
 
-###USING THE SDK IN SANDBOX MODE
+### <a id='UsingSDKInSandboxMode'></a>USING THE SDK IN SANDBOX MODE
 
 The procedure to use the SDK in sandbox mode is just as easy,
 
@@ -119,18 +134,15 @@ import PaymentSDK
 
 
 
-## Using the SDK with UI (In PCI-DSS Scope: No )
+## <a id='UsingSDKWithUi'></a>Using the SDK with UI (In PCI-DSS Scope: No )
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
 
-1.  Pay with Card
+-  [Pay with Card](#PayWithCardNoUi)
+-  [Pay With Wallet](#PayWithWalletNoUi)
+-  [Validate Card](#ValidateCardNoUi)
+-  [Pay with Token](#PayWithTokenNoUi)
 
-2.  Pay With Wallet
-
-3.  Validate Card
-
-4.  Pay with Token
-
-### Pay with Card
+### <a id='PayWithCardNoUi'></a>Pay with Card
     
 * To allow for Payment with Card only
 * Create a Pay button
@@ -171,7 +183,7 @@ let viewCtrl = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: N
 ```
 
 
-### Pay With Wallet
+### <a id='PayWithWalletNoUi'></a>Pay With Wallet
 
 * To allow for Payment with Wallet only
 * Create a Pay button
@@ -213,7 +225,7 @@ let viewCtrl = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error:
 ```
 
 
-### Validate Card
+### <a id='ValidateCardNoUi'></a>Validate Card
 
 * Validate card is used to check if a card is a valid card, it returns the card balance and token
 * To call validate card, use this code.
@@ -251,7 +263,7 @@ let viewCtrl = validateCard.start({(validateCardResponse: ValidateCardResponse?,
 ```
 
 
-### Pay with Token
+### <a id='PayWithTokenNoUi'></a>Pay with Token
 
 * To allow for Payment with Token only
 * Create a Pay button
@@ -297,9 +309,9 @@ let viewCtrl = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: 
 
 
 
-## Using the SDK without UI (In PCI-DSS Scope: Yes)
+## <a id='UsingSDKWithoutUi'></a>Using the SDK without UI (In PCI-DSS Scope: Yes)
 
-### Pay with Card / Token
+### <a id='PayWithCardOrTokenWithoutUi'></a>Pay with Card / Token
 
 Import PaymentSDK and use the following code snippet
 
@@ -348,7 +360,7 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
 ```
 
 
-###	Pay with Wallet
+###	<a id='PayWithWalletWithoutUi'></a>Pay with Wallet
 
 To load Verve wallet, add this code 
 
@@ -373,7 +385,7 @@ let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", cl
 ```
 
 
-###	Authorize Transaction With OTP
+###	<a id='AuthorizeOtpWithoutUi'></a>Authorize Transaction With OTP
 
 Import PaymentSDK and use the following code snippet
 
@@ -394,7 +406,7 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
                  
             })
 ```
-###	Get Payment Status
+###	<a id='GetPaymentStatusWithoutUi'></a>Get Payment Status
 
 Use the code below to check payment status
 
