@@ -234,7 +234,7 @@ Validate card is used to check if a card is a valid card. It returns the card ba
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```swift
-let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
 let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
 
