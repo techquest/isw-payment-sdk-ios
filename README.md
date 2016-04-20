@@ -153,8 +153,8 @@ Now that you created and configured your Xcode project, you can add your choice 
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
-let paymentDescription = "Payment for goods";
+let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let paymentDescription = "Payment for goods"
 let theAmount = "200"
 
 let payWithCard = PayWithCard(clientId: yourClientId, clientSecret: yourClientSecret,
@@ -194,8 +194,8 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
-let paymentDescription = "Payment for goods";
+let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let paymentDescription = "Payment for goods"
 let theAmount = "200"
 
 let payWithWallet = PayWithWallet(clientId: yourClientId, clientSecret: yourClientSecret,
@@ -235,8 +235,8 @@ Validate card is used to check if a card is a valid card. It returns the card ba
 
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
-let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
-let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
 
 let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
                        customerId: theCustomerId)
@@ -275,8 +275,8 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = ""; // This should be a value that identifies your customer uniquely e.g email or phone number etc
-let paymentDescription = "Payment for goods";
+let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let paymentDescription = "Payment for goods"
 let theAmount = "200"
 let theToken = ""       //This should be a valid token value that was stored after a previously successful payment
 let theCardType = ""   //This should be a valid card type e.g mastercard, verve, visa etc
