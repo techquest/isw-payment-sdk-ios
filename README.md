@@ -6,10 +6,10 @@ Interswitch payment SDK allows you to accept payments from customers within your
 - [Before you begin](#BeforeYouBegin)
 - [Using the SDK in Sandbox Mode](#UsingSDKInSandboxMode)
 - [Using the SDK with UI](#UsingSDKWithUi)
-  *  [Pay with Card](#PayWithCardNoUi)
-  *  [Pay With Wallet](#PayWithWalletNoUi)
-  *  [Validate Card](#ValidateCardNoUi)
-  *  [Pay with Token](#PayWithTokenNoUi)
+  *  [Pay with Card](#PayWithCardWithUi)
+  *  [Pay With Wallet](#PayWithWalletWithUi)
+  *  [Validate Card](#ValidateCardWithUi)
+  *  [Pay with Token](#PayWithTokenWithUi)
 - [Using the SDK without UI](#UsingSDKWithoutUi)
     * [Pay with Card / Token](#PayWithCardOrTokenWithoutUi)
     * [Pay with Wallet](#PayWithWalletWithoutUi)
@@ -137,12 +137,12 @@ import PaymentSDK
 ## <a id='UsingSDKWithUi'></a>Using the SDK with UI (In PCI-DSS Scope: No )
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
 
--  [Pay with Card](#PayWithCardNoUi)
--  [Pay With Wallet](#PayWithWalletNoUi)
--  [Validate Card](#ValidateCardNoUi)
--  [Pay with Token](#PayWithTokenNoUi)
+-  [Pay with Card](#PayWithCardWithUi)
+-  [Pay With Wallet](#PayWithWalletWithUi)
+-  [Validate Card](#ValidateCardWithUi)
+-  [Pay with Token](#PayWithTokenWithUi)
 
-### <a id='PayWithCardNoUi'></a>Pay with Card
+### <a id='PayWithCardWithUi'></a>Pay with Card
     
 * To allow for Payment with Card only
 * Create a Pay UIButton
@@ -183,7 +183,7 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 ```
 
 
-### <a id='PayWithWalletNoUi'></a>Pay With Wallet
+### <a id='PayWithWalletWithUi'></a>Pay With Wallet
 
 * To allow for Payment with Wallet only
 * Create a Pay UIButton
@@ -225,7 +225,7 @@ let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSErr
 ```
 
 
-### <a id='ValidateCardNoUi'></a>Validate Card
+### <a id='ValidateCardWithUi'></a>Validate Card
 
 Validate card is used to check if a card is a valid card. It returns the card balance and token.
 
@@ -264,7 +264,7 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 ```
 
 
-### <a id='PayWithTokenNoUi'></a>Pay with Token
+### <a id='PayWithTokenWithUi'></a>Pay with Token
 
 * To allow for Payment with Token only
 * Create a Pay UIButton
