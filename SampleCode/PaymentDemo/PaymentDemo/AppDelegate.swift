@@ -3,7 +3,7 @@
 //  PaymentDemo
 //
 //  Created by Efe Ariaroo on 4/20/16.
-//  Copyright © 2016 Efe Ariaroo. All rights reserved.
+//  Copyright © 2016 Interswitch Limited. All rights reserved.
 //
 
 import UIKit
