@@ -11,7 +11,17 @@ import PaymentSDK
 
 
 class ViewController: UIViewController {
-
+    
+    let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
+    let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+    let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+    let paymentDescription = "Payment for goods"
+    let theAmount = "200"
+    
+    let theToken = "5060990580000217499"       //This should be a valid token value that was stored after a previously successful payment
+    let theCardType = "verve"   //This should be a valid card type e.g mastercard, verve, visa etc
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,12 +95,6 @@ class ViewController: UIViewController {
     }
 
     func payWithCard(){
-        let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
-        let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-        let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
-        let paymentDescription = "Payment for goods"
-        let theAmount = "200"
-        
         let payWithCard = PayWithCard(clientId: yourClientId, clientSecret: yourClientSecret,
                                       customerId: theCustomerId, description: paymentDescription,
                                       amount: theAmount, currency: "NGN")
@@ -113,12 +117,6 @@ class ViewController: UIViewController {
     }
     
     func payWithWallet(){
-        let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
-        let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-        let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
-        let paymentDescription = "Payment for goods"
-        let theAmount = "200"
-        
         let payWithWallet = PayWithWallet(clientId: yourClientId, clientSecret: yourClientSecret,
                                           customerId: theCustomerId, description: paymentDescription,
                                           amount: theAmount, currency: "NGN")
@@ -141,11 +139,7 @@ class ViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func validateCard(){
-        let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
-        let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-        let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
-        
+    func validateCard() {
         let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
                                         customerId: theCustomerId)
         let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: NSError?) in
@@ -169,14 +163,6 @@ class ViewController: UIViewController {
     }
     
     func payWithToken(){
-        let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
-        let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-        let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
-        let paymentDescription = "Payment for goods"
-        let theAmount = "200"
-        let theToken = "5060990580000217499"       //This should be a valid token value that was stored after a previously successful payment
-        let theCardType = "verve"   //This should be a valid card type e.g mastercard, verve, visa etc
-        
         let payWithToken = PayWithToken(clientId: yourClientId, clientSecret: yourClientSecret,
                                         customerId: theCustomerId, description: paymentDescription,
                                         amount: theAmount, token: theToken, currency: "NGN",
