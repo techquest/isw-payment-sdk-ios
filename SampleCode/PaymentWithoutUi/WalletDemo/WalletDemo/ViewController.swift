@@ -13,6 +13,7 @@ import PaymentSDK
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     var customerId : UITextField
     var amount : UITextField
+    var cvv2Field : UITextField
     var pin : UITextField
     var paymentMethod : UITextField
     
@@ -20,23 +21,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var otpTransactionIdentifier : String = ""
     var transactionIdentifier : String?
     
-    let sdk : WalletSDK
+    let walletSdk : WalletSDK
     var loadingWallet = false
     var paymentMethods = [PaymentMethod]()
-    var userSelectedPaymentMethod : String?
+    var tokenOfUserSelectedPM : String?    //PM stands for payment method
     
     let yourClientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
     let yourClientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
-    
+    let yourRequestorId = "12345678901"     //Specify your own requestorId here
+
     
     required init?(coder aDecoder: NSCoder) {
         customerId = UITextField()
         paymentMethod = UITextField()
         amount = UITextField()
+        cvv2Field = UITextField()
         pin = UITextField()
         activityIndicator = UIActivityIndicatorView()
         
-        sdk = WalletSDK(clientId: yourClientId, clientSecret: yourClientSecret)
+        walletSdk = WalletSDK(clientId: yourClientId, clientSecret: yourClientSecret)
         
         super.init(coder: aDecoder)
     }
@@ -46,11 +49,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.viewDidLoad()
         Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
         Payment.overrideApiBase("https://sandbox.interswitchng.com")
-
         view.backgroundColor = UIColor.whiteColor()
         
         let screenWidth = self.view.bounds.width
-        let yTopMargin : CGFloat = 10.0        //Set header
+        let yTopMargin : CGFloat = 10.0
         let textfieldsWidth : CGFloat = 250
         let textfieldsHeight : CGFloat = 40
         
@@ -70,10 +72,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         customerId.frame = CGRect(x: XPosition, y: 100, width: textfieldsWidth, height: textfieldsHeight)
         customerId.placeholder = "Customer ID"
         customerId.borderStyle = UITextBorderStyle.Line
-        customerId.text = "1407002510"
+        customerId.text = "1407002510"   // This should be a value that identifies your customer uniquely e.g email or phone number etc
         view.addSubview(customerId)
         
-        addPaymentMethodFieldFunctionality(x: XPosition, y: yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
+        addPaymentMethodFieldFunctionality(x: XPosition, y: (140 + yTopMargin), width: textfieldsWidth, height: textfieldsHeight)
         
         amount.frame = CGRect(x: XPosition, y: 180 + 2 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         amount.placeholder = "Amount"
@@ -83,7 +85,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         view.addSubview(amount)
         
         
-        pin.frame = CGRect(x: XPosition, y: 220 + 3 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
+        cvv2Field.frame = CGRect(x: XPosition, y: 220 + 3 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
+        cvv2Field.placeholder = "CVV"
+        cvv2Field.borderStyle = UITextBorderStyle.Line
+        cvv2Field.keyboardType = .NumberPad
+        cvv2Field.text = "111"
+        view.addSubview(cvv2Field)
+        
+        pin.frame = CGRect(x: XPosition, y: 260 + 4 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         pin.placeholder = "PIN"
         pin.borderStyle = UITextBorderStyle.Line
         pin.keyboardType = .NumberPad
@@ -91,7 +100,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         view.addSubview(pin)
         
         let payNow = UIButton(type: UIButtonType.RoundedRect)
-        payNow.frame = CGRect(x: XPosition, y: 330, width: textfieldsWidth, height: textfieldsHeight)
+        payNow.frame = CGRect(x: XPosition, y: 370, width: textfieldsWidth, height: textfieldsHeight)
         payNow.setTitle("Pay", forState: UIControlState.Normal)
         payNow.titleLabel?.font = UIFont.boldSystemFontOfSize(22)
         styleButton(payNow)
@@ -100,7 +109,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         view.addSubview(payNow)
         
         
-        activityIndicator.frame = CGRect(x: (screenWidth - 40)/2, y: 380, width: 40, height: textfieldsHeight)
+        activityIndicator.frame = CGRect(x: (screenWidth - 40)/2, y: 420, width: 40, height: textfieldsHeight)
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
         //activityIndicator.center = view.center
         view.addSubview(activityIndicator)
@@ -113,7 +122,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         theButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     }
 
-    func addPaymentMethodFieldFunctionality(x xPosition: CGFloat, y topMargin: CGFloat,
+    func addPaymentMethodFieldFunctionality(x xPosition: CGFloat, y yPosition: CGFloat,
                                               width textfieldsWidth: CGFloat, height textfieldsHeight: CGFloat) {
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
@@ -128,10 +137,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                                            action: #selector(ViewController.cancelPicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
+        
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
-        paymentMethod.frame = CGRect(x: xPosition, y: 130 + 2 * topMargin, width: textfieldsWidth, height: textfieldsHeight)
+        //--
+        paymentMethod.frame = CGRect(x: xPosition, y: yPosition, width: textfieldsWidth, height: textfieldsHeight)
         paymentMethod.placeholder = "Select Payment Method"
         paymentMethod.borderStyle = UITextBorderStyle.Line
         
@@ -176,32 +187,23 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let thePaymentMethod : PaymentMethod = paymentMethods[row]
             
             paymentMethod.text = thePaymentMethod.cardProduct
-            userSelectedPaymentMethod = thePaymentMethod.token
-            
+            tokenOfUserSelectedPM = thePaymentMethod.token
             self.view.endEditing(true)
         }
     }
     
     func pay() {
-        if !customerId.hasText() {
-            showError("Customer ID is required")
-        } else if !amount.hasText() {
-            showError("Amount is required")
-        } else if !pin.hasText() {
-            showError("PIN is required")
-        } else if (userSelectedPaymentMethod == nil || userSelectedPaymentMethod?.isEmpty == true) {
-            showError("Select a Payment Method")        } else {
-            //At this point a payment method must have been selected by the user in order to make the purchase
-            self.otpTransactionIdentifier = "";
+        if isOkToMakePaymentRequest() {
+            self.otpTransactionIdentifier = ""
             
-            let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: userSelectedPaymentMethod!,
-                                          pin: pin.text!, expiryDate: "", cvv2: "", transactionRef: Payment.randomStringWithLength(12),
-                                          requestorId: "12345678901")
+            let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: tokenOfUserSelectedPM!,
+                                          pin: pin.text!, cvv2: cvv2Field.text!,
+                                          transactionRef: Payment.randomStringWithLength(12), requestorId: yourRequestorId)
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             activityIndicator.startAnimating()
             
-            sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
+            walletSdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
                 guard error == nil else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
@@ -231,11 +233,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    func isOkToMakePaymentRequest() -> Bool {
+        var isOk = false
+        
+        if !customerId.hasText() {
+            showError("Customer ID is required")
+        } else if !amount.hasText() {
+            showError("Amount is required")
+        } else if !cvv2Field.hasText() {
+            showError("CVV is required")
+        } else if !pin.hasText() {
+            showError("PIN is required")
+        } else if (tokenOfUserSelectedPM == nil || tokenOfUserSelectedPM?.isEmpty == true) {
+            showError("Select a Payment Method")
+        } else {
+            isOk = true
+        }
+        return isOk
+    }
+    
     func loadWallet() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         activityIndicator.startAnimating()
         
-        sdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
+        walletSdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
             guard error == nil else {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.activityIndicator.stopAnimating()
@@ -257,7 +278,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             self.loadingWallet = false
             self.paymentMethods = walletResponse.paymentMethods
-            print("Got the payment methods: \n\(self.paymentMethods)")
+            print("Got the payment methods!")
             
             if self.paymentMethods.count > 0 {
                 self.paymentMethod.text = self.paymentMethods[0].cardProduct
@@ -289,7 +310,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: self.otpTransactionIdentifier,
                 otp: textField.text!, transactionRef: Payment.randomStringWithLength(12))
             
-            self.sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
+            self.walletSdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
                 guard error == nil else {
                     // handle error
                     return
