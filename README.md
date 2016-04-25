@@ -203,7 +203,7 @@ let payWithWallet = PayWithWallet(clientId: yourClientId, clientSecret: yourClie
                         amount: theAmount, currency: "NGN")
 let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
     guard error == nil else {
-        // et errMsg = (error?.localizedDescription)!
+        // let errMsg = (error?.localizedDescription)!
         // Handle error
         // Payment not successful.
         

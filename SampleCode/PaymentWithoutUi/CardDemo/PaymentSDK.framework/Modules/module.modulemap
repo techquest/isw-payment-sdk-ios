@@ -1,0 +1,10 @@
+framework module PaymentSDK {
+  umbrella header "PaymentSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module PaymentSDK.Swift {
+    header "PaymentSDK-Swift.h"
+}
