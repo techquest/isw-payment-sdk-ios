@@ -49,6 +49,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.viewDidLoad()
         Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
         Payment.overrideApiBase("https://sandbox.interswitchng.com")
+        
         view.backgroundColor = UIColor.whiteColor()
         
         let screenWidth = self.view.bounds.width

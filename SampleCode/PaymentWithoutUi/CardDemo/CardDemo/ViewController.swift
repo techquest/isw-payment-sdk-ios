@@ -37,7 +37,7 @@ class ViewController: UIViewController, UIAlertViewDelegate{
         pin = UITextField(frame: CGRect(x: 20, y: 220, width: 200, height: 30))
         expiry = UITextField(frame: CGRect(x: 20, y: 260, width: 200, height: 30))
         
-        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        activityIndicator = UIActivityIndicatorView()
 
         sdk = PaymentSDK(clientId: yourClientId, clientSecret: yourClientSecret)
         
@@ -123,8 +123,8 @@ class ViewController: UIViewController, UIAlertViewDelegate{
         payNow.addTarget(self, action: #selector(ViewController.pay), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(payNow)
         
+        activityIndicator.frame = CGRect(x: (screenWidth - 40)/2, y: 470, width: 40, height: textfieldsHeight)
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        activityIndicator.center = view.center
         view.addSubview(activityIndicator)
         activityIndicator.bringSubviewToFront(view)
     }
