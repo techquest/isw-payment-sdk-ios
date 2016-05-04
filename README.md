@@ -6,10 +6,10 @@ Interswitch payment SDK allows you to accept payments from customers within your
 - [Before you begin](#BeforeYouBegin)
 - [Using the SDK in Sandbox Mode](#UsingSDKInSandboxMode)
 - [Using the SDK with UI](#UsingSDKWithUi)
-  *  [Pay with Card](#PayWithCardNoUi)
-  *  [Pay With Wallet](#PayWithWalletNoUi)
-  *  [Validate Card](#ValidateCardNoUi)
-  *  [Pay with Token](#PayWithTokenNoUi)
+  *  [Pay with Card](#PayWithCardWithUi)
+  *  [Pay With Wallet](#PayWithWalletWithUi)
+  *  [Validate Card](#ValidateCardWithUi)
+  *  [Pay with Token](#PayWithTokenWithUi)
 - [Using the SDK without UI](#UsingSDKWithoutUi)
     * [Pay with Card / Token](#PayWithCardOrTokenWithoutUi)
     * [Pay with Wallet](#PayWithWalletWithoutUi)
@@ -137,12 +137,12 @@ import PaymentSDK
 ## <a id='UsingSDKWithUi'></a>Using the SDK with UI (In PCI-DSS Scope: No )
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
 
--  [Pay with Card](#PayWithCardNoUi)
--  [Pay With Wallet](#PayWithWalletNoUi)
--  [Validate Card](#ValidateCardNoUi)
--  [Pay with Token](#PayWithTokenNoUi)
+-  [Pay with Card](#PayWithCardWithUi)
+-  [Pay With Wallet](#PayWithWalletWithUi)
+-  [Validate Card](#ValidateCardWithUi)
+-  [Pay with Token](#PayWithTokenWithUi)
 
-### <a id='PayWithCardNoUi'></a>Pay with Card
+### <a id='PayWithCardWithUi'></a>Pay with Card
     
 * To allow for Payment with Card only
 * Create a Pay UIButton
@@ -183,7 +183,7 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 ```
 
 
-### <a id='PayWithWalletNoUi'></a>Pay With Wallet
+### <a id='PayWithWalletWithUi'></a>Pay With Wallet
 
 * To allow for Payment with Wallet only
 * Create a Pay UIButton
@@ -203,7 +203,7 @@ let payWithWallet = PayWithWallet(clientId: yourClientId, clientSecret: yourClie
                         amount: theAmount, currency: "NGN")
 let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
     guard error == nil else {
-        //let errMsg = (error?.localizedDescription)!
+        // let errMsg = (error?.localizedDescription)!
         // Handle error
         // Payment not successful.
         
@@ -225,7 +225,7 @@ let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSErr
 ```
 
 
-### <a id='ValidateCardNoUi'></a>Validate Card
+### <a id='ValidateCardWithUi'></a>Validate Card
 
 Validate card is used to check if a card is a valid card. It returns the card balance and token.
 
@@ -264,7 +264,7 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 ```
 
 
-### <a id='PayWithTokenNoUi'></a>Pay with Token
+### <a id='PayWithTokenWithUi'></a>Pay with Token
 
 * To allow for Payment with Token only
 * Create a Pay UIButton
@@ -363,26 +363,62 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
 
 ###	<a id='PayWithWalletWithoutUi'></a>Pay with Wallet
 
-To load Verve wallet, add this code 
+To allow for Payment with Wallet only
+- Create a UI with `UITextField`s to collect customerID, amount, CVV, PIN and to display the user's Payment Method(s). 
+- Use the code below to retrieve the Payment Method(s) array
+
+Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```swift
 //Replace with your own client id and secret
-let sdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
-            sdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
-                guard error == nil else {
-                    print("error getting payment methods")
-                    print(error)
-                    return
-                }
-                
-                guard let walletResponse = response else {
-                    print("error getting payment methods")
-                    return
-                }
-                if !walletResponse.paymentMethods.isEmpty{
-                    print(walletResponse.paymentMethods[0].cardProduct)
-                }
-            })
+let walletSdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+
+walletSdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Void in
+    guard error == nil else {
+        print("error getting payment methods")
+        print(error)
+        return
+    }
+    
+    guard let walletResponse = response else {
+        print("error getting payment methods")
+        return
+    }
+    if !walletResponse.paymentMethods.isEmpty{
+        print(walletResponse.paymentMethods[0].cardProduct)
+    }
+})
+```
+
+* Create a Pay UIButton
+* Add a target to the button that will call the below code if the user has entered the required input information.
+
+```swift
+let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: tokenOfUserSelectedPM!,
+                                          pin: pin.text!, cvv2: cvv2Field.text!,
+                                          transactionRef: Payment.randomStringWithLength(12), requestorId: yourRequestorId)
+            
+walletSdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
+    guard error == nil else {
+        // let errMsg = (error?.localizedDescription)!
+        // Handle error
+        return
+    }
+    
+    guard let response = purchaseResponse else {
+        //let failureMsg = (error?.localizedFailureReason)!
+        // Handle error
+        return
+    }
+    
+    guard let otpTransactionIdentifier = response.otpTransactionIdentifier else {
+        self.showSuccess("Ref: " + response.transactionIdentifier)
+        return
+    }
+    
+    //handle OTP
+    //To handle OTP see below: Authorize Transaction With OTP
+})
 ```
 
 
