@@ -2,6 +2,13 @@
 
 * You'll need to have **Xcode 7.3** or later installed.
 
+* **cd** to a directory of your choice. 
+
+* Clone the plugin 
+```
+git clone https://github.com/...
+```
+
 * Create the cordova project
 ```terminal
 cordova create testapp com.develop.testapp TestApp
@@ -23,7 +30,7 @@ cordova platform add ios
 
 * In Finder, go to the ```/platforms/ios/<NameOfApp>/plugins/com.interswitchng.sdk.payment``` directory
 
-* Drag the ​ **PaymentSDK.framework** file to the **Embedded Binaries** section of your app's **TARGETS** settings(`General` tab).
+* Drag the ​ **PaymentSDK.framework** file from ```Finder``` to XCode's **Embedded Binaries** section for your app's **TARGETS** settings.
 
 * In the dialog that appears, make sure ```Copy items if needed``` is unchecked.
 
@@ -38,13 +45,17 @@ The **PaymentSDK.framework** needs some [Cocoapods](https://cocoapods.org/) depe
 pod init
 ```
 
-* Open the Podfile created and replace its entire contents with
+* Open the Podfile created and replace ```#``` commented parts with the following.
 
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, "8.0"
 use_frameworks!
+```
 
+* Add the following to the Podfile, inside the first ```target``` block.
+
+```
 pod 'CryptoSwift'
 pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git'
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
