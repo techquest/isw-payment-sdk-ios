@@ -1,4 +1,10 @@
-##Cordova iOS Payment Plugin
+## Cordova iOS Payment Plugin
+
+Interswitch payment SDK allows you to accept payments from customers within your mobile application.
+
+**Please Note: *The current supported currency is naira (NGN), support for other currencies would be added later***.
+
+The first step to ​using the plugin is to register as a merchant. This is described [here](merchantxuat.interswitchng.com)
 
 * You'll need to have **Xcode 7.3** or later installed.
 
@@ -21,20 +27,20 @@ cordova create testapp com.develop.testapp TestApp
 cordova plugin add ../cordova-payment-plugin
 ```
 
-* Add ```ios``` platform. Make sure to add the platform after adding the plugin.
+* Add ```ios``` platform. Make sure to add the platform **after** adding the plugin.
 ```terminal
 cordova platform add ios
 ```
 
-* In Finder, go to the **platforms/ios** directory. Open the .xcodeproj file in XCode. A dialog may appear asking: Convert to latest Swift Syntax? Click the **Cancel** button.
+* In ```Finder```, go to the **platforms/ios** directory. Open the .xcodeproj file in XCode. A dialog may appear asking: Convert to latest Swift Syntax? Click the **Cancel** button.
 
-* In Finder, go to the ```/platforms/ios/<NameOfApp>/plugins/com.interswitchng.sdk.payment``` directory
+* In ```Finder```, go to the ```/platforms/ios/<NameOfApp>/plugins/com.interswitchng.sdk.payment``` directory
 
 * Drag the ​ **PaymentSDK.framework** file from ```Finder``` to XCode's **Embedded Binaries** section for your app's **TARGETS** settings.
 
 * In the dialog that appears, make sure ```Copy items if needed``` is unchecked.
 
-* **Important**: With XCode still open, click the project to view its settings. Under the **info** tab find the **Configurations** section and change the values for ```Debug``` and ```Release``` to **None**. You can change it back once our installation are done.
+* **Important**: With ```XCode``` still open, click the project to view its settings. Under the **info** tab find the **Configurations** section and change the values for ```Debug``` and ```Release``` to **None**. You can change it back once our setups are done.
 
 The **PaymentSDK.framework** needs some [Cocoapods](https://cocoapods.org/) dependencies so we'll need to install them.
 
@@ -45,7 +51,7 @@ The **PaymentSDK.framework** needs some [Cocoapods](https://cocoapods.org/) depe
 pod init
 ```
 
-* Open the Podfile created and replace ```#``` commented parts with the following.
+* Open the **Podfile** created and replace ```#``` commented parts with the following.
 
 ```
 source 'https://github.com/CocoaPods/Specs.git'
@@ -53,7 +59,7 @@ platform :ios, "8.0"
 use_frameworks!
 ```
 
-* Add the following to the Podfile, inside the first ```target``` block.
+* Add the following to the **Podfile**, inside the first ```target``` block.
 
 ```
 pod 'CryptoSwift'
@@ -67,6 +73,8 @@ pod 'OpenSSL'
 pod install
 ```
 
-* After the pods are installed successfully you can go to the directory ```platforms/ios``` and open the ```<NameOfApp>.xcworkspace``` file in XCode. You can now begin developing.
+* After the pods are installed successfully you can go to the directory ```platforms/ios``` and open the ```<NameOfApp>.xcworkspace``` file in XCode. 
+
+* To use the plugin in your app with Html and Javascript, please follow the tutorial for the [Cordova plugin for Android](https://github.com/techquest/isw-payment-sdk-android/blob/babajide_dev/CORDOVA_README.md#SandBoxMode)
 
 
