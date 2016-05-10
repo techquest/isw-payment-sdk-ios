@@ -113,10 +113,10 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 *Set up payment request like this: 
 ```javascript
     var payRequest = {			
-        amount : 100, // Amount in Naira
-        customerId : 1234567890, // Optional email, mobile no, BVN etc to uniquely identify the customer.
-        currency : "NGN", // ISO Currency code
-        description : "Purchase Phone" // Description of product to purchase
+        amount : "100",                     // Amount in Naira
+        customerId : "1234567890",          // Value to uniquely identify the customer e.g email, phone no etc
+        currency : "NGN",                   // ISO Currency code
+        description : "Purchase Phone"      // Description of product to purchase
     }
 ```
 * In the onclick event of the Pay button, use this code.
@@ -137,10 +137,9 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 * Set up payment request like this: 
 ```javascript
     var payWithWalletRequest = {			
-        amount : 100, // Amount in Naira
-        customerId : 1234567890, // Optional email, mobile no, BVN etc to uniquely identify the customer.
-        currency : "NGN", // ISO Currency code
-        description : "Purchase Phone" // Description of product to purchase
+        amount : "100",                     // Amount in Naira
+        customerId : "1234567890",          // Value to uniquely identify the customer e.g email, phone no etc
+        description : "Purchase Phone"      // Description of product to purchase
     }
 ```
 * In the onclick event of the Pay button, use this code.
@@ -160,7 +159,7 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 * Set up payment request like this: 
 ```javascript
     var validateCardRequest = {
-        customerId : 1234567890 // Optional email, mobile no, BVN etc to uniquely identify the customer
+        customerId : "1234567890"          // Value to uniquely identify the customer e.g email, phone no etc
     }
 ```
 * To call validate card, use this code.
@@ -181,14 +180,14 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 * Set up payment request like this: 
 ```javascript
     var payWithTokenRequest = {
-        pan : 5060990580000217499, //Token
-        amount : 100, // Amount in Naira
-        currency : "NGN", // ISO Currency code		
-        cardtype : "Verve", // Card Type	
-        expiryDate : 2004, // Card or Token expiry date in YYMM format
-        customerId : 1234567890,	// Optional email, mobile no, BVN etc to uniquely identify the customer.	
-        panLast4Digits : 7499,		//Last 4digit of the pan card
-        description : "Pay for gown"
+        pan : "5060990580000217499",         // Token
+        amount : "100",                      // Amount in Naira
+        currency : "NGN",                    // ISO Currency code		
+        cardtype : "Verve",                  // Card Type	
+        expiryDate : "2004",                 // Card or Token expiry date in YYMM format
+        customerId : "1234567890",	         // Optional email, mobile no, BVN etc to uniquely identify the customer.	
+        panLast4Digits : "7499",		     // Last 4digit of the pan card
+        description : "Pay for gown"         // Description of product to purchase
     }
 ```
 * In the onclick event of the Pay button, use this code.
