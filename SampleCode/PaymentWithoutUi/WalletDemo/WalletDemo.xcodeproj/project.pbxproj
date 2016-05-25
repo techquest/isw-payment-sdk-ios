@@ -13,8 +13,8 @@
 		F39CF28B1CC8E89F00E37551 /* WalletDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F39CF2891CC8E89F00E37551 /* WalletDemo.xcdatamodeld */; };
 		F39CF28D1CC8E89F00E37551 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F39CF28C1CC8E89F00E37551 /* Assets.xcassets */; };
 		F39CF2901CC8E89F00E37551 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F39CF28E1CC8E89F00E37551 /* LaunchScreen.storyboard */; };
-		F3BC64BB1CC8E9A0004DF809 /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3BC64BA1CC8E9A0004DF809 /* PaymentSDK.framework */; };
-		F3BC64BC1CC8E9A0004DF809 /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F3BC64BA1CC8E9A0004DF809 /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F3FD34881CF605E400F35881 /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34871CF605E400F35881 /* PaymentSDK.framework */; };
+		F3FD34891CF605E400F35881 /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34871CF605E400F35881 /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF7788A0D08362E75F6E073D /* Pods_WalletDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2260FDD6FFB48FB05188F249 /* Pods_WalletDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,7 +25,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F3BC64BC1CC8E9A0004DF809 /* PaymentSDK.framework in Embed Frameworks */,
+				F3FD34891CF605E400F35881 /* PaymentSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -43,7 +43,7 @@
 		F39CF28C1CC8E89F00E37551 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F39CF28F1CC8E89F00E37551 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F39CF2911CC8E89F00E37551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F3BC64BA1CC8E9A0004DF809 /* PaymentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PaymentSDK.framework; sourceTree = "<group>"; };
+		F3FD34871CF605E400F35881 /* PaymentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PaymentSDK.framework; sourceTree = "<group>"; };
 		FFA0A6FA0DFD93517AC44BB7 /* Pods-WalletDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalletDemo/Pods-WalletDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3BC64BB1CC8E9A0004DF809 /* PaymentSDK.framework in Frameworks */,
+				F3FD34881CF605E400F35881 /* PaymentSDK.framework in Frameworks */,
 				FF7788A0D08362E75F6E073D /* Pods_WalletDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +80,7 @@
 		F39CF2761CC8E89F00E37551 = {
 			isa = PBXGroup;
 			children = (
-				F3BC64BA1CC8E9A0004DF809 /* PaymentSDK.framework */,
+				F3FD34871CF605E400F35881 /* PaymentSDK.framework */,
 				F39CF2811CC8E89F00E37551 /* WalletDemo */,
 				F39CF2801CC8E89F00E37551 /* Products */,
 				45296C2CCF8AC110B7BA58DC /* Pods */,

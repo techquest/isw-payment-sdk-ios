@@ -14,8 +14,8 @@
 		F38A99D01CCA6920000AF3BD /* CardDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F38A99CE1CCA6920000AF3BD /* CardDemo.xcdatamodeld */; };
 		F38A99D21CCA6920000AF3BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F38A99D11CCA6920000AF3BD /* Assets.xcassets */; };
 		F38A99D51CCA6920000AF3BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F38A99D31CCA6920000AF3BD /* LaunchScreen.storyboard */; };
-		F38A99DD1CCA6B06000AF3BD /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F38A99DC1CCA6B06000AF3BD /* PaymentSDK.framework */; };
-		F38A99DE1CCA6B06000AF3BD /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F38A99DC1CCA6B06000AF3BD /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F3FD34851CF605C000F35881 /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34841CF605C000F35881 /* PaymentSDK.framework */; };
+		F3FD34861CF605C000F35881 /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34841CF605C000F35881 /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,7 +25,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F38A99DE1CCA6B06000AF3BD /* PaymentSDK.framework in Embed Frameworks */,
+				F3FD34861CF605C000F35881 /* PaymentSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,7 +44,7 @@
 		F38A99D11CCA6920000AF3BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F38A99D41CCA6920000AF3BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F38A99D61CCA6920000AF3BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F38A99DC1CCA6B06000AF3BD /* PaymentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PaymentSDK.framework; sourceTree = "<group>"; };
+		F3FD34841CF605C000F35881 /* PaymentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PaymentSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F38A99DD1CCA6B06000AF3BD /* PaymentSDK.framework in Frameworks */,
+				F3FD34851CF605C000F35881 /* PaymentSDK.framework in Frameworks */,
 				626D01C11DADAEA383A1119B /* Pods_CardDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +80,7 @@
 		F38A99BB1CCA6920000AF3BD = {
 			isa = PBXGroup;
 			children = (
-				F38A99DC1CCA6B06000AF3BD /* PaymentSDK.framework */,
+				F3FD34841CF605C000F35881 /* PaymentSDK.framework */,
 				F38A99C61CCA6920000AF3BD /* CardDemo */,
 				F38A99C51CCA6920000AF3BD /* Products */,
 				2F76BDE6005A642E916B45C8 /* Pods */,

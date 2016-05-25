@@ -9,7 +9,7 @@
 import UIKit
 import PaymentSDK
 
-class ViewController: UIViewController, UIAlertViewDelegate{
+class ViewController: UIViewController, UIAlertViewDelegate {
     
     var customerId: UITextField
     var amount: UITextField
@@ -21,8 +21,12 @@ class ViewController: UIViewController, UIAlertViewDelegate{
     var activityIndicator: UIActivityIndicatorView
     var otpTransactionIdentifier: String = ""
     
-    let yourClientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
-    let yourClientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
+//    let yourClientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
+//    let yourClientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
+    
+    let yourClientId = "IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232"
+    let yourClientSecret = "ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30="
+    
     let yourRequestorId = "12345678901"     //Specify your own requestorId here
     
     let sdk : PaymentSDK
@@ -48,9 +52,12 @@ class ViewController: UIViewController, UIAlertViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
-        Payment.overrideApiBase("https://sandbox.interswitchng.com")
+        //Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
+        //Payment.overrideApiBase("https://sandbox.interswitchng.com")
         
+        Passport.overrideApiBase("https://qa.interswitchng.com/passport")
+        Payment.overrideApiBase("https://qa.interswitchng.com")
+    
         view.backgroundColor = UIColor.whiteColor()
         
         let screenWidth = self.view.bounds.width
@@ -123,7 +130,7 @@ class ViewController: UIViewController, UIAlertViewDelegate{
         payNow.addTarget(self, action: #selector(ViewController.pay), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(payNow)
         
-        activityIndicator.frame = CGRect(x: (screenWidth - 40)/2, y: 470, width: 40, height: textfieldsHeight)
+        activityIndicator.frame = CGRect(x: (screenWidth - 40)/2, y: 500, width: 40, height: textfieldsHeight)
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
         view.addSubview(activityIndicator)
         activityIndicator.bringSubviewToFront(view)
@@ -138,7 +145,7 @@ class ViewController: UIViewController, UIAlertViewDelegate{
     func pay(){
         if isOkToMakePaymentRequest() {
             let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: pan.text!,
-                                          pin: pin.text!, cvv2: cvv2Field.text!,
+                                          pin: pin.text!, expiryDate: expiry.text!, cvv2: cvv2Field.text!,
                                           transactionRef: Payment.randomStringWithLength(12), requestorId: yourRequestorId)
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -169,7 +176,7 @@ class ViewController: UIViewController, UIAlertViewDelegate{
                 self.otpTransactionIdentifier = otpTransactionIdentifier
                 print("Got the otp transaction identifier")
                 
-                self.handleOTP(response.message)
+                self.handleOTP(otpTransactionIdentifier, otpTransactionRef: response.transactionRef, otpMessage: response.message)
             })
         }
     }
@@ -185,7 +192,7 @@ class ViewController: UIViewController, UIAlertViewDelegate{
             showError("PAN is required")
         } else if !cvv2Field.hasText() {
             showError("CVV is required")
-        }  else if !pin.hasText() {
+        } else if !pin.hasText() {
             showError("PIN is required")
         } else {
             isOk = true
@@ -193,47 +200,55 @@ class ViewController: UIViewController, UIAlertViewDelegate{
         return isOk
     }
     
-    func handleOTP(message: String) {
+    func handleOTP(theOtpTransactionIdentifier: String, otpTransactionRef: String, otpMessage: String) {
         let otpAlertController = UIAlertController(title: "OTP transaction authorization",
-                                                   message: "Please enter the OTP text sent to you", preferredStyle: .Alert)
+                                                   message: otpMessage, preferredStyle: .Alert)
         
         otpAlertController.addTextFieldWithConfigurationHandler({ (textField) -> Void in
             //Customize textField however you want
-            textField.text = "_____"
+            textField.text = ""
         })
         
         otpAlertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             let textField = otpAlertController.textFields![0] as UITextField
             
             guard !textField.text!.isEmpty else {
+                self.activityIndicator.stopAnimating()
                 self.showError("You didn't enter an otp value")
                 return
             }
             guard !self.otpTransactionIdentifier.isEmpty else {
+                self.activityIndicator.stopAnimating()
                 self.showError("Otp transaction identifier does not exist")
                 return
             }
             //--
-            let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: self.otpTransactionIdentifier,
-                otp: textField.text!, transactionRef: Payment.randomStringWithLength(12))
+            let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: theOtpTransactionIdentifier,
+                otp: textField.text!, transactionRef: otpTransactionRef)
             
             self.sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
                 guard error == nil else {
                     // handle error
+                    self.activityIndicator.stopAnimating()
+                    
+                    self.showError((error?.localizedDescription)!)
                     return
                 }
                 
                 guard authorizeOtpResponse != nil else {
                     //handle error
+                    self.activityIndicator.stopAnimating()
+                    
+                    self.showError("Otp validation was NOT successful")
                     return
                 }
                 //OTP successful
-                print("OTP authorization success")
-                
+                self.showSuccess("OTP authorization success")
             })
         }))
         otpAlertController.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
             //Does nothing after cancel button is clicked
+            self.activityIndicator.stopAnimating()
         }))
         
         self.presentViewController(otpAlertController, animated: true, completion: nil)

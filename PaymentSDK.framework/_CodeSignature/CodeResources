@@ -6,43 +6,43 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		4obICwzHhJMIjfxEj873yBrRks0=
+		uJULAsKiRUMGKm9/JPRuMhNY/Eo=
 		</data>
 		<key>Frameworks/libswiftContacts.dylib</key>
 		<data>
-		qyL1rOXaffshSypQsQlpNg0OLsA=
+		UxUFduhtAxfFHdNQtWbXvp65RRI=
 		</data>
 		<key>Frameworks/libswiftCore.dylib</key>
 		<data>
-		fKrxIGYLGTolzsS9P3tfSljyEKs=
+		6kN+4uRr+TVIC7Qu9WHukJeoV4Y=
 		</data>
 		<key>Frameworks/libswiftCoreGraphics.dylib</key>
 		<data>
-		o17ifdipSIL9a62cLKFdIOxfabE=
+		swYFeI/z2zo4t3G/JavQiwULsZ0=
 		</data>
 		<key>Frameworks/libswiftCoreImage.dylib</key>
 		<data>
-		3oV3FMN87iQ66N49nzwuM0LiKcQ=
+		ploiuwdB6GPanEQf14C39Y/eEK8=
 		</data>
 		<key>Frameworks/libswiftDarwin.dylib</key>
 		<data>
-		49mvXq9lT1BDA7bALNgk9T3JVwI=
+		plPYgV4oxdNj+Rq8HMBW1TdVZOk=
 		</data>
 		<key>Frameworks/libswiftDispatch.dylib</key>
 		<data>
-		hY9WoE6tbND6Ai4pVqPVkuNoAiU=
+		/5/jrtvE3WzrQfeoP7yjpph07xY=
 		</data>
 		<key>Frameworks/libswiftFoundation.dylib</key>
 		<data>
-		9CUJ/wYJYQFCp4rbi6uVghBlCag=
+		Bij2Tdbb5oJahe/pD3wGnQXZ+OY=
 		</data>
 		<key>Frameworks/libswiftObjectiveC.dylib</key>
 		<data>
-		3vXwGtfZxd8Hzge7++eY76j5u00=
+		8nySepHpgOfkDX53OmOeNLVKEyw=
 		</data>
 		<key>Frameworks/libswiftUIKit.dylib</key>
 		<data>
-		phSMip/9RUUJikUp21c7o1e4vfE=
+		QnBUzPv9l6DE/juh6KfIxOWDMJw=
 		</data>
 		<key>Headers/Crypto.h</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm.swiftmodule</key>
 		<data>
-		3/ITnjF9UcqGpVundN1uEzKmwoM=
+		WISun4cRPRE6mFBeXJztEyRfdmQ=
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -74,7 +74,7 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		A0CCIWtldt59/oUnmYxErioCp8E=
+		KcHaAHJht4Q+ENlcqwycDdq6+NA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -86,11 +86,23 @@
 		</data>
 		<key>PayWithCard.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		mqSG3tQAYlXT9mkEKK+Uo4Tod5w=
+		rmjnazkASkb/yT8tpGl9u06ewe4=
 		</data>
 		<key>PayWithCard.storyboardc/payWithCard.nib</key>
 		<data>
-		I07FaKZjpCB9+Gme/8zUn4ntoTs=
+		qTnrr4tfVrU4aJ5OtiYfX5Q5crg=
+		</data>
+		<key>PayWithCardOrWallet.storyboardc/Info.plist</key>
+		<data>
+		Lw5jge77u0mrn4CeLr29L2sYpS4=
+		</data>
+		<key>PayWithCardOrWallet.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
+		<data>
+		EtnS+edAerw1Vz6H6nKtmANgNtI=
+		</data>
+		<key>PayWithCardOrWallet.storyboardc/payWithCardOrWallet.nib</key>
+		<data>
+		Nuw6p8o1HmVx1Vh/MGqzJKB8p58=
 		</data>
 		<key>PayWithToken.storyboardc/Info.plist</key>
 		<data>
@@ -98,11 +110,11 @@
 		</data>
 		<key>PayWithToken.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		5WE6SjtDA2/jHACYEL1NRVgLIKM=
+		Lkf7ppg0ckavh+wTX5rxWoL7rjY=
 		</data>
 		<key>PayWithToken.storyboardc/payWithToken.nib</key>
 		<data>
-		yuf3THs8XD/V4Ly1oBcVDaACSI0=
+		ZI94HO8Qoy0e9funfSH/HRA0xzM=
 		</data>
 		<key>PayWithWallet.storyboardc/Info.plist</key>
 		<data>
@@ -110,11 +122,11 @@
 		</data>
 		<key>PayWithWallet.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		YR/SCMpt+yUFyN+BlLn6Bc6DFNc=
+		RWO6EA08tqgR47qK+Q5WP+3j8XE=
 		</data>
 		<key>PayWithWallet.storyboardc/payWithWallet.nib</key>
 		<data>
-		mH+QDhyPtjk7tRiG5l4/wvESaQg=
+		86CABIsOgs2N0SY+CQ6DqWvB8GM=
 		</data>
 		<key>ValidateCard.storyboardc/Info.plist</key>
 		<data>
@@ -122,54 +134,54 @@
 		</data>
 		<key>ValidateCard.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		K0CTATrBq8v5zBpHtHQkk8TOReo=
+		qHkOdkUdd7szr6VW/WY8ED3tPyQ=
 		</data>
 		<key>ValidateCard.storyboardc/validateCard.nib</key>
 		<data>
-		8umWZawMRKiq88xEI2tZfiWqtig=
+		tyCVWpa+NCfRs3mp8C5Tz/w4mxk=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		4obICwzHhJMIjfxEj873yBrRks0=
+		uJULAsKiRUMGKm9/JPRuMhNY/Eo=
 		</data>
 		<key>Frameworks/libswiftContacts.dylib</key>
 		<data>
-		qyL1rOXaffshSypQsQlpNg0OLsA=
+		UxUFduhtAxfFHdNQtWbXvp65RRI=
 		</data>
 		<key>Frameworks/libswiftCore.dylib</key>
 		<data>
-		fKrxIGYLGTolzsS9P3tfSljyEKs=
+		6kN+4uRr+TVIC7Qu9WHukJeoV4Y=
 		</data>
 		<key>Frameworks/libswiftCoreGraphics.dylib</key>
 		<data>
-		o17ifdipSIL9a62cLKFdIOxfabE=
+		swYFeI/z2zo4t3G/JavQiwULsZ0=
 		</data>
 		<key>Frameworks/libswiftCoreImage.dylib</key>
 		<data>
-		3oV3FMN87iQ66N49nzwuM0LiKcQ=
+		ploiuwdB6GPanEQf14C39Y/eEK8=
 		</data>
 		<key>Frameworks/libswiftDarwin.dylib</key>
 		<data>
-		49mvXq9lT1BDA7bALNgk9T3JVwI=
+		plPYgV4oxdNj+Rq8HMBW1TdVZOk=
 		</data>
 		<key>Frameworks/libswiftDispatch.dylib</key>
 		<data>
-		hY9WoE6tbND6Ai4pVqPVkuNoAiU=
+		/5/jrtvE3WzrQfeoP7yjpph07xY=
 		</data>
 		<key>Frameworks/libswiftFoundation.dylib</key>
 		<data>
-		9CUJ/wYJYQFCp4rbi6uVghBlCag=
+		Bij2Tdbb5oJahe/pD3wGnQXZ+OY=
 		</data>
 		<key>Frameworks/libswiftObjectiveC.dylib</key>
 		<data>
-		3vXwGtfZxd8Hzge7++eY76j5u00=
+		8nySepHpgOfkDX53OmOeNLVKEyw=
 		</data>
 		<key>Frameworks/libswiftUIKit.dylib</key>
 		<data>
-		phSMip/9RUUJikUp21c7o1e4vfE=
+		QnBUzPv9l6DE/juh6KfIxOWDMJw=
 		</data>
 		<key>Headers/Crypto.h</key>
 		<data>
@@ -189,7 +201,7 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm.swiftmodule</key>
 		<data>
-		3/ITnjF9UcqGpVundN1uEzKmwoM=
+		WISun4cRPRE6mFBeXJztEyRfdmQ=
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -197,7 +209,7 @@
 		</data>
 		<key>Modules/PaymentSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		A0CCIWtldt59/oUnmYxErioCp8E=
+		KcHaAHJht4Q+ENlcqwycDdq6+NA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -209,11 +221,23 @@
 		</data>
 		<key>PayWithCard.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		mqSG3tQAYlXT9mkEKK+Uo4Tod5w=
+		rmjnazkASkb/yT8tpGl9u06ewe4=
 		</data>
 		<key>PayWithCard.storyboardc/payWithCard.nib</key>
 		<data>
-		I07FaKZjpCB9+Gme/8zUn4ntoTs=
+		qTnrr4tfVrU4aJ5OtiYfX5Q5crg=
+		</data>
+		<key>PayWithCardOrWallet.storyboardc/Info.plist</key>
+		<data>
+		Lw5jge77u0mrn4CeLr29L2sYpS4=
+		</data>
+		<key>PayWithCardOrWallet.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
+		<data>
+		EtnS+edAerw1Vz6H6nKtmANgNtI=
+		</data>
+		<key>PayWithCardOrWallet.storyboardc/payWithCardOrWallet.nib</key>
+		<data>
+		Nuw6p8o1HmVx1Vh/MGqzJKB8p58=
 		</data>
 		<key>PayWithToken.storyboardc/Info.plist</key>
 		<data>
@@ -221,11 +245,11 @@
 		</data>
 		<key>PayWithToken.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		5WE6SjtDA2/jHACYEL1NRVgLIKM=
+		Lkf7ppg0ckavh+wTX5rxWoL7rjY=
 		</data>
 		<key>PayWithToken.storyboardc/payWithToken.nib</key>
 		<data>
-		yuf3THs8XD/V4Ly1oBcVDaACSI0=
+		ZI94HO8Qoy0e9funfSH/HRA0xzM=
 		</data>
 		<key>PayWithWallet.storyboardc/Info.plist</key>
 		<data>
@@ -233,11 +257,11 @@
 		</data>
 		<key>PayWithWallet.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		YR/SCMpt+yUFyN+BlLn6Bc6DFNc=
+		RWO6EA08tqgR47qK+Q5WP+3j8XE=
 		</data>
 		<key>PayWithWallet.storyboardc/payWithWallet.nib</key>
 		<data>
-		mH+QDhyPtjk7tRiG5l4/wvESaQg=
+		86CABIsOgs2N0SY+CQ6DqWvB8GM=
 		</data>
 		<key>ValidateCard.storyboardc/Info.plist</key>
 		<data>
@@ -245,11 +269,11 @@
 		</data>
 		<key>ValidateCard.storyboardc/UYd-9z-ZDH-view-L96-Be-gsL.nib</key>
 		<data>
-		K0CTATrBq8v5zBpHtHQkk8TOReo=
+		qHkOdkUdd7szr6VW/WY8ED3tPyQ=
 		</data>
 		<key>ValidateCard.storyboardc/validateCard.nib</key>
 		<data>
-		8umWZawMRKiq88xEI2tZfiWqtig=
+		tyCVWpa+NCfRs3mp8C5Tz/w4mxk=
 		</data>
 	</dict>
 	<key>rules</key>
