@@ -21,11 +21,8 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     var activityIndicator: UIActivityIndicatorView
     var otpTransactionIdentifier: String = ""
     
-//    let yourClientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
-//    let yourClientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
-    
-    let yourClientId = "IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232"
-    let yourClientSecret = "ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30="
+    let yourClientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
+    let yourClientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
     
     let yourRequestorId = "12345678901"     //Specify your own requestorId here
     
@@ -52,11 +49,8 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
-        //Payment.overrideApiBase("https://sandbox.interswitchng.com")
-        
-        Passport.overrideApiBase("https://qa.interswitchng.com/passport")
-        Payment.overrideApiBase("https://qa.interswitchng.com")
+        Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
+        Payment.overrideApiBase("https://sandbox.interswitchng.com")
     
         view.backgroundColor = UIColor.whiteColor()
         
