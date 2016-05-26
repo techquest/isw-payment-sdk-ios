@@ -14,12 +14,13 @@ class ViewController: UIViewController {
     
     let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
     let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-    let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+    
+    let theCustomerId = "07037122181"           // This should be a value that identifies your customer uniquely e.g email or phone number etc
     let paymentDescription = "Payment for goods"
     let theAmount = "200"
     
     let theToken = "5060990580000217499"       //This should be a valid token value that was stored after a previously successful payment
-    let theCardType = "verve"   //This should be a valid card type e.g mastercard, verve, visa etc
+    let theCardType = "verve"                  //This should be a valid card type e.g mastercard, verve, visa etc
     
     
     override func viewDidLoad() {
@@ -41,12 +42,21 @@ class ViewController: UIViewController {
         let headerLabel = UILabel()
         headerLabel.text = "Payment demo"
         
-        headerLabel.frame = CGRectMake(XPosition, 80, 250, 40)
+        headerLabel.frame = CGRectMake(XPosition, 60, 250, 40)
         headerLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 16.0)
         headerLabel.font = UIFont.boldSystemFontOfSize(16.0)
         headerLabel.textAlignment = .Center
         view.addSubview(headerLabel)
         
+        
+        //Pay with card button
+        let payWithCardOrWalletButton = UIButton(type: .System)
+        payWithCardOrWalletButton.frame = CGRectMake(XPosition, 100 + yTopMargin, buttonsWidth, buttonsHeight)
+        payWithCardOrWalletButton.setTitle("Pay With Card or Wallet", forState: .Normal)
+        styleButton(payWithCardOrWalletButton)
+        
+        payWithCardOrWalletButton.addTarget(self, action: #selector(ViewController.payWithCardOrWallet), forControlEvents: .TouchUpInside)
+        view.addSubview(payWithCardOrWalletButton)
         
         //Pay with card button
         let payWithCardButton = UIButton(type: .System)
@@ -94,6 +104,25 @@ class ViewController: UIViewController {
         theButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     }
 
+    func payWithCardOrWallet(){
+        let pwc = Pay(clientId: yourClientId, clientSecret: yourClientSecret,
+                      customerId: theCustomerId, description: paymentDescription,
+                      amount: theAmount, currency: "NGN")
+        let vc = pwc.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+            guard error == nil else {
+                self.showError((error?.localizedDescription)!)
+                return
+            }
+            
+            guard let response = purchaseResponse else {
+                self.showError((error?.localizedFailureReason)!)
+                return
+            }
+            self.showSuccess("Ref: " + response.transactionIdentifier)
+        })
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func payWithCard(){
         let payWithCard = PayWithCard(clientId: yourClientId, clientSecret: yourClientSecret,
                                       customerId: theCustomerId, description: paymentDescription,

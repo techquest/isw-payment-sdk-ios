@@ -263,6 +263,7 @@ SWIFT_CLASS("_TtC10PaymentSDK16PurchaseResponse")
 @property (nonatomic, copy) NSString * _Nullable token;
 @property (nonatomic, copy) NSString * _Nullable tokenExpiryDate;
 @property (nonatomic, copy) NSString * _Nullable panLast4Digits;
+@property (nonatomic, copy) NSString * _Nullable cardType;
 @property (nonatomic, copy) NSString * _Nullable otpTransactionIdentifier;
 @end
 

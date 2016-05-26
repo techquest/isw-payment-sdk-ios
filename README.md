@@ -137,10 +137,51 @@ import PaymentSDK
 ## <a id='UsingSDKWithUi'></a>Using the SDK with UI (In PCI-DSS Scope: No )
 Now that you created and configured your Xcode project, you can add your choice of Payment SDK features to your app:
 
+-  [Pay with Card or Wallet](#PayWithCardOrWalletWithUi)
 -  [Pay with Card](#PayWithCardWithUi)
 -  [Pay With Wallet](#PayWithWalletWithUi)
 -  [Validate Card](#ValidateCardWithUi)
 -  [Pay with Token](#PayWithTokenWithUi)
+
+### <a id='PayWithCardOrWalletWithUi'></a>Pay with Card or Wallet
+    
+* To allow for Payment with Card or Wallet
+* Create a Pay UIButton
+* Add a target to the button that will call the below code.
+
+  Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+```swift
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let paymentDescription = "Payment for goods"
+let theAmount = "200"
+
+let payWithCardOrWallet = Pay(clientId: yourClientId, clientSecret: yourClientSecret, 
+                              customerId: theCustomerId, description: paymentDescription,
+                              amount: theAmount, currency: "NGN")
+let vc = payWithCardOrWallet.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+    guard error == nil else {
+        //let errMsg = (error?.localizedDescription)!                
+        // Handle error.
+        // Payment not successful.
+        
+        return
+    }
+    guard let response = purchaseResponse else {
+        //let failureMsg = (error?.localizedFailureReason)!
+        // Handle error.
+        // Payment not successful.
+        
+        return
+    }
+    /*  Handle success
+        Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+        Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+     */
+})
+```
 
 ### <a id='PayWithCardWithUi'></a>Pay with Card
     
@@ -342,17 +383,19 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
 	    return
 	}
  
-	//OTP required, ask user for OTP and authorize OTP
-	let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: otpId, otp: "123456", transactionRef: Payment.randomStringWithLength(12))
-	 
-	sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
+	//OTP required, ask user for OTP and authorize OTP with the below code
+
+    let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: theOtpTransactionId, otp: theUserEnteredOtpValue, transactionRef: theOtpTransactionRef)
+	
+    sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
         guard error == nil else {
+            // let errMsg = (error?.localizedDescription)!
             // handle error
             return
         }
          
         guard let otpResponse = authorizeOtpResponse else {
-            //handle error
+            //handle error ... Otp validation was not successful
             return
         }
         //OTP successful   
@@ -412,7 +455,7 @@ walletSdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseRespon
     }
     
     guard let otpTransactionIdentifier = response.otpTransactionIdentifier else {
-        self.showSuccess("Ref: " + response.transactionIdentifier)
+        // OTP not required, payment successful.  
         return
     }
     
@@ -427,7 +470,7 @@ walletSdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseRespon
 Import PaymentSDK and use the following code snippet
 
 ```swift
-let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: otpId, otp: "123456", transactionRef: Payment.randomStringWithLength(12))
+let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: theOtpTransactionId, otp: theUserEnteredOtpValue, transactionRef: theOtpTransactionRef)
  
 sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
                 guard error == nil else {

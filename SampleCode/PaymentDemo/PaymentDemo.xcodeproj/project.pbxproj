@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		9974BA198B24A4079EED707B /* Pods_PaymentDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE48FB08AF94A70701DE407 /* Pods_PaymentDemo.framework */; };
-		F3823D411CC7F68D00BAFC01 /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3823D401CC7F68D00BAFC01 /* PaymentSDK.framework */; };
-		F3823D421CC7F68D00BAFC01 /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F3823D401CC7F68D00BAFC01 /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3CD8D7A1CC7F3A40097572C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD8D791CC7F3A40097572C /* AppDelegate.swift */; };
 		F3CD8D7C1CC7F3A40097572C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD8D7B1CC7F3A40097572C /* ViewController.swift */; };
 		F3CD8D7F1CC7F3A40097572C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3CD8D7D1CC7F3A40097572C /* Main.storyboard */; };
 		F3CD8D821CC7F3A40097572C /* PaymentDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3CD8D801CC7F3A40097572C /* PaymentDemo.xcdatamodeld */; };
 		F3CD8D841CC7F3A40097572C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3CD8D831CC7F3A40097572C /* Assets.xcassets */; };
 		F3CD8D871CC7F3A40097572C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3CD8D851CC7F3A40097572C /* LaunchScreen.storyboard */; };
+		F3FD34821CF6015000F35881 /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34811CF6015000F35881 /* PaymentSDK.framework */; };
+		F3FD34831CF6015000F35881 /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34811CF6015000F35881 /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,7 +25,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F3823D421CC7F68D00BAFC01 /* PaymentSDK.framework in Embed Frameworks */,
+				F3FD34831CF6015000F35881 /* PaymentSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,7 +36,6 @@
 		4AE48FB08AF94A70701DE407 /* Pods_PaymentDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PaymentDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ED3C795AED6909F3B8EF1FA /* Pods-PaymentDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaymentDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PaymentDemo/Pods-PaymentDemo.release.xcconfig"; sourceTree = "<group>"; };
 		F2207BAFACA33FAB3E7AD7B1 /* Pods-PaymentDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaymentDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PaymentDemo/Pods-PaymentDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		F3823D401CC7F68D00BAFC01 /* PaymentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PaymentSDK.framework; sourceTree = "<group>"; };
 		F3CD8D761CC7F3A40097572C /* PaymentDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymentDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3CD8D791CC7F3A40097572C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3CD8D7B1CC7F3A40097572C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +44,7 @@
 		F3CD8D831CC7F3A40097572C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F3CD8D861CC7F3A40097572C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F3CD8D881CC7F3A40097572C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3FD34811CF6015000F35881 /* PaymentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PaymentSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3823D411CC7F68D00BAFC01 /* PaymentSDK.framework in Frameworks */,
+				F3FD34821CF6015000F35881 /* PaymentSDK.framework in Frameworks */,
 				9974BA198B24A4079EED707B /* Pods_PaymentDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +80,7 @@
 		F3CD8D6D1CC7F3A40097572C = {
 			isa = PBXGroup;
 			children = (
-				F3823D401CC7F68D00BAFC01 /* PaymentSDK.framework */,
+				F3FD34811CF6015000F35881 /* PaymentSDK.framework */,
 				F3CD8D781CC7F3A40097572C /* PaymentDemo */,
 				F3CD8D771CC7F3A40097572C /* Products */,
 				00F90358474151A7A74F7F1B /* Pods */,
@@ -146,6 +146,7 @@
 				TargetAttributes = {
 					F3CD8D751CC7F3A40097572C = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = M28B7CT6HR;
 					};
 				};
 			};
@@ -349,6 +350,8 @@
 			baseConfigurationReference = F2207BAFACA33FAB3E7AD7B1 /* Pods-PaymentDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -357,6 +360,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.PaymentDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -365,6 +369,8 @@
 			baseConfigurationReference = 4ED3C795AED6909F3B8EF1FA /* Pods-PaymentDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -373,6 +379,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.PaymentDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -9,15 +9,15 @@
 import UIKit
 import PaymentSDK
 
-
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     var customerId : UITextField
     var amount : UITextField
-    var cvv2Field : UITextField
+    var cvvTextField : UITextField
     var pin : UITextField
     var paymentMethod : UITextField
     
     var activityIndicator : UIActivityIndicatorView
+    var otpTransactionRef : String = ""
     var otpTransactionIdentifier : String = ""
     var transactionIdentifier : String?
     
@@ -28,6 +28,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     let yourClientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
     let yourClientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
+    
     let yourRequestorId = "12345678901"     //Specify your own requestorId here
 
     
@@ -35,7 +36,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         customerId = UITextField()
         paymentMethod = UITextField()
         amount = UITextField()
-        cvv2Field = UITextField()
+        cvvTextField = UITextField()
         pin = UITextField()
         activityIndicator = UIActivityIndicatorView()
         
@@ -76,7 +77,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         customerId.text = "1407002510"   // This should be a value that identifies your customer uniquely e.g email or phone number etc
         view.addSubview(customerId)
         
-        addPaymentMethodFieldFunctionality(x: XPosition, y: (140 + yTopMargin), width: textfieldsWidth, height: textfieldsHeight)
+        addPaymentMethodFieldFunctionality(XPosition, yPosition: (140 + yTopMargin), textfieldsWidth: textfieldsWidth, textfieldsHeight: textfieldsHeight)
         
         amount.frame = CGRect(x: XPosition, y: 180 + 2 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         amount.placeholder = "Amount"
@@ -86,12 +87,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         view.addSubview(amount)
         
         
-        cvv2Field.frame = CGRect(x: XPosition, y: 220 + 3 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
-        cvv2Field.placeholder = "CVV"
-        cvv2Field.borderStyle = UITextBorderStyle.Line
-        cvv2Field.keyboardType = .NumberPad
-        cvv2Field.text = "111"
-        view.addSubview(cvv2Field)
+        cvvTextField.frame = CGRect(x: XPosition, y: 220 + 3 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
+        cvvTextField.placeholder = "CVV"
+        cvvTextField.borderStyle = UITextBorderStyle.Line
+        cvvTextField.keyboardType = .NumberPad
+        cvvTextField.text = "111"
+        view.addSubview(cvvTextField)
         
         pin.frame = CGRect(x: XPosition, y: 260 + 4 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         pin.placeholder = "PIN"
@@ -123,8 +124,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         theButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     }
 
-    func addPaymentMethodFieldFunctionality(x xPosition: CGFloat, y yPosition: CGFloat,
-                                              width textfieldsWidth: CGFloat, height textfieldsHeight: CGFloat) {
+    func addPaymentMethodFieldFunctionality(xPosition: CGFloat, yPosition: CGFloat,
+                                              textfieldsWidth: CGFloat, textfieldsHeight: CGFloat) {
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
         toolBar.translucent = true
@@ -163,32 +164,40 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             loadWallet()
         }
     }
+    //--
+    func cancelPicker(){
+        paymentMethod.resignFirstResponder()
+    }
     
     func donePicker() {
         paymentMethod.resignFirstResponder()
     }
     
-    func cancelPicker() {
-        paymentMethod.resignFirstResponder()
-    }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
         return 1
     }
     
-    
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
         return paymentMethods.count
     }
+    
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return paymentMethods[row].cardProduct
     }
+    
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if row > 0 && row <= paymentMethods.count{
+        if row >= 0 && row < paymentMethods.count {
             let thePaymentMethod : PaymentMethod = paymentMethods[row]
             
-            paymentMethod.text = thePaymentMethod.cardProduct
+            let cardProduct = thePaymentMethod.cardProduct
+            paymentMethod.text = cardProduct
             tokenOfUserSelectedPM = thePaymentMethod.token
+            
+            if(cardProduct.lowercaseString.containsString("eCash".lowercaseString) || cardProduct.lowercaseString.containsString("m-Pin".lowercaseString)){
+                cvvTextField.hidden = true
+            } else {
+                cvvTextField.hidden = false
+            }
             self.view.endEditing(true)
         }
     }
@@ -196,10 +205,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func pay() {
         if isOkToMakePaymentRequest() {
             self.otpTransactionIdentifier = ""
+            self.otpTransactionRef = ""
             
             let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: tokenOfUserSelectedPM!,
-                                          pin: pin.text!, cvv2: cvv2Field.text!,
-                                          transactionRef: Payment.randomStringWithLength(12), requestorId: yourRequestorId)
+                                          pin: pin.text!, cvv2: cvvTextField.text!, transactionRef: Payment.randomStringWithLength(12),
+                                          requestorId: yourRequestorId)
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             activityIndicator.startAnimating()
@@ -226,10 +236,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     return
                 }
                 
-                self.otpTransactionIdentifier = otpTransactionIdentifier
                 print("Got the otp transaction identifier")
-                self.transactionIdentifier = response.transactionIdentifier
-                self.handleOTP(response.message)
+                self.handleOTP(otpTransactionIdentifier, otpTransactionRef: response.transactionRef, otpMessage: response.message)
             })
         }
     }
@@ -241,9 +249,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             showError("Customer ID is required")
         } else if !amount.hasText() {
             showError("Amount is required")
-        } else if !cvv2Field.hasText() {
-            showError("CVV is required")
-        } else if !pin.hasText() {
+        } else if !pin.hidden && !pin.hasText() {
             showError("PIN is required")
         } else if (tokenOfUserSelectedPM == nil || tokenOfUserSelectedPM?.isEmpty == true) {
             showError("Select a Payment Method")
@@ -287,43 +293,52 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         })
     }
     
-    func handleOTP(message: String) {
-        let otpAlertController = UIAlertController(title: "OTP transaction authorization",
-                                      message: "Please enter the OTP text sent to you", preferredStyle: .Alert)
+    func handleOTP(theOtpTransactionIdentifier: String, otpTransactionRef: String, otpMessage: String) {
+        let otpAlertController = UIAlertController(title: "OTP transaction authorization", message: otpMessage, preferredStyle: .Alert)
+        otpAlertController.view.tintColor = UIColor.greenColor()
         
         otpAlertController.addTextFieldWithConfigurationHandler({ (textField) -> Void in
             //Customize textField however you want
-            textField.text = "_____"
+            textField.text = ""
         })
         
         otpAlertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             let textField = otpAlertController.textFields![0] as UITextField
             
             guard !textField.text!.isEmpty else {
+                self.activityIndicator.stopAnimating()
+                
                 self.showError("You didn't enter an otp value")
                 return
             }
             guard !self.otpTransactionIdentifier.isEmpty else {
+                self.activityIndicator.stopAnimating()
+                
                 self.showError("Otp transaction identifier does not exist")
                 return
             }
             //--
-            let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: self.otpTransactionIdentifier,
-                otp: textField.text!, transactionRef: Payment.randomStringWithLength(12))
+            let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: theOtpTransactionIdentifier,
+                otp: textField.text!, transactionRef: otpTransactionRef)
             
             self.walletSdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
                 guard error == nil else {
                     // handle error
+                    self.activityIndicator.stopAnimating()
+                    
+                    self.showError((error?.localizedDescription)!)
                     return
                 }
                 
                 guard authorizeOtpResponse != nil else {
                     //handle error
+                    self.activityIndicator.stopAnimating()
+                    
+                    self.showError("Otp validation was NOT successful")
                     return
                 }
                 //OTP successful
-                print("OTP authorization success")
-                
+                self.showSuccess("OTP authorization success")
             })
         }))
         otpAlertController.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
@@ -335,21 +350,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     
     func showError(message: String) {
-        let alertView = UIAlertView()
-        alertView.title = "Error"
-        alertView.addButtonWithTitle("OK")
-        alertView.message = message
+        let alertVc = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        alertVc.addAction(action)
         
-        alertView.show()
+        self.presentViewController(alertVc, animated: true, completion: nil)
     }
     
     func showSuccess(message: String) {
-        let alertView = UIAlertView()
-        alertView.title = "Success"
-        alertView.addButtonWithTitle("OK")
-        alertView.message = message
+        let alertVc = UIAlertController(title: "Success", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        alertVc.addAction(action)
         
-        alertView.show()
+        self.presentViewController(alertVc, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
