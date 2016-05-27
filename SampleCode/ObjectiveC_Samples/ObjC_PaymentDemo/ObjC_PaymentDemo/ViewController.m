@@ -39,7 +39,7 @@ NSString *panLast4Digits = @"7499";
     
     [Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
     [Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
-
+    
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     window.rootViewController = navigationController;
@@ -240,22 +240,22 @@ NSString *panLast4Digits = @"7499";
 
 
 - (void) showError:(NSString*)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okAction];
-
-    [self presentViewController:alert animated:YES completion:nil];
+    [self showAlert:message :@"Error"];
 }
 
 - (void) showSuccess:(NSString*)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [self showAlert:message :@"Success"];
+}
+
+- (void) showAlert:(NSString*)alertMessage :(NSString*) alertTitle {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okAction];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
