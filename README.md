@@ -151,10 +151,11 @@ Now that you created and configured your Xcode project, you can add your choice 
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let theCustomerId = "9689808900" // This should be a value that identifies your customer uniquely e.g email or phone number etc
 let paymentDescription = "Payment for goods"
 let theAmount = "200"
 
@@ -183,6 +184,39 @@ let vc = payWithCardOrWallet.start({(purchaseResponse: PurchaseResponse?, error:
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+Pay *pwcw = [[Pay alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                              description: paymentDescription amount: theAmount currency: theCurrency];
+UIViewController *vc = [pwcw start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error.
+        // Payment not successful.
+
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error.
+        // Payment not successful.
+
+    } else {
+      /*  Handle success 
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef. 
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
+
+
 ### <a id='PayWithCardWithUi'></a>Pay with Card
     
 * To allow for Payment with Card only
@@ -191,6 +225,7 @@ let vc = payWithCardOrWallet.start({(purchaseResponse: PurchaseResponse?, error:
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -223,6 +258,37 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+PayWithCard *pwc = [[PayWithCard alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                                             description: paymentDescription amount: theAmount currency: theCurrency];
+UIViewController *vc = [pwc start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error.
+        // Payment not successful.
+        
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error.
+        // Payment not successful.
+
+    } else {
+      /*  Handle success
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 ### <a id='PayWithWalletWithUi'></a>Pay With Wallet
 
@@ -232,6 +298,7 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -265,6 +332,37 @@ let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSErr
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+PayWithWallet *pww = [[PayWithWallet alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                                                   description: paymentDescription amount: theAmount currency: theCurrency];
+UIViewController *vc = [pww start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error
+        // Payment not successful.
+
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error
+        // Payment not successful.
+
+    } else {
+      /*  Handle success
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 ### <a id='ValidateCardWithUi'></a>Validate Card
 
@@ -274,6 +372,7 @@ Validate card is used to check if a card is a valid card. It returns the card ba
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -304,6 +403,33 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+
+ValidateCard *validateCard = [[ValidateCard alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId];
+
+UIViewController *vc = [validateCard start:^(ValidateCardResponse *validateResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error.
+        // Card validation not successful
+
+    } else if(validateResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error.
+        // Card validation not successful
+
+    } else {
+      /*  Handle success.
+          Card validation successful. The response object contains fields token, tokenExpiryDate, panLast4Digits and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 ### <a id='PayWithTokenWithUi'></a>Pay with Token
 
@@ -313,6 +439,7 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -349,6 +476,43 @@ let vc = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSErro
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+NSString *theToken = @"5060990580000217499"; //This should be a valid token value that was stored after a previously successful payment
+NSString *theCardType = @"verve";            //This should be a valid card type e.g mastercard, verve, visa etc
+
+NSString *theExpiryDate = @"2004";
+NSString *panLast4Digits = @"7499";
+
+PayWithToken *pwt = [[PayWithToken alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                                               description: paymentDescription amount: theAmount token: theToken
+                                                  currency: theCurrency expiryDate: theExpiryDate cardType: theCardType last4Digits: panLast4Digits];
+UIViewController *vc = [pwt start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error
+        // Payment not successful.
+
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error
+        // Payment not successful.
+        
+    } else {
+      /*  Handle success
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 
 ## <a id='UsingSDKWithoutUi'></a>Using the SDK without UI (In PCI-DSS Scope: Yes)
