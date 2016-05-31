@@ -122,13 +122,29 @@ The procedure to use the SDK in sandbox mode is just as easy,
 
 * Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 
 * Override the api base as follows
+
+*Swift*
 ```swift
 Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
 Payment.overrideApiBase("https://sandbox.interswitchng.com");
 ```
+
+*Objective C*
+```Objective-C
+[Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
+[Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
+```
+
 * Make sure you include the following import statement
+
+*Swift*
 ```swift
 import PaymentSDK
+```
+
+*Objective C*
+```Objective-C
+@import PaymentSDK;
 ```
 * Follow the remaining steps in the documentation
 
@@ -151,10 +167,11 @@ Now that you created and configured your Xcode project, you can add your choice 
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
-let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let theCustomerId = "9689808900" // This should be a value that identifies your customer uniquely e.g email or phone number etc
 let paymentDescription = "Payment for goods"
 let theAmount = "200"
 
@@ -183,6 +200,39 @@ let vc = payWithCardOrWallet.start({(purchaseResponse: PurchaseResponse?, error:
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+Pay *pwcw = [[Pay alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                              description: paymentDescription amount: theAmount currency: theCurrency];
+UIViewController *vc = [pwcw start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error.
+        // Payment not successful.
+
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error.
+        // Payment not successful.
+
+    } else {
+      /*  Handle success 
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef. 
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
+
+
 ### <a id='PayWithCardWithUi'></a>Pay with Card
     
 * To allow for Payment with Card only
@@ -191,6 +241,7 @@ let vc = payWithCardOrWallet.start({(purchaseResponse: PurchaseResponse?, error:
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -223,6 +274,37 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+PayWithCard *pwc = [[PayWithCard alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                                             description: paymentDescription amount: theAmount currency: theCurrency];
+UIViewController *vc = [pwc start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error.
+        // Payment not successful.
+
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error.
+        // Payment not successful.
+
+    } else {
+      /*  Handle success
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 ### <a id='PayWithWalletWithUi'></a>Pay With Wallet
 
@@ -232,6 +314,7 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -265,6 +348,37 @@ let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSErr
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+PayWithWallet *pww = [[PayWithWallet alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                                                   description: paymentDescription amount: theAmount currency: theCurrency];
+UIViewController *vc = [pww start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error
+        // Payment not successful.
+
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error
+        // Payment not successful.
+
+    } else {
+      /*  Handle success
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 ### <a id='ValidateCardWithUi'></a>Validate Card
 
@@ -274,6 +388,7 @@ Validate card is used to check if a card is a valid card. It returns the card ba
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -304,6 +419,33 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+
+ValidateCard *validateCard = [[ValidateCard alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId];
+
+UIViewController *vc = [validateCard start:^(ValidateCardResponse *validateResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error.
+        // Card validation not successful
+
+    } else if(validateResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error.
+        // Card validation not successful
+
+    } else {
+      /*  Handle success.
+          Card validation successful. The response object contains fields token, tokenExpiryDate, panLast4Digits and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 ### <a id='PayWithTokenWithUi'></a>Pay with Token
 
@@ -313,6 +455,7 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -349,6 +492,43 @@ let vc = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSErro
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *paymentDescription = @"Payment for goods";
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+NSString *theToken = @"5060990580000217499"; //This should be a valid token value that was stored after a previously successful payment
+NSString *theCardType = @"verve";            //This should be a valid card type e.g mastercard, verve, visa etc
+
+NSString *theExpiryDate = @"2004";
+NSString *panLast4Digits = @"7499";
+
+PayWithToken *pwt = [[PayWithToken alloc] initWithClientId:yourClientId clientSecret:yourClientSecret customerId:theCustomerId
+                                               description: paymentDescription amount: theAmount token: theToken
+                                                  currency: theCurrency expiryDate: theExpiryDate cardType: theCardType last4Digits: panLast4Digits];
+UIViewController *vc = [pwt start:^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        // Handle error
+        // Payment not successful.
+
+    } else if(purchaseResponse == nil) {
+        NSString *failureMsg = error.localizedFailureReason;
+        // Handle error
+        // Payment not successful.
+        
+    } else {
+      /*  Handle success
+          Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+          Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+      */
+    }
+}];
+```
 
 
 ## <a id='UsingSDKWithoutUi'></a>Using the SDK without UI (In PCI-DSS Scope: Yes)
@@ -357,6 +537,7 @@ let vc = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSErro
 
 Import PaymentSDK and use the following code snippet
 
+*Swift*
 ```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
@@ -378,31 +559,55 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
 	    return
 	}
 	 
-	guard let otpId = response.otpTransactionIdentifier else {
+	guard let otpId = purchaseResponse.otpTransactionIdentifier else {
 	    // OTP not required, payment successful. A token for the card details is returned in the response       
 	    return
 	}
- 
-	//OTP required, ask user for OTP and authorize OTP with the below code
 
-    let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: theOtpTransactionId, otp: theUserEnteredOtpValue, transactionRef: theOtpTransactionRef)
-	
-    sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
-        guard error == nil else {
-            // let errMsg = (error?.localizedDescription)!
-            // handle error
-            return
-        }
-         
-        guard let otpResponse = authorizeOtpResponse else {
-            //handle error ... Otp validation was not successful
-            return
-        }
-        //OTP successful   
-	})
+  //OTP required, ask user for OTP
+  //To handle OTP see below: Authorize Transaction With OTP
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
+NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
+
+NSString *theCustomerId = @"9689808900"; // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *theAmount = @"200";
+
+NSString *thePan = @"5060990580000217499";
+NSString *theCvv = @"111";
+NSString *thePin = @"1111";
+NSString *theExpiryDate = @"2004";
+NSString *theRequestorId = @"12345678901";
+
+PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
+
+PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustomerId amount:theAmount pan: thePan
+                                                                   pin: thePin expiryDate: theExpiryDate cvv2: theCvv
+                                                        transactionRef: [Payment randomStringWithLength: 12] currency: @"NGN" requestorId: theRequestorId];
+
+[sdk purchase:request completionHandler: ^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        
+        NSLog(@"Error ... %@", errMsg);
+    } else if(purchaseResponse == nil) {
+        NSString *errMsg = error.localizedFailureReason;
+        
+        NSLog(@"Failure: %@", errMsg);
+    } else {
+        if (purchaseResponse.otpTransactionIdentifier != nil) {
+            //OTP required, ask user for OTP
+            //To handle OTP see below: Authorize Transaction With OTP
+        } else {
+            NSLog(@"Purchase success response: %@", purchaseResponse.message);
+        }
+    }
+}];
+```
 
 ###	<a id='PayWithWalletWithoutUi'></a>Pay with Wallet
 
@@ -412,6 +617,7 @@ To allow for Payment with Wallet only
 
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+*Swift*
 ```swift
 //Replace with your own client id and secret
 let walletSdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
@@ -433,11 +639,42 @@ walletSdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Vo
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
+NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
+
+WalletSDK *walletSdk = [[WalletSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
+
+[walletSdk getPaymentMethods:^(WalletResponse *walletResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        
+        NSLog(@"error getting payment methods ... %@", errMsg);
+    } else if(walletResponse == nil) {
+        NSString *errMsg = error.localizedFailureReason;
+        
+        NSLog(@"Failure: %@", errMsg);
+    } else {
+        if ([walletResponse.paymentMethods count] > 0) {
+            for (int i = 0; i < [walletResponse.paymentMethods count]; i++) {
+                PaymentMethod *aPaymentMethod = [walletResponse.paymentMethods objectAtIndex:i];
+                
+                NSLog(@"Payment Method card product: %@", aPaymentMethod.cardProduct);
+            }
+        }
+    }
+}];
+```
+
 * Create a Pay UIButton
 * Add a target to the button that will call the below code if the user has entered the required input information.
 
+*Swift*
 ```swift
-let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: tokenOfUserSelectedPM!,
+let tokenOfUserSelectedPaymentMethod = "5060990580000217499"
+
+let request = PurchaseRequest(customerId: customerId.text, amount: amount.text!, pan: tokenOfUserSelectedPaymentMethod,
                                           pin: pin.text!, cvv2: cvv2Field.text!,
                                           transactionRef: Payment.randomStringWithLength(12), requestorId: yourRequestorId)
             
@@ -464,11 +701,53 @@ walletSdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseRespon
 })
 ```
 
+*Objective C*
+```Objective-C
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+NSString *theCustomerId = customerId.text; // This should be a value that identifies your customer uniquely e.g email or phone number etc
+NSString *theAmount = @"200";
+NSString *theCurrency = @"NGN";
+
+NSString *tokenOfUserSelectedPM = @"5060990580000217499";
+NSString *theCvv = @"111";
+NSString *thePin = @"1111";
+NSString *theExpiryDate = @"2004";
+NSString *theRequestorId = @"12345678901";
+
+WalletSDK *walletSdk = [[WalletSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
+
+PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustomerId amount:theAmount pan: tokenOfUserSelectedPM
+                                                                   pin: thePin expiryDate: theExpiryDate cvv2: theCvv
+                                                        transactionRef: [Payment randomStringWithLength: 12] currency: theCurrency requestorId: theRequestorId];
+
+[walletSdk purchase:request completionHandler: ^(PurchaseResponse *purchaseResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        
+        NSLog(@"Normal error ... %@", errMsg);
+    } else if(purchaseResponse == nil) {
+        NSString *errMsg = error.localizedFailureReason;
+        
+        NSLog(@"Failure: %@", errMsg);
+    } else {
+      if (purchaseResponse.otpTransactionIdentifier != nil) {
+        //handle OTP
+        //To handle OTP see below: Authorize Transaction With OTP
+      } else {
+        // OTP not required, payment successful.  
+        NSLog(@"Purchase success response: %@", purchaseResponse.message);
+      }
+    }
+}];
+```
 
 ###	<a id='AuthorizeOtpWithoutUi'></a>Authorize Transaction With OTP
 
 Import PaymentSDK and use the following code snippet
 
+*Swift*
 ```swift
 let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: theOtpTransactionId, otp: theUserEnteredOtpValue, transactionRef: theOtpTransactionRef)
  
@@ -486,10 +765,37 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
                  
             })
 ```
+
+*Objective C*
+```Objective-C
+NSString *theOtpTransactionId = @"5060990580000217499";
+NSString *theUserEnteredOtpValue = @"54343";
+NSString *theOtpTransactionRef = @"1234543211";
+
+PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
+
+AuthorizeOtpRequest *request = [[AuthorizeOtpRequest alloc] initWithOtpTransactionIdentifier:theOtpTransactionId otp: theUserEnteredOtpValue transactionRef: theOtpTransactionRef];
+
+[sdk authorizeOtp:request completionHandler: ^(AuthorizeOtpResponse *authorizeOtpResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        
+        NSLog(@"Error ... %@", errMsg);
+    } else if(authorizeOtpResponse == nil) {
+        NSString *errMsg = error.localizedFailureReason;
+        
+        NSLog(@"Failure: %@", errMsg);
+    } else {
+        NSLog(@"Authorize Otp: %@", @"Authorize otp successful.");
+    }
+}];
+```
+
 ###	<a id='GetPaymentStatusWithoutUi'></a>Get Payment Status
 
 Use the code below to check payment status
 
+*Swift*
 ```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
@@ -508,3 +814,26 @@ sdk.getPaymentStatus("441469400958", amount: "100", completionHandler: {(payment
     print(statusResponse.message)        
 })
 ```
+
+*Objective C*
+```Objective-C
+NSString *theTransactionRef = @"583774306964";
+NSString *theAmount = @"100";
+
+PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
+
+[sdk getPaymentStatus:theTransactionRef amount: theAmount completionHandler: ^(PaymentStatusResponse *paymentStatusResponse, NSError *error) {
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        
+        NSLog(@"Error getting payment status... %@", errMsg);
+    } else if(paymentStatusResponse == nil) {
+        NSString *errMsg = error.localizedFailureReason;
+        
+        NSLog(@"Failed to get payment status: %@", errMsg);
+    } else {
+        NSLog(@"Payment status: %@", paymentStatusResponse.message);
+    }
+}];
+```
+
