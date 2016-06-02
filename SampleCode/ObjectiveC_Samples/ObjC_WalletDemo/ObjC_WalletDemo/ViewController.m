@@ -1,0 +1,488 @@
+//
+//  ViewController.m
+//  ObjC_WalletDemo
+//
+//  Created by Efe Ariaroo on 6/2/16.
+//  Copyright © 2016 Efe Ariaroo. All rights reserved.
+//
+
+#import "ViewController.h"
+@import PaymentSDK;
+
+
+@interface ViewController ()
+
+@end
+
+@implementation ViewController
+
+
+//NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
+//NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+
+WalletSDK *walletSdk = nil;
+
+bool shouldLoadWalletFromServer = YES;
+NSMutableArray *paymentMethods;
+
+NSString *tokenOfUserSelectedPM = nil;    //PM stands for payment method
+
+NSString *requstorId = @"12345678901";      //Specify your own requestorId here
+//--
+
+UITextField *customerId = nil;
+UITextField *amount = nil;
+UITextField *cvvTextField = nil;
+UITextField *pin = nil;
+UITextField *paymentMethodTextField = nil;
+
+UIActivityIndicatorView *activityIndicator = nil;
+//--
+bool loadingWallet = NO;
+
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        // Initialization code here.
+        paymentMethods = [NSMutableArray array];
+    }
+    
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+
+    //--
+    [self initializeSdk];
+    
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    
+    window.rootViewController = navigationController;
+    [window makeKeyAndVisible];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    //--
+    CGFloat screenWidth = self.view.bounds.size.width;
+    CGFloat headerXPos = (screenWidth - 250)/2;
+    
+    //--
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerXPos, 60, 250, 40)];
+    headerLabel.text = @"Wallet payment demo";
+    
+    headerLabel.font = [UIFont boldSystemFontOfSize:16.0 ];
+    headerLabel.textAlignment = UITextAlignmentCenter;
+    [self.view addSubview:headerLabel];
+    
+    //--
+    [self initializeUIComponents];
+}
+
+- (void) initializeSdk
+{
+    [Payment overrideApiBase: @"https://qa.interswitchng.com"];
+    [Passport overrideApiBase: @"https://qa.interswitchng.com/passport"];
+    
+    walletSdk = [[WalletSDK alloc] initWithClientId: yourClientId clientSecret: yourClientSecret];
+}
+
+- (void) initializeUIComponents
+{
+    CGFloat screenWidth = self.view.bounds.size.width;
+    
+    CGFloat textfieldsWidth = 250;
+    CGFloat textfieldsHeight = 40;
+    
+    CGFloat XPosition = (screenWidth - textfieldsWidth)/2;
+    CGFloat yTopMargin = 10.0;
+    //--
+    customerId = [[UITextField alloc] initWithFrame:CGRectMake(XPosition, 120, textfieldsWidth, textfieldsHeight)];
+    customerId.text = @"07012122323"; // This should be a value that identifies your customer uniquely e.g email or phone number etc
+    customerId.placeholder = @" Customer ID";
+    customerId.layer.borderColor = [[UIColor blackColor] CGColor];
+    customerId.layer.borderWidth = 2.0;
+    [self.view addSubview: customerId];
+    
+    [self addPaymentMethodFunctions: XPosition :(160 + yTopMargin) :textfieldsWidth :textfieldsHeight];
+    //--
+    amount = [[UITextField alloc] initWithFrame:CGRectMake(XPosition, 200 + 2 * yTopMargin, textfieldsWidth, textfieldsHeight)];
+    amount.text = @"200";
+    amount.keyboardType = UIKeyboardTypeDecimalPad;
+    amount.placeholder = @" Amount";
+    amount.layer.borderColor = [[UIColor blackColor] CGColor];
+    amount.layer.borderWidth = 2.0;
+    
+    [self.view addSubview: amount];
+    //--
+    cvvTextField = [[UITextField alloc] initWithFrame:CGRectMake(XPosition, 240 + 3 * yTopMargin, textfieldsWidth, textfieldsHeight)];
+    cvvTextField.text = @"";
+    cvvTextField.keyboardType = UIKeyboardTypeNumberPad;
+    cvvTextField.placeholder = @" CVV";
+    cvvTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+    cvvTextField.layer.borderWidth = 2.0;
+    
+    [self.view addSubview: cvvTextField];
+    //--
+    pin = [[UITextField alloc] initWithFrame:CGRectMake(XPosition, 280 + 4 * yTopMargin, textfieldsWidth, textfieldsHeight)];
+    pin.text = @"";
+    pin.keyboardType = UIKeyboardTypeNumberPad;
+    pin.placeholder = @" PIN";
+    pin.layer.borderColor = [[UIColor blackColor] CGColor];
+    pin.layer.borderWidth = 2.0;
+    
+    [self.view addSubview: pin];
+    //--
+    
+    //Pay with card button
+    UIButton *payWithWalletButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    payWithWalletButton.frame = CGRectMake(XPosition, 320 + 5 * yTopMargin, textfieldsWidth, textfieldsHeight);
+    [payWithWalletButton setTitle:@"Pay with Wallet" forState:UIControlStateNormal];
+    
+    [payWithWalletButton addTarget:self action:@selector(makePayment:) forControlEvents:UIControlEventTouchUpInside];
+    [self styleButton: payWithWalletButton];
+    [self.view addSubview: payWithWalletButton];
+    //--
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((screenWidth - 40)/2, 440, 40, textfieldsHeight)];
+    
+    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    //activityIndicator.center = view.center
+    
+    [self.view addSubview: activityIndicator];
+    [activityIndicator bringSubviewToFront: self.view];
+}
+
+- (void) addPaymentMethodFunctions: (CGFloat) xPosition :(CGFloat) yPosition :(CGFloat) textfieldsWidth : (CGFloat) textfieldsHeight
+{
+//    UIToolbar *toolBar = [[UIToolbar alloc] init];
+//    toolBar = UIBarStyleDefault;
+//    toolBar.translucent = YES;
+//    toolBar.tintColor = [UIColor colorWithRed:76/255.0 green:217/255.0 blue:100/255.0 alpha:1.0];
+//    [toolBar sizeToFit];
+    //--
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+    toolBar.barStyle = UIBarStyleBlackTranslucent;
+    toolBar.tintColor = [UIColor darkGrayColor];
+    //[toolBar sizeToFit];
+    //--
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain
+                                                                  target:self action:@selector(donePicker:)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain
+                                                                    target:self action:@selector(cancelPicker:)];
+    UIBarButtonItem *spaceButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain
+                                                                  target:self action:nil];
+    
+    [toolBar setItems:[[NSArray alloc] initWithObjects:cancelButton, spaceButton, doneButton, nil] animated:NO];
+    //[toolBar setItems:[[NSArray alloc] initWithObjects:cancelButton, doneButton, nil] animated:NO];
+    toolBar.userInteractionEnabled = YES;
+    //--
+    
+    paymentMethodTextField = [[UITextField alloc] initWithFrame:CGRectMake(xPosition, yPosition, textfieldsWidth, textfieldsHeight)];
+    paymentMethodTextField.text = @"";
+    paymentMethodTextField.placeholder = @" Select Payment Method";
+    
+    paymentMethodTextField.layer.borderColor = [[UIColor blackColor] CGColor];
+    paymentMethodTextField.layer.borderWidth = 2.0;
+    //--
+    
+    UIPickerView *uiPickerView = [[UIPickerView alloc] init];
+
+    uiPickerView.dataSource = self;
+    uiPickerView.delegate = self;
+    uiPickerView.showsSelectionIndicator = YES;
+    paymentMethodTextField.inputView = uiPickerView;
+    
+    paymentMethodTextField.inputAccessoryView = toolBar;
+    paymentMethodTextField.delegate = self;
+    [self.view addSubview: paymentMethodTextField];
+}
+
+- (void) styleButton: (UIButton*) theButton {
+    theButton.layer.cornerRadius = 5.0;
+    
+    theButton.backgroundColor = [UIColor blackColor];
+    
+    [theButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+}
+
+//--
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    NSLog(@"The did begin edit method was called");
+    if(paymentMethods.count == 0) {
+        [self loadWallet];
+    }
+}
+
+- (void) loadWallet
+{
+    if( shouldLoadWalletFromServer == YES) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [activityIndicator startAnimating];
+        
+        [walletSdk getPaymentMethods:^(WalletResponse *walletResponse, NSError *error) {
+            if(error != nil) {
+                NSString *errMsg = error.localizedDescription;
+                NSLog(@"error getting payment methods ... %@", errMsg);
+                
+                [self showError: errMsg];
+            } else if(walletResponse == nil) {
+                NSString *errMsg = error.localizedFailureReason;
+                NSLog(@"Failure: %@", errMsg);
+                
+                [self showError: errMsg];
+            } else {
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [activityIndicator stopAnimating];
+                
+                if (walletResponse.paymentMethods.count > 0) {
+                    [paymentMethods addObjectsFromArray: walletResponse.paymentMethods];
+                    
+                    PaymentMethod *aPaymentMethod = [paymentMethods objectAtIndex:0];
+                    paymentMethodTextField.text = aPaymentMethod.cardProduct;
+                    tokenOfUserSelectedPM = aPaymentMethod.token;
+                    
+                    shouldLoadWalletFromServer = NO;
+                }
+            }
+        }];
+    }
+}
+
+//--
+
+- (void) makePayment :(id)sender
+{
+    if( [self isOkToMakePaymentRequest]) {
+        PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:customerId.text amount:amount.text pan: tokenOfUserSelectedPM
+                                                                           pin: pin.text expiryDate: @"" cvv2: cvvTextField.text
+                                                                transactionRef: [Payment randomStringWithLength: 12] currency: @"NGN" requestorId: requstorId];
+
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [activityIndicator startAnimating];
+        
+        [walletSdk purchase:request completionHandler: ^(PurchaseResponse *purchaseResponse, NSError *error) {
+            if(error != nil) {
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                 [activityIndicator stopAnimating];
+                
+                NSString *errMsg = error.localizedDescription;
+                NSLog(@"Normal error ... %@", errMsg);
+                
+                [self showError: errMsg];
+            } else if(purchaseResponse == nil) {
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                 [activityIndicator stopAnimating];
+                
+                NSString *errMsg = error.localizedFailureReason;
+                NSLog(@"Failure: %@", errMsg);
+                
+                [self showError: errMsg];
+            } else {
+                if (purchaseResponse.otpTransactionIdentifier != nil) {
+                    [self handleOTP:purchaseResponse.otpTransactionIdentifier :purchaseResponse.transactionRef :purchaseResponse.message];
+                } else {
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                     [activityIndicator stopAnimating];
+                    
+                    [self showSuccess: purchaseResponse.message];
+                }
+            }
+        }];
+    }
+}
+
+- (bool) isOkToMakePaymentRequest
+{
+    bool isOk = NO;
+    
+    if(!customerId.hasText) {
+        [self showError: @"Customer ID is required"];
+    } else if(!amount.hasText) {
+        [self showError: @"Amount is required"];
+    } else if(!pin.hidden && !pin.hasText) {
+        [self showError: @"PIN is required"];
+    } else if (tokenOfUserSelectedPM == nil || tokenOfUserSelectedPM.length == 0) {
+        [self showError: @"Select a Payment Method" ];
+    } else {
+        isOk = true;
+    }
+    return isOk;
+}
+
+- (void) handleOTP: (NSString*)theOtpTransactionId :(NSString*)theOtpTransactionRef :(NSString*) otpMessage
+{
+    UIAlertController *otpAlertController = [UIAlertController alertControllerWithTitle: @"OTP transaction authorization"
+                                                                                message: otpMessage
+                                                                         preferredStyle: UIAlertViewStyleDefault];
+    otpAlertController.view.tintColor = [UIColor greenColor];
+    [otpAlertController addTextFieldWithConfigurationHandler:^(UITextField *otpTextField) {
+        //otpTextField.placeholder = @"";
+    }];
+                                            
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        [activityIndicator stopAnimating];
+        NSString *theUserEnteredOtpValue = ((UITextField *)[otpAlertController.textFields objectAtIndex:0]).text;
+        
+        if(theUserEnteredOtpValue.length > 0) {
+            [self showSuccess: @"You didn't enter an otp value"];
+        } else if(theOtpTransactionId == nil) {
+            [self showSuccess: @"Otp transaction identifier does not exist"];
+        } else {
+            AuthorizeOtpRequest *otpRequest = [[AuthorizeOtpRequest alloc] initWithOtpTransactionIdentifier:theOtpTransactionId
+                                                                                                    otp: theUserEnteredOtpValue
+                                                                                         transactionRef: theOtpTransactionRef];
+            [walletSdk authorizeOtp:otpRequest completionHandler: ^(AuthorizeOtpResponse *authorizeOtpResponse, NSError *error) {
+                if(error != nil) {
+                    NSString *errMsg = error.localizedDescription;
+                    NSLog(@"Normal error ... %@", errMsg);
+                    
+                    [self showSuccess: errMsg];
+                } else if(authorizeOtpResponse == nil) {
+                    NSString *errMsg = error.localizedFailureReason;
+                    NSLog(@"Failure: %@", errMsg);
+                    
+                    [self showSuccess: errMsg];
+                } else {
+                    NSLog(@"Authorize Otp: %@", @"Authorize otp successful.");
+                    
+                    [self showSuccess: @"OTP authorization success"];
+                }
+            }];
+        }
+    }];
+    [otpAlertController addAction:okAction];
+                                            
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler: nil];
+    
+    [self presentViewController: otpAlertController animated: true completion: nil];
+}
+
+- (void) authorizeOtp {
+    NSString *theOtpTransactionId = @"5060990580000217499";
+    NSString *theUserEnteredOtpValue = @"111";
+    NSString *theOtpTransactionRef = @"1111";
+    
+    PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
+    
+    AuthorizeOtpRequest *request = [[AuthorizeOtpRequest alloc] initWithOtpTransactionIdentifier:theOtpTransactionId otp: theUserEnteredOtpValue transactionRef: theOtpTransactionRef];
+    
+    [sdk authorizeOtp:request completionHandler: ^(AuthorizeOtpResponse *authorizeOtpResponse, NSError *error) {
+        if(error != nil) {
+            NSString *errMsg = error.localizedDescription;
+            NSLog(@"Normal error ... %@", errMsg);
+            
+            [self showSuccess: errMsg];
+        } else if(authorizeOtpResponse == nil) {
+            NSString *errMsg = error.localizedFailureReason;
+            NSLog(@"Failure: %@", errMsg);
+            
+            [self showSuccess: errMsg];
+        } else {
+            NSLog(@"Authorize Otp: %@", @"Authorize otp successful.");
+            
+            [self showSuccess: @"OTP authorization success"];
+        }
+    }];
+}
+
+//--
+
+- (void) cancelPicker: (id) sender
+{
+    [paymentMethodTextField resignFirstResponder];
+}
+
+- (void) donePicker: (id) sender
+{
+    [paymentMethodTextField resignFirstResponder];
+}
+
+//--
+- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return (paymentMethods != nil) ? paymentMethods.count : 0;
+}
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if(paymentMethods != nil) {
+        NSLog(@"pickerView: %@", @"A");
+        
+        PaymentMethod *selectedPaymentMethod = [paymentMethods objectAtIndex:row];
+        return selectedPaymentMethod.cardProduct;
+    } else
+        return @"";
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if(row >= 0 && row < paymentMethods.count) {
+        PaymentMethod *thePaymentMethod = [paymentMethods objectAtIndex:row];
+        
+        NSString *cardProduct = thePaymentMethod.cardProduct;
+        paymentMethodTextField.text = cardProduct;
+        tokenOfUserSelectedPM = thePaymentMethod.token;
+        
+        if([cardProduct.lowercaseString containsString: @"ecash"] || [cardProduct.lowercaseString containsString: @"m-pin"]) {
+            cvvTextField.hidden = YES;
+        } else {
+            cvvTextField.hidden = NO;
+        }
+        [self.view endEditing: true];
+    }
+}
+//--
+
+
+- (void) showError:(NSString*)message {
+    [self showAlert:message :@"Error"];
+}
+
+- (void) showSuccess:(NSString*)message {
+    [self showAlert:message :@"Success"];
+}
+
+- (void) showAlert:(NSString*)alertMessage :(NSString*) alertTitle {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:okAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
+
+
+@interface NSString ( containsCategory )
+- (BOOL) containsString: (NSString*) substring;
+@end
+
+@implementation NSString ( containsCategory )
+
+- (BOOL) containsString: (NSString*) substring
+{
+    NSRange range = [self rangeOfString : substring];
+    BOOL found = ( range.location != NSNotFound );
+    
+    return found;
+}
+
+@end
