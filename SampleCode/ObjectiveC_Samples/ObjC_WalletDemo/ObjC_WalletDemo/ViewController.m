@@ -17,8 +17,8 @@
 @implementation ViewController
 
 
-NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
-NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
+NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
+NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
 
 WalletSDK *walletSdk = nil;
 
@@ -83,10 +83,8 @@ bool loadingWallet = NO;
 
 - (void) initializeSdk
 {
-//    [Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
-//    [Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
-    [Payment overrideApiBase: @"https://qa.interswitchng.com"];
-    [Passport overrideApiBase: @"https://qa.interswitchng.com/passport"];
+    [Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
+    [Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
     
     walletSdk = [[WalletSDK alloc] initWithClientId: yourClientId clientSecret: yourClientSecret];
 }
