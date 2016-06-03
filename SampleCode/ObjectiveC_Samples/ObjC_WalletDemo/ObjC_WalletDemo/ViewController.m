@@ -17,17 +17,16 @@
 @implementation ViewController
 
 
-//NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
-//NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
-NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
-NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
+NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
+NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
 
 WalletSDK *walletSdk = nil;
 
 bool shouldLoadWalletFromServer = YES;
-NSMutableArray *paymentMethods;
+NSArray *paymentMethods;
 
 NSString *tokenOfUserSelectedPM = nil;    //PM stands for payment method
+NSString *tokenExpiryOfSelectedPM = @"";
 
 NSString *requstorId = @"12345678901";      //Specify your own requestorId here
 //--
@@ -38,6 +37,8 @@ UITextField *cvvTextField = nil;
 UITextField *pin = nil;
 UITextField *paymentMethodTextField = nil;
 
+UIPickerView *uiPickerView;
+
 UIActivityIndicatorView *activityIndicator = nil;
 //--
 bool loadingWallet = NO;
@@ -46,10 +47,8 @@ bool loadingWallet = NO;
 - (id)init {
     self = [super init];
     if (self) {
-        // Initialization code here.
-        paymentMethods = [NSMutableArray array];
+        paymentMethods = [[NSArray alloc] init];
     }
-    
     return self;
 }
 
@@ -59,7 +58,6 @@ bool loadingWallet = NO;
 
     //--
     [self initializeSdk];
-    
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
@@ -76,8 +74,7 @@ bool loadingWallet = NO;
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerXPos, 60, 250, 40)];
     headerLabel.text = @"Wallet payment demo";
     
-    headerLabel.font = [UIFont boldSystemFontOfSize:16.0 ];
-    headerLabel.textAlignment = UITextAlignmentCenter;
+    headerLabel.font = [UIFont boldSystemFontOfSize:16.0];
     [self.view addSubview:headerLabel];
     
     //--
@@ -86,8 +83,8 @@ bool loadingWallet = NO;
 
 - (void) initializeSdk
 {
-    [Payment overrideApiBase: @"https://qa.interswitchng.com"];
-    [Passport overrideApiBase: @"https://qa.interswitchng.com/passport"];
+    [Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
+    [Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
     
     walletSdk = [[WalletSDK alloc] initWithClientId: yourClientId clientSecret: yourClientSecret];
 }
@@ -159,16 +156,16 @@ bool loadingWallet = NO;
 
 - (void) addPaymentMethodFunctions: (CGFloat) xPosition :(CGFloat) yPosition :(CGFloat) textfieldsWidth : (CGFloat) textfieldsHeight
 {
-//    UIToolbar *toolBar = [[UIToolbar alloc] init];
-//    toolBar = UIBarStyleDefault;
-//    toolBar.translucent = YES;
-//    toolBar.tintColor = [UIColor colorWithRed:76/255.0 green:217/255.0 blue:100/255.0 alpha:1.0];
-//    [toolBar sizeToFit];
+    UIToolbar *toolBar = [[UIToolbar alloc] init];
+    toolBar = UIBarStyleDefault;
+    toolBar.translucent = YES;
+    toolBar.tintColor = [UIColor colorWithRed:76/255.0 green:217/255.0 blue:100/255.0 alpha:1.0];
+    [toolBar sizeToFit];
     //--
-    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
-    toolBar.barStyle = UIBarStyleBlackTranslucent;
-    toolBar.tintColor = [UIColor darkGrayColor];
-    //[toolBar sizeToFit];
+//    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+//    toolBar.barStyle = UIBarStyleBlackTranslucent;
+//    toolBar.tintColor = [UIColor darkGrayColor];
+//    [toolBar sizeToFit];
     //--
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain
                                                                   target:self action:@selector(donePicker:)];
@@ -177,11 +174,11 @@ bool loadingWallet = NO;
     UIBarButtonItem *spaceButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain
                                                                   target:self action:nil];
     
-    [toolBar setItems:[[NSArray alloc] initWithObjects:cancelButton, spaceButton, doneButton, nil] animated:NO];
+    //[toolBar setItems:[[NSArray alloc] initWithObjects:cancelButton, spaceButton, doneButton, nil] animated:NO];
     //[toolBar setItems:[[NSArray alloc] initWithObjects:cancelButton, doneButton, nil] animated:NO];
+    [toolBar setItems:[NSArray arrayWithObjects:cancelButton, spaceButton, doneButton, nil]];
     toolBar.userInteractionEnabled = YES;
     //--
-    
     paymentMethodTextField = [[UITextField alloc] initWithFrame:CGRectMake(xPosition, yPosition, textfieldsWidth, textfieldsHeight)];
     paymentMethodTextField.text = @"";
     paymentMethodTextField.placeholder = @" Select Payment Method";
@@ -190,7 +187,7 @@ bool loadingWallet = NO;
     paymentMethodTextField.layer.borderWidth = 2.0;
     //--
     
-    UIPickerView *uiPickerView = [[UIPickerView alloc] init];
+    uiPickerView = [[UIPickerView alloc] init];
 
     uiPickerView.dataSource = self;
     uiPickerView.delegate = self;
@@ -204,54 +201,51 @@ bool loadingWallet = NO;
 
 - (void) styleButton: (UIButton*) theButton {
     theButton.layer.cornerRadius = 5.0;
-    
     theButton.backgroundColor = [UIColor blackColor];
-    
     [theButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 //--
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    NSLog(@"The did begin edit method was called");
-    if(paymentMethods.count == 0) {
+    if(paymentMethods.count == 0 || shouldLoadWalletFromServer == YES) {
         [self loadWallet];
     }
 }
 
 - (void) loadWallet
 {
-    if( shouldLoadWalletFromServer == YES) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [activityIndicator startAnimating];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [activityIndicator startAnimating];
+    
+    [walletSdk getPaymentMethods:^(WalletResponse *walletResponse, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [activityIndicator stopAnimating];
         
-        [walletSdk getPaymentMethods:^(WalletResponse *walletResponse, NSError *error) {
-            if(error != nil) {
-                NSString *errMsg = error.localizedDescription;
-                NSLog(@"error getting payment methods ... %@", errMsg);
-                
-                [self showError: errMsg];
-            } else if(walletResponse == nil) {
-                NSString *errMsg = error.localizedFailureReason;
-                NSLog(@"Failure: %@", errMsg);
-                
-                [self showError: errMsg];
-            } else {
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                [activityIndicator stopAnimating];
-                
-                if (walletResponse.paymentMethods.count > 0) {
-                    [paymentMethods addObjectsFromArray: walletResponse.paymentMethods];
-                    
-                    PaymentMethod *aPaymentMethod = [paymentMethods objectAtIndex:0];
-                    paymentMethodTextField.text = aPaymentMethod.cardProduct;
-                    tokenOfUserSelectedPM = aPaymentMethod.token;
-                    
-                    shouldLoadWalletFromServer = NO;
-                }
-            }
-        }];
-    }
+        if(error != nil) {
+            NSString *errMsg = error.localizedDescription;
+            //NSLog(@"error getting payment methods ... %@", errMsg);
+            
+            [self.view endEditing: true];
+            [self showError: errMsg];
+        } else if(walletResponse == nil) {
+            NSString *errMsg = error.localizedFailureReason;
+            //NSLog(@"Failure: %@", errMsg);
+            
+            [self.view endEditing: true];
+            [self showError: errMsg];
+        } else if (walletResponse.paymentMethods.count > 0) {
+            paymentMethods = walletResponse.paymentMethods;
+            
+            PaymentMethod *aPaymentMethod = [paymentMethods objectAtIndex:0];
+            paymentMethodTextField.text = aPaymentMethod.cardProduct;
+            tokenOfUserSelectedPM = aPaymentMethod.token;
+            tokenExpiryOfSelectedPM = aPaymentMethod.tokenExpiry;
+            
+            shouldLoadWalletFromServer = NO;
+            [uiPickerView reloadAllComponents];
+        }
+    }];
 }
 
 //--
@@ -260,8 +254,9 @@ bool loadingWallet = NO;
 {
     if( [self isOkToMakePaymentRequest]) {
         PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:customerId.text amount:amount.text pan: tokenOfUserSelectedPM
-                                                                           pin: pin.text expiryDate: @"" cvv2: cvvTextField.text
-                                                                transactionRef: [Payment randomStringWithLength: 12] currency: @"NGN" requestorId: requstorId];
+                                                                           pin: pin.text expiryDate: tokenExpiryOfSelectedPM
+                                                                          cvv2: cvvTextField.text transactionRef: [Payment randomStringWithLength: 12]
+                                                                      currency: @"NGN" requestorId: requstorId];
 
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [activityIndicator startAnimating];
@@ -324,7 +319,7 @@ bool loadingWallet = NO;
     [otpAlertController addTextFieldWithConfigurationHandler:^(UITextField *otpTextField) {
         //otpTextField.placeholder = @"";
     }];
-                                            
+    
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
         [activityIndicator stopAnimating];
         NSString *theUserEnteredOtpValue = ((UITextField *)[otpAlertController.textFields objectAtIndex:0]).text;
@@ -363,34 +358,6 @@ bool loadingWallet = NO;
     [self presentViewController: otpAlertController animated: true completion: nil];
 }
 
-- (void) authorizeOtp {
-    NSString *theOtpTransactionId = @"5060990580000217499";
-    NSString *theUserEnteredOtpValue = @"111";
-    NSString *theOtpTransactionRef = @"1111";
-    
-    PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
-    
-    AuthorizeOtpRequest *request = [[AuthorizeOtpRequest alloc] initWithOtpTransactionIdentifier:theOtpTransactionId otp: theUserEnteredOtpValue transactionRef: theOtpTransactionRef];
-    
-    [sdk authorizeOtp:request completionHandler: ^(AuthorizeOtpResponse *authorizeOtpResponse, NSError *error) {
-        if(error != nil) {
-            NSString *errMsg = error.localizedDescription;
-            NSLog(@"Normal error ... %@", errMsg);
-            
-            [self showSuccess: errMsg];
-        } else if(authorizeOtpResponse == nil) {
-            NSString *errMsg = error.localizedFailureReason;
-            NSLog(@"Failure: %@", errMsg);
-            
-            [self showSuccess: errMsg];
-        } else {
-            NSLog(@"Authorize Otp: %@", @"Authorize otp successful.");
-            
-            [self showSuccess: @"OTP authorization success"];
-        }
-    }];
-}
-
 //--
 
 - (void) cancelPicker: (id) sender
@@ -411,18 +378,17 @@ bool loadingWallet = NO;
 
 - (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return (paymentMethods != nil) ? paymentMethods.count : 0;
+    return paymentMethods.count;
 }
 
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if(paymentMethods != nil) {
-        NSLog(@"pickerView: %@", @"A");
-        
-        PaymentMethod *selectedPaymentMethod = [paymentMethods objectAtIndex:row];
-        return selectedPaymentMethod.cardProduct;
-    } else
-        return @"";
+    PaymentMethod *selectedPaymentMethod = [paymentMethods objectAtIndex:row];
+    
+    tokenOfUserSelectedPM = selectedPaymentMethod.token;
+    tokenExpiryOfSelectedPM = selectedPaymentMethod.tokenExpiry;
+    
+    return selectedPaymentMethod.cardProduct;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -445,15 +411,18 @@ bool loadingWallet = NO;
 //--
 
 
-- (void) showError:(NSString*)message {
+- (void) showError:(NSString*)message
+{
     [self showAlert:message :@"Error"];
 }
 
-- (void) showSuccess:(NSString*)message {
+- (void) showSuccess:(NSString*)message
+{
     [self showAlert:message :@"Success"];
 }
 
-- (void) showAlert:(NSString*)alertMessage :(NSString*) alertTitle {
+- (void) showAlert:(NSString*)alertMessage :(NSString*) alertTitle
+{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];

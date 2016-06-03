@@ -99,6 +99,16 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
+enum AuthMethod : NSInteger;
+
+SWIFT_CLASS("_TtC10PaymentSDK11AbstractSDK")
+@interface AbstractSDK : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull userSettings;
+@property (nonatomic, readonly, copy) NSString * _Nonnull clientSettings;
+@property (nonatomic, readonly, copy) NSString * _Nonnull redirectUri;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret authMethod:(enum AuthMethod)authMethod OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 SWIFT_CLASS("_TtC10PaymentSDK11AccessToken")
 @interface AccessToken : NSObject
@@ -213,6 +223,36 @@ SWIFT_CLASS("_TtC10PaymentSDK8Passport")
 - (void)getUserAccessToken:(NSString * _Nonnull)accessCode redirectUri:(NSString * _Nonnull)redirectUri completionHandler:(void (^ _Nonnull)(AccessToken * _Nullable, NSError * _Nullable))completionHandler;
 @end
 
+@class PurchaseResponse;
+@class UIViewController;
+
+SWIFT_CLASS("_TtC10PaymentSDK3Pay")
+@interface Pay : NSObject
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency OBJC_DESIGNATED_INITIALIZER;
+- (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler;
+@end
+
+
+SWIFT_CLASS("_TtC10PaymentSDK11PayWithCard")
+@interface PayWithCard : NSObject
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency OBJC_DESIGNATED_INITIALIZER;
+- (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler;
+@end
+
+
+SWIFT_CLASS("_TtC10PaymentSDK12PayWithToken")
+@interface PayWithToken : NSObject
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount token:(NSString * _Nonnull)token currency:(NSString * _Nonnull)currency expiryDate:(NSString * _Nonnull)expiryDate cardType:(NSString * _Nonnull)cardType last4Digits:(NSString * _Nonnull)last4Digits OBJC_DESIGNATED_INITIALIZER;
+- (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler;
+@end
+
+
+SWIFT_CLASS("_TtC10PaymentSDK13PayWithWallet")
+@interface PayWithWallet : NSObject
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency OBJC_DESIGNATED_INITIALIZER;
+- (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler;
+@end
+
 
 SWIFT_CLASS("_TtC10PaymentSDK7Payment")
 @interface Payment : NSObject
@@ -233,6 +273,20 @@ SWIFT_CLASS("_TtC10PaymentSDK13PaymentMethod")
 @property (nonatomic, copy) NSString * _Nonnull tokenExpiry;
 @property (nonatomic, copy) NSString * _Nonnull panLast4Digits;
 @property (nonatomic, copy) NSString * _Nonnull cardProduct;
+@end
+
+@class PurchaseRequest;
+@class ValidateCardRequest;
+@class ValidateCardResponse;
+@class PaymentStatusResponse;
+
+SWIFT_CLASS("_TtC10PaymentSDK10PaymentSDK")
+@interface PaymentSDK : AbstractSDK
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret OBJC_DESIGNATED_INITIALIZER;
+- (void)purchase:(PurchaseRequest * _Nonnull)request completionHandler:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler;
+- (void)validateCard:(ValidateCardRequest * _Nonnull)request completionHandler:(void (^ _Nonnull)(ValidateCardResponse * _Nullable, NSError * _Nullable))completionHandler;
+- (void)authorizeOtp:(AuthorizeOtpRequest * _Nonnull)request completionHandler:(void (^ _Nonnull)(AuthorizeOtpResponse * _Nullable, NSError * _Nullable))completionHandler;
+- (void)getPaymentStatus:(NSString * _Nonnull)transactionRef amount:(NSString * _Nonnull)amount completionHandler:(void (^ _Nonnull)(PaymentStatusResponse * _Nullable, NSError * _Nullable))completionHandler;
 @end
 
 @class NSDate;
@@ -272,6 +326,13 @@ SWIFT_CLASS("_TtC10PaymentSDK16PurchaseResponse")
 @end
 
 
+SWIFT_CLASS("_TtC10PaymentSDK12ValidateCard")
+@interface ValidateCard : NSObject
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId OBJC_DESIGNATED_INITIALIZER;
+- (UIViewController * _Nonnull)start:(void (^ _Nonnull)(ValidateCardResponse * _Nullable, NSError * _Nullable))completionHandler;
+@end
+
+
 SWIFT_CLASS("_TtC10PaymentSDK19ValidateCardRequest")
 @interface ValidateCardRequest : NSObject
 - (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef requestorId:(NSString * _Nullable)requestorId OBJC_DESIGNATED_INITIALIZER;
@@ -287,6 +348,16 @@ SWIFT_CLASS("_TtC10PaymentSDK14WalletResponse")
 @interface WalletResponse : NSObject
 @property (nonatomic, copy) NSString * _Nonnull transactionRef;
 @property (nonatomic, copy) NSArray<PaymentMethod *> * _Nonnull paymentMethods;
+@end
+
+
+SWIFT_CLASS("_TtC10PaymentSDK9WalletSDK")
+@interface WalletSDK : AbstractSDK
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret OBJC_DESIGNATED_INITIALIZER;
+- (void)purchase:(PurchaseRequest * _Nonnull)request completionHandler:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler;
+- (void)authorizeOtp:(AuthorizeOtpRequest * _Nonnull)request completionHandler:(void (^ _Nonnull)(AuthorizeOtpResponse * _Nullable, NSError * _Nullable))completionHandler;
+- (void)getPaymentStatus:(NSString * _Nonnull)transactionRef amount:(NSString * _Nonnull)amount completionHandler:(void (^ _Nonnull)(PaymentStatusResponse * _Nullable, NSError * _Nullable))completionHandler;
+- (void)getPaymentMethods:(void (^ _Nonnull)(WalletResponse * _Nullable, NSError * _Nullable))completionHandler;
 @end
 
 @class UIWebView;
