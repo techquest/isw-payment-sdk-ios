@@ -83,8 +83,10 @@ bool loadingWallet = NO;
 
 - (void) initializeSdk
 {
-    [Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
-    [Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
+//    [Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
+//    [Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
+    [Payment overrideApiBase: @"https://qa.interswitchng.com"];
+    [Passport overrideApiBase: @"https://qa.interswitchng.com/passport"];
     
     walletSdk = [[WalletSDK alloc] initWithClientId: yourClientId clientSecret: yourClientSecret];
 }
@@ -157,26 +159,14 @@ bool loadingWallet = NO;
 - (void) addPaymentMethodFunctions: (CGFloat) xPosition :(CGFloat) yPosition :(CGFloat) textfieldsWidth : (CGFloat) textfieldsHeight
 {
     UIToolbar *toolBar = [[UIToolbar alloc] init];
-    toolBar = UIBarStyleDefault;
     toolBar.translucent = YES;
     toolBar.tintColor = [UIColor colorWithRed:76/255.0 green:217/255.0 blue:100/255.0 alpha:1.0];
     [toolBar sizeToFit];
     //--
-//    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
-//    toolBar.barStyle = UIBarStyleBlackTranslucent;
-//    toolBar.tintColor = [UIColor darkGrayColor];
-//    [toolBar sizeToFit];
-    //--
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain
-                                                                  target:self action:@selector(donePicker:)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain
                                                                     target:self action:@selector(cancelPicker:)];
-    UIBarButtonItem *spaceButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain
-                                                                  target:self action:nil];
     
-    //[toolBar setItems:[[NSArray alloc] initWithObjects:cancelButton, spaceButton, doneButton, nil] animated:NO];
-    //[toolBar setItems:[[NSArray alloc] initWithObjects:cancelButton, doneButton, nil] animated:NO];
-    [toolBar setItems:[NSArray arrayWithObjects:cancelButton, spaceButton, doneButton, nil]];
+    [toolBar setItems:[NSArray arrayWithObjects:cancelButton, nil] animated:NO];
     toolBar.userInteractionEnabled = YES;
     //--
     paymentMethodTextField = [[UITextField alloc] initWithFrame:CGRectMake(xPosition, yPosition, textfieldsWidth, textfieldsHeight)];
@@ -185,17 +175,19 @@ bool loadingWallet = NO;
     
     paymentMethodTextField.layer.borderColor = [[UIColor blackColor] CGColor];
     paymentMethodTextField.layer.borderWidth = 2.0;
-    //--
-    
-    uiPickerView = [[UIPickerView alloc] init];
 
+    //--
+    uiPickerView = [[UIPickerView alloc] init];
     uiPickerView.dataSource = self;
     uiPickerView.delegate = self;
     uiPickerView.showsSelectionIndicator = YES;
-    paymentMethodTextField.inputView = uiPickerView;
     
+    //--
+    paymentMethodTextField.inputView = uiPickerView;
     paymentMethodTextField.inputAccessoryView = toolBar;
+    
     paymentMethodTextField.delegate = self;
+    
     [self.view addSubview: paymentMethodTextField];
 }
 
@@ -361,11 +353,6 @@ bool loadingWallet = NO;
 //--
 
 - (void) cancelPicker: (id) sender
-{
-    [paymentMethodTextField resignFirstResponder];
-}
-
-- (void) donePicker: (id) sender
 {
     [paymentMethodTextField resignFirstResponder];
 }
