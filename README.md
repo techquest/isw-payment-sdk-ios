@@ -946,7 +946,30 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
 
 *Objective C*
 ```Objective-C
-
+NSString *responseCode = validateCardResponse.responseCode;
+if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
+    AuthorizeCardRequest *otpReq = [[AuthorizeCardRequest alloc] init];
+    otpReq.transactionRef = validateCardResponse.transactionRef;
+    otpReq.otp = "123456";
+    otpReq.authData = request.authData;
+    
+    PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSecret: clientSecret];
+    [paymentSdk authorizeCard:otpReq completionHandler: ^(AuthorizeCardResponse *authorizeCardResponse, NSError *error) {
+        if(error != nil) {
+            NSString *errMsg = error.localizedDescription;
+            NSLog(@"Normal error ... %@", errMsg);
+        } else if(authorizeCardResponse == nil) {
+            NSString *errMsg = error.localizedFailureReason;
+            NSLog(@"Failure: %@", errMsg);
+        } else {
+            NSLog(@"Authorize Card: %@", @"Authorize Card successful.");
+        }
+    }];
+} else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
+    
+} else {
+    NSLog(@"Failure: %@", @"An unknown event has occurred on the server. Please try again.");
+}
 
 ```
 
