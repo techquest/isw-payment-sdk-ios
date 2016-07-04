@@ -14,8 +14,9 @@ Interswitch payment SDK allows you to accept payments from customers within your
     * [Pay with Card / Token](#PayWithCardOrTokenWithoutUi)
     * [Pay with Wallet](#PayWithWalletWithoutUi)
     * [Validate Card and Get Token](#ValidateCardWithoutUi)
-    * [Authorize Card Purchase With OTP](#AuthorizeCardPurchaseWithoutUi)
-    * [Authorize Wallet Purchase With OTP](#AuthorizeWalletPurchaseWithoutUi)
+    * [Authorize PayWithCard using OTP](#AuthorizePayWithCardWithoutUi)
+    * [Authorize Card Validation using OTP](#AuthorizeCardValidationWithoutUi)
+    * [Authorize PayWithWallet using OTP](#AuthorizeWalletPurchaseWithoutUi)
     * [Get Payment Status](#GetPaymentStatusWithoutUi)
 
 ### <a id='BeforeYouBegin'></a>Before you begin
@@ -778,7 +779,7 @@ sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCar
     if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
       // To handle Safetoken OTP see below: Authorize Card Purchase With OTP
     } else {
-      // To handle OTP see below: Authorize Wallet Purchase With OTP
+      // To handle Cardinal authorization see below: Authorize Card With OTP
     }
 })
 ```
@@ -789,22 +790,22 @@ sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCar
 ```
 
 
-### <a id='AuthorizeCardPurchaseWithoutUi'></a>Authorize a Card Purchase With OTP
+### <a id='AuthorizePayWithCardWithoutUi'></a>Authorize PayWithCard using OTP
 
 Import PaymentSDK and use the following code snippet
 
 *Swift*
 ```swift
-guard let responseCode = response.responseCode else {
+guard let responseCode = purchaseResponse!.responseCode else {
     //Handle and notify user of successful transaction
     return
 }
 
 if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     let otpReq = AuthorizePurchaseRequest()
-    otpReq.paymentId = purchaseResponse.paymentId!          // Set the payment identifier for the request
-    otpReq.otp = "123456"                                   // Accept OTP from user
-    otpReq.authData = request.authData                      // Set the request Auth Data
+    otpReq.paymentId = purchaseResponse!.paymentId!                  // Set the payment identifier for the request
+    otpReq.otp = "123456"                                            // Accept OTP from user
+    otpReq.authData = request.authData                               // Set the request Auth Data
   
     self.sdk.authorizePurchase(otpReq, completionHandler: {(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
         guard error == nil else {
@@ -819,13 +820,13 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     })
 } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
     let authorizeHandler = {() -> Void in
-        //self.navigationController?.popViewControllerAnimated(true)  ... //To dismiss the authorize webview before proceeding
+        //self.navigationController?.popViewControllerAnimated(true)          // To dismiss the authorize webview before proceeding
       
         let authorizeCardinalRequest = AuthorizePurchaseRequest()
-        authorizeCardinalRequest.authData = authData
-        authorizeCardinalRequest.paymentId = self.purchaseResponse!.paymentId!
-        authorizeCardinalRequest.transactionId = self.purchaseResponse!.transactionId
-        authorizeCardinalRequest.eciFlag = self.purchaseResponse!.eciFlag!
+        authorizeCardinalRequest.authData = request.authData                  // Set the request Auth Data
+        authorizeCardinalRequest.paymentId = purchaseResponse!.paymentId!
+        authorizeCardinalRequest.transactionId = purchaseResponse!.transactionId
+        authorizeCardinalRequest.eciFlag = purchaseResponse!.eciFlag!
       
         self.sdk.authorizePurchase(authorizeCardinalRequest, completionHandler:{(purchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
             guard error == nil else {
@@ -849,7 +850,72 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
 
 ```
 
-###	<a id='AuthorizeWalletPurchaseWithoutUi'></a>Authorize a Wallet Purchase With OTP
+### <a id='AuthorizeCardValidationWithoutUi'></a>Authorize Card Validation using OTP
+
+
+*Swift*
+```swift
+guard let responseCode = validateCardResponse!.responseCode else {
+    //Handle and notify user of successful card validation
+    return
+}
+
+if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
+    let otp = alert.textFields?.first?.text
+    let otpReq = AuthorizeCardRequest()
+    otpReq.transactionRef = validateCardResponse!.transactionRef                                 // Set the transaction reference for the request
+    otpReq.otp = "123456"                                                                        // Accept OTP from user
+    otpReq.authData = request.authData                                                           // Set the request Auth Data
+    
+    self.sdk!.authorizeCard(otpReq, completionHandler: {(authorizeCardResponse: AuthorizeCardResponse?, error: NSError?) in        
+        guard error == nil else {
+            // let errMsg = (error?.localizedDescription)!
+            // Handle and notify user of error
+            return
+        }
+        guard let authCardResponse = authorizeCardResponse else {
+            // let failureMsg = (error?.localizedFailureReason)!
+            // Handle and notify user of error
+            return
+        }
+        //Handle and notify user of successful card validation
+    })
+} else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
+    let authorizeHandler = {() -> Void in
+        //self.navigationController?.popViewControllerAnimated(true)  //To dismiss the authorize webview before proceeding
+        
+        let authorizeCardinalRequest = AuthorizeCardRequest()
+        authorizeCardinalRequest.authData = request.authData
+        authorizeCardinalRequest.transactionId = validateCardResponse!.transactionId             // Set the transactionId from the response
+        authorizeCardinalRequest.eciFlag = validateCardResponse!.eciFlag!                        // Set the eciFlag from the response 
+        authorizeCardinalRequest.transactionRef = validateCardResponse!.transactionRef           // Set the transaction reference for the request
+        
+        let sdk = PaymentSDK(clientId: self.clientId!, clientSecret: self.clientSecret!)
+        sdk.authorizeCard(authorizeCardinalRequest, completionHandler:{(validateCardResponse: AuthorizeCardResponse?, error: NSError?) in      
+            guard error == nil else {
+                self.completionHandler!(nil, error)
+                return
+            }
+            guard validateCardResponse != nil else {
+                self.completionHandler!(nil, error)
+                return
+            }
+            self.completionHandler!(validateCardResponse!, error)
+        })
+    }
+    let authorizeCardVc = AuthorizeViewController(response: self.validateCardResponse!, authorizeHandler: authorizeHandler)
+    self.navigationController?.pushViewController(authorizeCardVc, animated: true)
+}
+```
+
+
+*Objective C*
+```Objective-C
+
+
+```
+
+###	<a id='AuthorizeWalletPurchaseWithoutUi'></a>Authorize PayWithWallet using OTP
 
 Import PaymentSDK and use the following code snippet
 
