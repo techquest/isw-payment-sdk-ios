@@ -15,6 +15,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var cvvTextField : UITextField
     var pin : UITextField
     var paymentMethod : UITextField
+    var uiPickerView : UIPickerView
     
     var activityIndicator : UIActivityIndicatorView
     var otpTransactionRef : String = ""
@@ -38,6 +39,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         amount = UITextField()
         cvvTextField = UITextField()
         pin = UITextField()
+        uiPickerView = UIPickerView()
+        
         activityIndicator = UIActivityIndicatorView()
         
         walletSdk = WalletSDK(clientId: yourClientId, clientSecret: yourClientSecret)
@@ -148,7 +151,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         paymentMethod.placeholder = "Select Payment Method"
         paymentMethod.borderStyle = UITextBorderStyle.Line
         
-        let uiPickerView = UIPickerView()
         uiPickerView.dataSource = self
         uiPickerView.delegate = self
         uiPickerView.showsSelectionIndicator = true
@@ -268,6 +270,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.activityIndicator.stopAnimating()
                 self.loadingWallet = false
+                
+                self.view.endEditing(true)
                 self.showError((error?.localizedDescription)!)
                 return
             }
@@ -276,6 +280,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.activityIndicator.stopAnimating()
                 self.loadingWallet = false
+                
+                self.view.endEditing(true)
                 self.showError((error?.localizedDescription)!)
                 return
             }
@@ -289,6 +295,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             if self.paymentMethods.count > 0 {
                 self.paymentMethod.text = self.paymentMethods[0].cardProduct
+                self.uiPickerView.reloadAllComponents()
             }
         })
     }
