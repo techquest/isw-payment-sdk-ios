@@ -569,7 +569,7 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
     if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
         // To handle Safetoken OTP see below: Authorize Card Purchase With OTP
     } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
-        // To handle OTP see below: Authorize Wallet Purchase With OTP
+        // // To handle Cardinal authorization see below: Authorize PayWithCard using OTP
     }
 })
 ```
@@ -779,7 +779,7 @@ sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCar
     if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
       // To handle Safetoken OTP see below: Authorize Card Purchase With OTP
     } else {
-      // To handle Cardinal authorization see below: Authorize Card With OTP
+      // To handle Cardinal authorization see below: Authorize Card Validation using OTP
     }
 })
 ```
