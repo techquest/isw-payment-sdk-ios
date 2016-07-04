@@ -738,8 +738,7 @@ PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustom
         NSLog(@"Failure: %@", errMsg);
     } else {
       if (purchaseResponse.otpTransactionIdentifier != nil) {
-        //handle OTP
-        //To handle OTP see below: Authorize Wallet Purchase With OTP
+        //To handle OTP see below: Authorize PayWithWallet using OTP
       } else {
         // OTP not required, payment successful.  
         NSLog(@"Purchase success response: %@", purchaseResponse.message);
@@ -763,18 +762,19 @@ let request = ValidateCardRequest(customerId: customerIdLabel.text, pan: pan, pi
             
 sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCardResponse?, error: NSError?) in
     guard error == nil else {
-        self.completionHandler!(validateCardResponse, error)
+        // let errMsg = (error?.localizedDescription)!
+        // Handle error
         return
     }
     guard let response = validateCardResponse else {
-        self.completionHandler!(validateCardResponse, error)
+        //let failureMsg = (error?.localizedFailureReason)!
+        // Handle error
         return
     }
     guard let responseCode = response.responseCode else {
-        self.completionHandler!(validateCardResponse, error)
+        // Further authorization not required, card validation successful. 
         return
     }
-    self.validateCardResponse = response
 
     if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
       // To handle Safetoken OTP see below: Authorize Card Purchase With OTP
@@ -786,6 +786,41 @@ sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCar
 
 *Objective C*
 ```Objective-C
+NSString *clientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
+NSString *clientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
+
+NSString *customerId = @"9689808900"; // This should be a value that identifies your customer uniquely e.g email or phone number etc
+
+NSString *pan = @"5060990580000217499";
+NSString *cvv = @"111";
+NSString *pin = @"1111";
+NSString *expiryDate = @"2004";
+NSString *requestorId = @"12345678901";
+
+PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSecret: clientSecret];
+[paymentSdk validateCard:request completionHandler: ^(ValidateCardResponse *validateCardResponse, NSError *error) {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [activityIndicator stopAnimating];
+    
+    if(error != nil) {
+        NSString *errMsg = error.localizedDescription;
+        NSLog(@"Normal error ... %@", errMsg);
+    } else if(validateCardResponse == nil) {
+        NSString *errMsg = error.localizedFailureReason;
+        NSLog(@"Failure: %@", errMsg);
+    } else if(validateCardResponse.responseCode == nil || [validateCardResponse.responseCode length] == 0) {
+        NSLog(@"Success: %@", @"Card validation successful");
+    } else {
+        NSString *responseCode = validateCardResponse.responseCode;
+        if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
+            // To handle Safetoken OTP see below: Authorize Card Validation using OTP
+        } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
+            // To handle Cardinal authorization see below: Authorize Card Validation using OTP
+        } else {
+            NSLog(@"Failure: %@", @"An unknown event has occurred on the server. Please try again.");
+        }
+    }
+}];
 
 ```
 
