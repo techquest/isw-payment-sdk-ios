@@ -855,10 +855,10 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     })
 } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
     let authorizeHandler = {() -> Void in
-        //self.navigationController?.popViewControllerAnimated(true)          // To dismiss the authorize webview before proceeding
+        //self.navigationController?.popViewControllerAnimated(true)                     // To dismiss the authorize webview before proceeding
       
         let authorizeCardinalRequest = AuthorizePurchaseRequest()
-        authorizeCardinalRequest.authData = request.authData                  // Set the request Auth Data
+        authorizeCardinalRequest.authData = request.authData                            // Set the authData from the initial request
         authorizeCardinalRequest.paymentId = purchaseResponse!.paymentId!
         authorizeCardinalRequest.transactionId = purchaseResponse!.transactionId
         authorizeCardinalRequest.eciFlag = purchaseResponse!.eciFlag!
@@ -900,7 +900,7 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     let otpReq = AuthorizeCardRequest()
     otpReq.transactionRef = validateCardResponse!.transactionRef                                 // Set the transaction reference for the request
     otpReq.otp = "123456"                                                                        // Accept OTP from user
-    otpReq.authData = request.authData                                                           // Set the request Auth Data
+    otpReq.authData = request.authData                                                           // Set the authData from the initial request
     
     self.sdk!.authorizeCard(otpReq, completionHandler: {(authorizeCardResponse: AuthorizeCardResponse?, error: NSError?) in        
         guard error == nil else {
@@ -920,10 +920,10 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
         //self.navigationController?.popViewControllerAnimated(true)  //To dismiss the authorize webview before proceeding
         
         let authorizeCardinalRequest = AuthorizeCardRequest()
-        authorizeCardinalRequest.authData = request.authData
+        authorizeCardinalRequest.authData = request.authData                                     // Set the authData from the initial request
         authorizeCardinalRequest.transactionId = validateCardResponse!.transactionId             // Set the transactionId from the response
         authorizeCardinalRequest.eciFlag = validateCardResponse!.eciFlag!                        // Set the eciFlag from the response 
-        authorizeCardinalRequest.transactionRef = validateCardResponse!.transactionRef           // Set the transaction reference for the request
+        authorizeCardinalRequest.transactionRef = validateCardResponse!.transactionRef           // Set the transaction reference from the response
         
         let sdk = PaymentSDK(clientId: self.clientId!, clientSecret: self.clientSecret!)
         sdk.authorizeCard(authorizeCardinalRequest, completionHandler:{(validateCardResponse: AuthorizeCardResponse?, error: NSError?) in      
@@ -966,7 +966,29 @@ if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
         }
     }];
 } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
-    
+    AuthorizeViewController *authorizeCardVc = [[AuthorizeViewController alloc] initWithResponse:validateCardResponse authorizeHandler:^() {
+        //[self.navigationController popViewControllerAnimated:YES];                                // To dismiss the authorize webview before proceeding
+        
+        AuthorizeCardRequest *authorizeRequest = [[AuthorizeCardRequest alloc] init];
+        authorizeRequest.authData = request.authData;                                               // Set the authData from the initial request
+        authorizeRequest.transactionId = validateCardResponse.transactionId;                        // Set the transactionId from the response
+        authorizeRequest.eciFlag = validateCardResponse.eciFlag;                                    // Set the eciFlag from the response 
+        authorizeRequest.transactionRef = validateCardResponse.transactionRef;                      // Set the transaction reference from the request
+        
+        PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSecret: clientSecret];
+        [paymentSdk authorizeCard:authorizeRequest completionHandler: ^(AuthorizeCardResponse *authorizeCardResponse, NSError *error) {
+            if(error != nil) {
+                NSString *errMsg = error.localizedDescription;
+                NSLog(@"Normal error ... %@", errMsg);
+            } else if(authorizeCardResponse == nil) {
+                NSString *errMsg = error.localizedFailureReason;
+                NSLog(@"Failure: %@", errMsg);
+            } else {
+                NSLog(@"Authorize Card Validation: %@", @"successful.");
+            }
+        }];
+    }];
+    [self.navigationController pushViewController:authorizeCardVc animated:YES];
 } else {
     NSLog(@"Failure: %@", @"An unknown event has occurred on the server. Please try again.");
 }
