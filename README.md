@@ -390,7 +390,7 @@ Validate card is used to check if a card is a valid card. It returns the card ba
 
 * To validate a card, use the below code.
 
-  Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
 ```swift
@@ -606,7 +606,7 @@ PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustom
     if(error != nil) {
         NSString *errMsg = error.localizedDescription;
         
-        NSLog(@"Error ... %@", errMsg);
+        NSLog(@"Error: %@", errMsg);
     } else if(purchaseResponse == nil) {
         NSString *errMsg = error.localizedFailureReason;
         
@@ -738,7 +738,7 @@ PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustom
     if(error != nil) {
         NSString *errMsg = error.localizedDescription;
         
-        NSLog(@"Normal error ... %@", errMsg);
+        NSLog(@"Error: %@", errMsg);
     } else if(purchaseResponse == nil) {
         NSString *errMsg = error.localizedFailureReason;
         
@@ -766,7 +766,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 *Swift*
 ```swift
 let request = ValidateCardRequest(customerId: customerIdLabel.text, pan: pan, pin: pinTextField.text!, expiryDate: expiry, cvv2: cvvTextField.text!, transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
-            
+
 sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCardResponse?, error: NSError?) in
     guard error == nil else {
         // let errMsg = (error?.localizedDescription)!
@@ -807,7 +807,7 @@ PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSe
     
     if(error != nil) {
         NSString *errMsg = error.localizedDescription;
-        NSLog(@"Normal error ... %@", errMsg);
+        NSLog(@"Error: %@", errMsg);
     } else if(validateCardResponse == nil) {
         NSString *errMsg = error.localizedFailureReason;
         NSLog(@"Failure: %@", errMsg);
@@ -819,7 +819,6 @@ PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSe
         // Please see below: Authorize Card Validation
     }
 }];
-
 ```
 
 
@@ -835,7 +834,8 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     otpReq.otp = "123456"                                    // Accept OTP from user
     otpReq.authData = request.authData                       // Set the request Auth Data
   
-    self.sdk.authorizePurchase(otpReq, completionHandler: {(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
+    let paymentSdk = PaymentSDK(clientId: clientId, clientSecret: clientSecret)
+    paymentSdk.authorizePurchase(otpReq, completionHandler: {(AuthorizePurchaseResponse: authorizePurchaseResponse?, error: NSError?) in
         guard error == nil else {
             // Handle and notify user of error
             return
@@ -848,15 +848,16 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     })
 } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
     let authorizeHandler = {() -> Void in
-        //self.navigationController?.popViewControllerAnimated(true)                // To dismiss the authorize webview before proceeding
+        //self.navigationController?.popViewControllerAnimated(true)        // To dismiss the authorize webview before proceeding
       
-        let authorizeCardinalRequest = AuthorizePurchaseRequest()
-        authorizeCardinalRequest.authData = request.authData                        // Set the authData from the request object used to make the purchase
-        authorizeCardinalRequest.paymentId = purchaseResponse!.paymentId!           // Set the paymentId from the purchaseResponse
-        authorizeCardinalRequest.transactionId = purchaseResponse!.transactionId    // Set the transactionId from the purchaseResponse
-        authorizeCardinalRequest.eciFlag = purchaseResponse!.eciFlag!               // Set the eciFlag from the purchaseResponse
+        let authorizeRequest = AuthorizePurchaseRequest()
+        authorizeRequest.authData = request.authData                        // Set the authData from the request object used to make the purchase
+        authorizeRequest.paymentId = purchaseResponse!.paymentId!           // Set the paymentId from the purchaseResponse
+        authorizeRequest.transactionId = purchaseResponse!.transactionId    // Set the transactionId from the purchaseResponse
+        authorizeRequest.eciFlag = purchaseResponse!.eciFlag!               // Set the eciFlag from the purchaseResponse
       
-        self.sdk.authorizePurchase(authorizeCardinalRequest, completionHandler:{(purchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
+        let paymentSdk = PaymentSDK(clientId: clientId, clientSecret: clientSecret)
+        paymentSdk.authorizePurchase(authorizeRequest, completionHandler:{(purchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
             guard error == nil else {
                 // Handle and notify user of error
                 return
@@ -868,17 +869,56 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
             //Handle and notify user of successful transaction
         })
     }
-    let authorizePurchaseVc = AuthorizeViewController(response: response, authorizeHandler: authorizeHandler)
+    let authorizePurchaseVc = AuthorizeViewController(response: purchaseResponse!, authorizeHandler: authorizeHandler)
     self.navigationController?.pushViewController(authorizePurchaseVc, animated: true)
 }
 ```
 
 *Objective C*
 ```Objective-C
-
-
-
-
+if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
+    AuthorizePurchaseRequest *otpReq = [[AuthorizePurchaseRequest alloc] init];
+    otpReq.paymentId = purchaseResponse.paymentId;                          // Set the paymentId from the purchaseResponse
+    otpReq.otp = @"123456";                                                 // Accept OTP from user
+    otpReq.authData = request.authData;                                     // Set the authData from the request object used to make the purchase
+    
+    PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSecret: clientSecret];
+    [paymentSdk authorizePurchase:otpReq completionHandler: ^(AuthorizePurchaseResponse *authorizePurchaseResponse, NSError *error) {
+        if(error != nil) {
+            NSString *errMsg = error.localizedDescription;
+            NSLog(@"Error: %@", errMsg);
+        } else if(authorizePurchaseResponse == nil) {
+            NSString *errMsg = error.localizedFailureReason;
+            NSLog(@"Failure: %@", errMsg);
+        } else {
+            NSLog(@"Purchase: %@", @"successful.");
+        }
+    }];
+} else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
+    AuthorizeViewController *authorizePurchaseVc = [[AuthorizeViewController alloc] initWithResponse:purchaseResponse authorizeHandler:^() {
+        //[self.navigationController popViewControllerAnimated:YES];                       // To dismiss the authorize webview before proceeding
+        
+        AuthorizePurchaseRequest *authorizeRequest = [[AuthorizePurchaseRequest alloc] init];
+        authorizeRequest.authData = request.authData;                                      // Set the authData from the request object used to make the purchase
+        authorizeRequest.paymentId = purchaseResponse.paymentId;                           // Set the paymentId from the purchaseResponse
+        authorizeRequest.transactionId = purchaseResponse.transactionId;                   // Set the transactionId from the purchaseResponse
+        authorizeRequest.eciFlag = purchaseResponse.eciFlag;                               // Set the eciFlag from the purchaseResponse
+        
+        PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSecret: clientSecret];
+        [paymentSdk authorizePurchase:authorizeRequest completionHandler: ^(AuthorizePurchaseResponse *authorizePurchaseResponse, NSError *error) {
+            if(error != nil) {
+                NSString *errMsg = error.localizedDescription;
+                NSLog(@"Error: %@", errMsg);
+            } else if(authorizePurchaseResponse == nil) {
+                NSString *errMsg = error.localizedFailureReason;
+                NSLog(@"Failure: %@", errMsg);
+            } else {
+                NSLog(@"Authorize purchase: %@", @"successful.");
+            }
+        }];
+    }];
+    [self.navigationController pushViewController:authorizePurchaseVc animated:YES];
+}
 ```
 
 ### <a id='AuthorizeCardValidationWithoutUi'></a>Authorize Card Validation
@@ -891,7 +931,8 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     otpReq.otp = "123456"                                                      // Accept OTP from user
     otpReq.authData = request.authData                                         // Set the authData from the request object used to initiate the card validation
     
-    self.sdk!.authorizeCard(otpReq, completionHandler: {(authorizeCardResponse: AuthorizeCardResponse?, error: NSError?) in        
+    let sdk = PaymentSDK(clientId: clientId, clientSecret: clientSecret)
+    sdk.authorizeCard(otpReq, completionHandler: {(authorizeCardResponse: AuthorizeCardResponse?, error: NSError?) in        
         guard error == nil else {
             // let errMsg = (error?.localizedDescription)!
             // Handle and notify user of error
@@ -929,8 +970,6 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     }
     let authorizeCardVc = AuthorizeViewController(response: self.validateCardResponse!, authorizeHandler: authorizeHandler)
     self.navigationController?.pushViewController(authorizeCardVc, animated: true)
-} else {
-    print("An unknown event has occurred on the server.")
 }
 ```
 
@@ -947,7 +986,7 @@ if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
     [paymentSdk authorizeCard:otpReq completionHandler: ^(AuthorizeCardResponse *authorizeCardResponse, NSError *error) {
         if(error != nil) {
             NSString *errMsg = error.localizedDescription;
-            NSLog(@"Normal error ... %@", errMsg);
+            NSLog(@"Error: %@", errMsg);
         } else if(authorizeCardResponse == nil) {
             NSString *errMsg = error.localizedFailureReason;
             NSLog(@"Failure: %@", errMsg);
@@ -969,7 +1008,7 @@ if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
         [paymentSdk authorizeCard:authorizeRequest completionHandler: ^(AuthorizeCardResponse *authorizeCardResponse, NSError *error) {
             if(error != nil) {
                 NSString *errMsg = error.localizedDescription;
-                NSLog(@"Normal error ... %@", errMsg);
+                NSLog(@"Error: %@", errMsg);
             } else if(authorizeCardResponse == nil) {
                 NSString *errMsg = error.localizedFailureReason;
                 NSLog(@"Failure: %@", errMsg);
@@ -979,10 +1018,7 @@ if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
         }];
     }];
     [self.navigationController pushViewController:authorizeCardVc animated:YES];
-} else {
-    NSLog(@"Failure: %@", @"An unknown event has occurred on the server.");
 }
-
 ```
 
 ###	<a id='AuthorizeWalletPurchaseWithoutUi'></a>Authorize PayWithWallet using OTP
@@ -1027,7 +1063,7 @@ AuthorizeOtpRequest *request = [[AuthorizeOtpRequest alloc] initWithOtpTransacti
     if(error != nil) {
         NSString *errMsg = error.localizedDescription;
         
-        NSLog(@"Error ... %@", errMsg);
+        NSLog(@"Error: %@", errMsg);
     } else if(authorizeOtpResponse == nil) {
         NSString *errMsg = error.localizedFailureReason;
         
@@ -1077,7 +1113,7 @@ NSString *amount = @"100";
     if(error != nil) {
         NSString *errMsg = error.localizedDescription;
         
-        NSLog(@"Error getting payment status... %@", errMsg);
+        NSLog(@"Error getting payment status: %@", errMsg);
     } else if(paymentStatusResponse == nil) {
         NSString *errMsg = error.localizedFailureReason;
         
