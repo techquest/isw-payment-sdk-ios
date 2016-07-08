@@ -17,7 +17,7 @@ Interswitch payment SDK allows you to accept payments from customers within your
     * [Authorize PayWithCard using OTP](#AuthorizePayWithCardWithoutUi)
     * [Authorize Card Validation using OTP](#AuthorizeCardValidationWithoutUi)
     * [Authorize PayWithWallet using OTP](#AuthorizeWalletPurchaseWithoutUi)
-    * [Get Payment Status](#GetPaymentStatusWithoutUi)
+    * [Checking Payment Status](#GetPaymentStatusWithoutUi)
 
 ### <a id='BeforeYouBegin'></a>Before you begin
 
@@ -572,7 +572,11 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
         return
     }
     guard let responseCode = response.responseCode else {
-        // OTP not required, payment successful. A token for the card details is returned in the response   
+        // OTP not required, payment successful. 
+        // The response object contains fields transactionIdentifier, message, 
+        // amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, 
+        // transactionRef and cardType. 
+        // Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.  
         return
     }
     self.purchaseResponse = response
@@ -612,7 +616,11 @@ PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustom
         
         NSLog(@"Failure: %@", errMsg);
     } else if(purchaseResponse.responseCode == nil || [purchaseResponse.responseCode length] == 0) {
-        NSLog(@"Success: %@", @"Card validation successful");
+        // OTP not required, payment successful. 
+        // The response object contains fields transactionIdentifier, message, 
+        // amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, 
+        // transactionRef and cardType. 
+        // Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.  
     } else {
         NSString *responseCode = validateCardResponse.responseCode;
         // At this point further authorization is required depending on the value of responseCode
@@ -759,7 +767,7 @@ PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustom
 * To check if a card is valid and get a token
 * Create a UI to collect card details
 * Create a Validate/Add Card button
-* In the onClick listener of the Validate/Add Card button, use this code.
+* Add a target to the Validate/Add Card button that will call the below code.
 
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
@@ -780,6 +788,11 @@ sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCar
     }
     guard let responseCode = response.responseCode else {
         // Further authorization not required, card validation successful. 
+        // The response object contains fields transactionIdentifier, 
+        // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
+        // transactionRef and cardType. 
+        // Save the token, tokenExpiryDate, cardType and panLast4Digits 
+        // in order to pay with the token in the future.
         return
     }
     // At this point, further authorization is required depending on the value of responseCode
@@ -812,7 +825,12 @@ PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSe
         NSString *errMsg = error.localizedFailureReason;
         NSLog(@"Failure: %@", errMsg);
     } else if(validateCardResponse.responseCode == nil || [validateCardResponse.responseCode length] == 0) {
-        NSLog(@"Success: %@", @"Card validation successful");
+        // Further authorization not required, card validation successful. 
+        // The response object contains fields transactionIdentifier, 
+        // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
+        // transactionRef and cardType. 
+        // Save the token, tokenExpiryDate, cardType and panLast4Digits 
+        // in order to pay with the token in the future.
     } else {
         NSString *responseCode = validateCardResponse.responseCode;
         // At this point further authorization is required depending on the value of responseCode
@@ -1028,9 +1046,9 @@ if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
 
-let otpTransactionId = "5060990580000217499"
-let userEnteredOtpValue = "54343"
-let otpTransactionRef = "1234543211"
+let otpTransactionId = purchaseResponse.otpTransactionIdentifier       // Set the OTP identifier for the request
+let userEnteredOtpValue = "123456"                                     // Accept OTP from user
+let otpTransactionRef = purchaseResponse.transactionRef                // Set the unique transaction reference
 
 let otpReq = AuthorizeOtpRequest(otpTransactionId: theOtpTransactionId, otp: userEnteredOtpValue, transactionRef: otpTransactionRef)
  
@@ -1053,9 +1071,9 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
 //Replace with your own client id and secret
 PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
 
-NSString *otpTransactionId = @"5060990580000217499";
-NSString *userEnteredOtpValue = @"54343";
-NSString *otpTransactionRef = @"1234543211";
+NSString *otpTransactionId = purchaseResponse.otpTransactionIdentifier;   // Set the OTP identifier for the request
+NSString *userEnteredOtpValue = @"123456";                                // Accept OTP from user
+NSString *otpTransactionRef = purchaseResponse.transactionRef;            // Set the unique transaction reference
 
 AuthorizeOtpRequest *request = [[AuthorizeOtpRequest alloc] initWithOtpTransactionIdentifier:otpTransactionId otp: userEnteredOtpValue transactionRef: otpTransactionRef];
 
@@ -1074,7 +1092,7 @@ AuthorizeOtpRequest *request = [[AuthorizeOtpRequest alloc] initWithOtpTransacti
 }];
 ```
 
-###<a id='GetPaymentStatusWithoutUi'></a>Get Payment Status
+###<a id='GetPaymentStatusWithoutUi'></a>Checking Payment Status
 
 To check the status of a payment made, use the code below
 
