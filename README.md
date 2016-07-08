@@ -14,8 +14,8 @@ Interswitch payment SDK allows you to accept payments from customers within your
     * [Pay with Card / Token](#PayWithCardOrTokenWithoutUi)
     * [Pay with Wallet](#PayWithWalletWithoutUi)
     * [Validate Card and Get Token](#ValidateCardWithoutUi)
-    * [Authorize PayWithCard using OTP](#AuthorizePayWithCardWithoutUi)
-    * [Authorize Card Validation using OTP](#AuthorizeCardValidationWithoutUi)
+    * [Authorize PayWithCard](#AuthorizePayWithCardWithoutUi)
+    * [Authorize Card Validation](#AuthorizeCardValidationWithoutUi)
     * [Authorize PayWithWallet using OTP](#AuthorizeWalletPurchaseWithoutUi)
     * [Checking Payment Status](#GetPaymentStatusWithoutUi)
 
