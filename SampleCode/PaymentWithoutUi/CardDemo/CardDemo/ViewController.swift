@@ -21,8 +21,8 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     var activityIndicator: UIActivityIndicatorView
     var otpTransactionIdentifier: String = ""
     
-    let yourClientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
-    let yourClientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
+    let clientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
+    let clientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
     
     let yourRequestorId = "12345678901"     //Specify your own requestorId here
     
@@ -40,7 +40,7 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         
         activityIndicator = UIActivityIndicatorView()
 
-        sdk = PaymentSDK(clientId: yourClientId, clientSecret: yourClientSecret)
+        sdk = PaymentSDK(clientId: clientId, clientSecret: clientSecret)
         
         super.init(coder: aDecoder)
     }
@@ -51,7 +51,7 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         
         Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
         Payment.overrideApiBase("https://sandbox.interswitchng.com")
-    
+
         view.backgroundColor = UIColor.whiteColor()
         
         let screenWidth = self.view.bounds.width
@@ -160,17 +160,23 @@ class ViewController: UIViewController, UIAlertViewDelegate {
                     return
                 }
                 
-                guard let otpTransactionIdentifier = response.otpTransactionIdentifier else {
+                guard let responseCode = response.responseCode else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
                     self.showSuccess("Ref: " + response.transactionIdentifier)
                     return
                 }
                 
-                self.otpTransactionIdentifier = otpTransactionIdentifier
-                print("Got the otp transaction identifier")
-                
-                self.handleOTP(otpTransactionIdentifier, otpTransactionRef: response.transactionRef, otpMessage: response.message)
+                if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
+                    self.handleOTP(response.message, authData: request.authData, purchaseResponse: response)
+                } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    self.activityIndicator.stopAnimating()
+                    self.handleCardinal(request.authData, purchaseResponse: response)
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    self.activityIndicator.stopAnimating()
+                }
             })
         }
     }
@@ -194,59 +200,83 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         return isOk
     }
     
-    func handleOTP(theOtpTransactionIdentifier: String, otpTransactionRef: String, otpMessage: String) {
-        let otpAlertController = UIAlertController(title: "OTP transaction authorization",
-                                                   message: otpMessage, preferredStyle: .Alert)
+    func handleOTP(message: String, authData: String, purchaseResponse: PurchaseResponse){
+        let alert = UIAlertController(title: "OTP", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
-        otpAlertController.addTextFieldWithConfigurationHandler({ (textField) -> Void in
-            //Customize textField however you want
-            textField.text = ""
-        })
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Enter OTP"
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
+        alert.addAction(cancel)
         
-        otpAlertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            let textField = otpAlertController.textFields![0] as UITextField
-            
-            guard !textField.text!.isEmpty else {
-                self.activityIndicator.stopAnimating()
-                self.showError("You didn't enter an otp value")
-                return
-            }
-            guard !self.otpTransactionIdentifier.isEmpty else {
-                self.activityIndicator.stopAnimating()
-                self.showError("Otp transaction identifier does not exist")
-                return
-            }
-            //--
-            let otpReq = AuthorizeOtpRequest(otpTransactionIdentifier: theOtpTransactionIdentifier,
-                otp: textField.text!, transactionRef: otpTransactionRef)
-            
-            self.sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtpResponse?, error: NSError?) in
-                guard error == nil else {
-                    // handle error
+        let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
+            if ((alert.textFields?.first?.hasText()) != nil){
+                let otp = alert.textFields?.first?.text
+                let otpReq = AuthorizePurchaseRequest()
+                otpReq.paymentId = purchaseResponse.paymentId!
+                otpReq.otp = otp!
+                otpReq.authData = authData
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                self.activityIndicator.startAnimating()
+                
+                self.sdk.authorizePurchase(otpReq, completionHandler: {(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
                     
+                    guard error == nil else {
+                        self.showError((error?.localizedDescription)!)
+                        return
+                    }
+                    
+                    guard let authPurchaseResponse = authorizePurchaseResponse else {
+                        self.showError("Otp validation was NOT successful")
+                        return
+                    }
+                    self.showSuccess("Payment successful!\n Transation Id: \(authPurchaseResponse.transactionIdentifier)")
+                })
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.activityIndicator.stopAnimating()
+            }
+        })
+        alert.addAction(ok)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    func handleCardinal(authData: String, purchaseResponse: PurchaseResponse) {
+        let authorizeHandler = {() -> Void in
+            self.navigationController?.popViewControllerAnimated(true)
+            
+            let authorizeCardinalRequest = AuthorizePurchaseRequest()
+            authorizeCardinalRequest.authData = authData
+            authorizeCardinalRequest.paymentId = purchaseResponse.paymentId!
+            authorizeCardinalRequest.transactionId = purchaseResponse.transactionId
+            authorizeCardinalRequest.eciFlag = purchaseResponse.eciFlag!
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            self.activityIndicator.startAnimating()
+            
+            self.sdk.authorizePurchase(authorizeCardinalRequest, completionHandler:{(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.activityIndicator.stopAnimating()
+                
+                guard error == nil else {
                     self.showError((error?.localizedDescription)!)
                     return
                 }
-                
-                guard authorizeOtpResponse != nil else {
-                    //handle error
-                    self.activityIndicator.stopAnimating()
-                    
-                    self.showError("Otp validation was NOT successful")
+                guard authorizePurchaseResponse != nil else {
+                    self.showError("Authorization was NOT successful")
                     return
                 }
-                //OTP successful
-                self.showSuccess("OTP authorization success")
+                self.showSuccess("Payment successful!\n Transation Id: \(authorizePurchaseResponse!.transactionIdentifier)")
             })
-        }))
-        otpAlertController.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
-            //Does nothing after cancel button is clicked
-            self.activityIndicator.stopAnimating()
-        }))
-        
-        self.presentViewController(otpAlertController, animated: true, completion: nil)
+        }
+        let authorizePurchaseVc = AuthorizeViewController(response: purchaseResponse, authorizeHandler: authorizeHandler)
+        self.navigationController?.pushViewController(authorizePurchaseVc, animated: true)
     }
+
     
     func showError(message: String){
         let alertView = UIAlertView()

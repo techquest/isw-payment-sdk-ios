@@ -1,0 +1,10 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, "8.0"
+use_frameworks!
+
+target 'ObjC_WalletDemo' do
+	pod 'CryptoSwift'
+	pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git'
+	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+	pod 'OpenSSL'
+end
