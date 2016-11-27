@@ -117,12 +117,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3CD8D8B1CC7F3A40097572C /* Build configuration list for PBXNativeTarget "PaymentDemo" */;
 			buildPhases = (
-				1BB10CC83F5C8865EE1035FA /* Check Pods Manifest.lock */,
+				1BB10CC83F5C8865EE1035FA /* 📦 Check Pods Manifest.lock */,
 				F3CD8D721CC7F3A40097572C /* Sources */,
 				F3CD8D731CC7F3A40097572C /* Frameworks */,
 				F3CD8D741CC7F3A40097572C /* Resources */,
-				FD55BE8A25D082A6E989C0F0 /* Embed Pods Frameworks */,
-				9E4CF82C8B1370A87CABC84A /* Copy Pods Resources */,
+				FD55BE8A25D082A6E989C0F0 /* 📦 Embed Pods Frameworks */,
+				9E4CF82C8B1370A87CABC84A /* 📦 Copy Pods Resources */,
 				F3823D431CC7F68D00BAFC01 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -182,14 +182,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1BB10CC83F5C8865EE1035FA /* Check Pods Manifest.lock */ = {
+		1BB10CC83F5C8865EE1035FA /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,14 +197,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9E4CF82C8B1370A87CABC84A /* Copy Pods Resources */ = {
+		9E4CF82C8B1370A87CABC84A /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,14 +212,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PaymentDemo/Pods-PaymentDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FD55BE8A25D082A6E989C0F0 /* Embed Pods Frameworks */ = {
+		FD55BE8A25D082A6E989C0F0 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,6 +361,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.PaymentDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -380,6 +381,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.PaymentDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
