@@ -99,10 +99,10 @@ Analyzing dependencies
 Pre-downloading: `Alamofire` from `https://github.com/Alamofire/Alamofire.git`
 Pre-downloading: `SwiftyJSON` from `https://github.com/SwiftyJSON/SwiftyJSON.git`
 Downloading dependencies
-Installing Alamofire (3.0.1)
-Installing CryptoSwift (0.1.1)
-Installing OpenSSL (1.0.204.1)
-Installing SwiftyJSON (2.3.0)
+Installing Alamofire (3.5.0)
+Installing CryptoSwift (0.3.1)
+Installing OpenSSL (1.0.207.1)
+Installing SwiftyJSON (2.4.0)
 Generating Pods project
 Integrating client project
  
