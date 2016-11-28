@@ -18,8 +18,8 @@
 @implementation ViewController
 
 
-NSString *yourClientId = @"IKIA7B379B0114CA57FAF8E19F5CC5063ED2220057EF";
-NSString *yourClientSecret = @"MiunSQ5S/N219UCVP1Lt2raPfwK9lMoiV/PdBX5v/R4=";
+NSString *yourClientId = @"IKIAB9CAC83B8CB8D064799DB34A58D2C8A7026A203B";
+NSString *yourClientSecret = @"z+xzMgCB8cUu1XRlzj06/TiFgT9p2wuA6q5wiZc5HZo=";
 
 NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
 NSString *paymentDescription = @"Payment for goods";

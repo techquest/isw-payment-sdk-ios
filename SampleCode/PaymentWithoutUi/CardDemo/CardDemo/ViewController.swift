@@ -21,8 +21,8 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     var activityIndicator: UIActivityIndicatorView
     var otpTransactionIdentifier: String = ""
     
-    let clientId = "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E"
-    let clientSecret = "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY="
+    let clientId = "IKIAB9CAC83B8CB8D064799DB34A58D2C8A7026A203B"
+    let clientSecret = "z+xzMgCB8cUu1XRlzj06/TiFgT9p2wuA6q5wiZc5HZo="
     
     let yourRequestorId = "12345678901"     //Specify your own requestorId here
     
