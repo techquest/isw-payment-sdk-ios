@@ -68,7 +68,7 @@ If you haven’t registered your app on DevConsole register the app and get your
   $ pod init
   ```
 
-This creates a Podfile for your project
+	This creates a Podfile for your project
 
 * Open the Podfile and replace the two commented lines with the following
 
