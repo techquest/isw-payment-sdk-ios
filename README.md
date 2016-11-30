@@ -72,42 +72,42 @@ This creates a Podfile for your project
 
 * Open the Podfile and replace the two commented lines with the following
 
-```
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, "8.0"
-use_frameworks!
-```
+	```
+	source 'https://github.com/CocoaPods/Specs.git'
+	platform :ios, "8.0"
+	use_frameworks!
+	```
 
 * Add the following to your Podfile, inside the first target block:
 
-```
-pod 'CryptoSwift'
-pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '3.5.0'
-pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '2.4.0'
-pod 'OpenSSL'
-```
+	```
+	pod 'CryptoSwift'
+	pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '3.5.0'
+	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '2.4.0'
+	pod 'OpenSSL'
+	```
 
-Enter the following command:
+* Enter the following command:
 	​```terminal
 	$ pod install
 	​```
-
-You should see output similar to the following:
-
-```
-Analyzing dependencies
-Pre-downloading: `Alamofire` from `https://github.com/Alamofire/Alamofire.git`
-Pre-downloading: `SwiftyJSON` from `https://github.com/SwiftyJSON/SwiftyJSON.git`
-Downloading dependencies
-Installing Alamofire (3.5.0)
-Installing CryptoSwift (0.3.1)
-Installing OpenSSL (1.0.207.1)
-Installing SwiftyJSON (2.4.0)
-Generating Pods project
-Integrating client project
- 
-[!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
-```
+	
+	You should see output similar to the following:
+	
+	```
+	Analyzing dependencies
+	Pre-downloading: `Alamofire` from `https://github.com/Alamofire/Alamofire.git`
+	Pre-downloading: `SwiftyJSON` from `https://github.com/SwiftyJSON/SwiftyJSON.git`
+	Downloading dependencies
+	Installing Alamofire (3.5.0)
+	Installing CryptoSwift (0.3.1)
+	Installing OpenSSL (1.0.207.1)
+	Installing SwiftyJSON (2.4.0)
+	Generating Pods project
+	Integrating client project
+	 
+	[!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
+	```
 
 * Open `YourProject.xcworkspace`
 
@@ -126,34 +126,34 @@ The procedure to use the SDK in sandbox mode is just as easy,
 
 * Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 
 * Override the api base as follows
-
-*Swift*
-
-```swift
-Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
-Payment.overrideApiBase("https://sandbox.interswitchng.com");
-```
-
-*Objective C*
-
-```Objective-C
-[Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
-[Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
-```
+	
+	*Swift*
+	
+	```swift
+	Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
+	Payment.overrideApiBase("https://sandbox.interswitchng.com");
+	```
+	
+	*Objective C*
+	
+	```Objective-C
+	[Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
+	[Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
+	```
 
 * Make sure you include the following import statement
-
-*Swift*
-
-```swift
-import PaymentSDK
-```
-
-*Objective C*
-
-```Objective-C
-@import PaymentSDK;
-```
+	
+	*Swift*
+	
+	```swift
+	import PaymentSDK
+	```
+	
+	*Objective C*
+	
+	```Objective-C
+	@import PaymentSDK;
+	```
 * Follow the remaining steps in the documentation
 
 
@@ -428,6 +428,7 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
         
         return
     }
+    
     /*  Handle success.
         Card validation successful. The response object contains fields token, tokenExpiryDate, panLast4Digits and transactionRef.
         Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
