@@ -4,7 +4,7 @@ use_frameworks!
 
 target 'ObjC_PaymentDemo' do
 	pod 'CryptoSwift'
-	pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git'
-	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+	pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '3.5.0'
+	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '2.4.0'
 	pod 'OpenSSL'
 end

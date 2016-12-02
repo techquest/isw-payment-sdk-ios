@@ -117,12 +117,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F38A99D91CCA6920000AF3BD /* Build configuration list for PBXNativeTarget "CardDemo" */;
 			buildPhases = (
-				1E76DE20A293DC577482FE92 /* Check Pods Manifest.lock */,
+				1E76DE20A293DC577482FE92 /* 📦 Check Pods Manifest.lock */,
 				F38A99C01CCA6920000AF3BD /* Sources */,
 				F38A99C11CCA6920000AF3BD /* Frameworks */,
 				F38A99C21CCA6920000AF3BD /* Resources */,
-				5D163475BD08DD0E5F9D0B3E /* Embed Pods Frameworks */,
-				5771D4C8018C41E769026A08 /* Copy Pods Resources */,
+				5D163475BD08DD0E5F9D0B3E /* 📦 Embed Pods Frameworks */,
+				5771D4C8018C41E769026A08 /* 📦 Copy Pods Resources */,
 				F38A99DF1CCA6B06000AF3BD /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -181,14 +181,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1E76DE20A293DC577482FE92 /* Check Pods Manifest.lock */ = {
+		1E76DE20A293DC577482FE92 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,14 +196,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		5771D4C8018C41E769026A08 /* Copy Pods Resources */ = {
+		5771D4C8018C41E769026A08 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,14 +211,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CardDemo/Pods-CardDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5D163475BD08DD0E5F9D0B3E /* Embed Pods Frameworks */ = {
+		5D163475BD08DD0E5F9D0B3E /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +282,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -303,6 +304,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -327,6 +329,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -341,6 +344,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 2.3;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

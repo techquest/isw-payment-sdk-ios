@@ -10,6 +10,7 @@
 
 struct PCBCModeEncryptGenerator: BlockModeGenerator {
     typealias Element = Array<UInt8>
+    let options: BlockModeOptions = [.InitializationVectorRequired, .PaddingRequired]
 
     private let iv: Element
     private let inputGenerator: AnyGenerator<Element>
@@ -37,6 +38,7 @@ struct PCBCModeEncryptGenerator: BlockModeGenerator {
 
 struct PCBCModeDecryptGenerator: BlockModeGenerator {
     typealias Element = Array<UInt8>
+    let options: BlockModeOptions = [.InitializationVectorRequired, .PaddingRequired]
 
     private let iv: Element
     private let inputGenerator: AnyGenerator<Element>

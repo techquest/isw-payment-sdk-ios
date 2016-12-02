@@ -68,45 +68,46 @@ If you haven’t registered your app on DevConsole register the app and get your
   $ pod init
   ```
 
-This creates a Podfile for your project
+	This creates a Podfile for your project
 
 * Open the Podfile and replace the two commented lines with the following
 
-```
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, "8.0"
-use_frameworks!
-```
+	```
+	source 'https://github.com/CocoaPods/Specs.git'
+	platform :ios, "8.0"
+	use_frameworks!
+	```
 
 * Add the following to your Podfile, inside the first target block:
-```
-pod 'CryptoSwift'
-pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git'
-pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
-pod 'OpenSSL'
-```
 
-Enter the following command:
+	```
+	pod 'CryptoSwift'
+	pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '3.5.0'
+	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '2.4.0'
+	pod 'OpenSSL'
+	```
+
+* Enter the following command:
 	​```terminal
 	$ pod install
 	​```
-
-You should see output similar to the following:
-
-```
-Analyzing dependencies
-Pre-downloading: `Alamofire` from `https://github.com/Alamofire/Alamofire.git`
-Pre-downloading: `SwiftyJSON` from `https://github.com/SwiftyJSON/SwiftyJSON.git`
-Downloading dependencies
-Installing Alamofire (3.0.1)
-Installing CryptoSwift (0.1.1)
-Installing OpenSSL (1.0.204.1)
-Installing SwiftyJSON (2.3.0)
-Generating Pods project
-Integrating client project
- 
-[!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
-```
+	
+	You should see output similar to the following:
+	
+	```
+	Analyzing dependencies
+	Pre-downloading: `Alamofire` from `https://github.com/Alamofire/Alamofire.git`
+	Pre-downloading: `SwiftyJSON` from `https://github.com/SwiftyJSON/SwiftyJSON.git`
+	Downloading dependencies
+	Installing Alamofire (3.5.0)
+	Installing CryptoSwift (0.3.1)
+	Installing OpenSSL (1.0.207.1)
+	Installing SwiftyJSON (2.4.0)
+	Generating Pods project
+	Integrating client project
+	 
+	[!] Please close any current Xcode sessions and use `YourProject.xcworkspace` for this project from now on.
+	```
 
 * Open `YourProject.xcworkspace`
 
@@ -125,30 +126,34 @@ The procedure to use the SDK in sandbox mode is just as easy,
 
 * Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 
 * Override the api base as follows
-
-*Swift*
-```swift
-Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
-Payment.overrideApiBase("https://sandbox.interswitchng.com");
-```
-
-*Objective C*
-```Objective-C
-[Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
-[Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
-```
+	
+	*Swift*
+	
+	```swift
+	Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
+	Payment.overrideApiBase("https://sandbox.interswitchng.com");
+	```
+	
+	*Objective C*
+	
+	```Objective-C
+	[Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
+	[Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
+	```
 
 * Make sure you include the following import statement
-
-*Swift*
-```swift
-import PaymentSDK
-```
-
-*Objective C*
-```Objective-C
-@import PaymentSDK;
-```
+	
+	*Swift*
+	
+	```swift
+	import PaymentSDK
+	```
+	
+	*Objective C*
+	
+	```Objective-C
+	@import PaymentSDK;
+	```
 * Follow the remaining steps in the documentation
 
 
@@ -171,6 +176,7 @@ Now that you created and configured your Xcode project, you can add your choice 
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -204,6 +210,7 @@ let vc = payWithCardOrWallet.start({(purchaseResponse: PurchaseResponse?, error:
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
 NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
@@ -245,6 +252,7 @@ UIViewController *vc = [pwcw start:^(PurchaseResponse *purchaseResponse, NSError
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 let clientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let clientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -279,6 +287,7 @@ let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *clientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
 NSString *clientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
@@ -319,6 +328,7 @@ UIViewController *vc = [pwc start:^(PurchaseResponse *purchaseResponse, NSError 
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -353,6 +363,7 @@ let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSErr
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
 NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
@@ -393,6 +404,7 @@ Validate card is used to check if a card is a valid card. It returns the card ba
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -416,6 +428,7 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
         
         return
     }
+    
     /*  Handle success.
         Card validation successful. The response object contains fields token, tokenExpiryDate, panLast4Digits and transactionRef.
         Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
@@ -424,6 +437,7 @@ let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
 NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
@@ -460,6 +474,7 @@ UIViewController *vc = [validateCard start:^(ValidateCardResponse *validateRespo
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
@@ -497,6 +512,7 @@ let vc = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSErro
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
 NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
@@ -547,6 +563,7 @@ To allow for Payment with Card or Token
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
 
@@ -587,6 +604,7 @@ sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, e
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
 NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
@@ -638,6 +656,7 @@ To allow for Payment with Wallet only
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 //Replace with your own client id and secret
 let walletSdk = WalletSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
@@ -660,6 +679,7 @@ walletSdk.getPaymentMethods({ (response: WalletResponse?, error: NSError?) -> Vo
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *yourClientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
 NSString *yourClientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
@@ -691,6 +711,7 @@ WalletSDK *walletSdk = [[WalletSDK alloc] initWithClientId:yourClientId clientSe
 * Add a target to the button that will call the below code if the user has entered the required input information.
 
 *Swift*
+
 ```swift
 let tokenOfUserSelectedPaymentMethod = "5060990580000217499"
 
@@ -722,6 +743,7 @@ walletSdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseRespon
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *yourClientId = @"IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276";
 NSString *yourClientSecret = @"Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=";
@@ -772,6 +794,7 @@ PurchaseRequest *request = [[PurchaseRequest alloc] initWithCustomerId:theCustom
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 *Swift*
+
 ```swift
 let request = ValidateCardRequest(customerId: customerIdLabel.text, pan: pan, pin: pinTextField.text!, expiryDate: expiry, cvv2: cvvTextField.text!, transactionRef: Payment.randomStringWithLength(12), requestorId: "12345678901")
 
@@ -801,6 +824,7 @@ sdk!.validateCard(request, completionHandler:{(validateCardResponse: ValidateCar
 ```
 
 *Objective C*
+
 ```Objective-C
 NSString *clientId = @"IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E";
 NSString *clientSecret = @"SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=";
@@ -845,6 +869,7 @@ PaymentSDK *paymentSdk = [[PaymentSDK alloc] initWithClientId: clientId clientSe
 Import PaymentSDK and use the following code snippet
 
 *Swift*
+
 ```swift
 if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     let otpReq = AuthorizePurchaseRequest()
@@ -893,6 +918,7 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
 ```
 
 *Objective C*
+
 ```Objective-C
 if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
     AuthorizePurchaseRequest *otpReq = [[AuthorizePurchaseRequest alloc] init];
@@ -942,6 +968,7 @@ if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
 ### <a id='AuthorizeCardValidationWithoutUi'></a>Authorize Card Validation
 
 *Swift*
+
 ```swift
 if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
     let otpReq = AuthorizeCardRequest()
@@ -993,6 +1020,7 @@ if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
 
 
 *Objective C*
+
 ```Objective-C
 if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
     AuthorizeCardRequest *otpReq = [[AuthorizeCardRequest alloc] init];
@@ -1042,6 +1070,7 @@ if (responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE) {
 ###	<a id='AuthorizeWalletPurchaseWithoutUi'></a>Authorize PayWithWallet using OTP
 
 *Swift*
+
 ```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
@@ -1067,6 +1096,7 @@ sdk.authorizeOtp(otpReq, completionHandler: {(authorizeOtpResponse: AuthorizeOtp
 ```
 
 *Objective C*
+
 ```Objective-C
 //Replace with your own client id and secret
 PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:yourClientId clientSecret:yourClientSecret];
@@ -1097,6 +1127,7 @@ AuthorizeOtpRequest *request = [[AuthorizeOtpRequest alloc] initWithOtpTransacti
 To check the status of a payment made, use the code below
 
 *Swift*
+
 ```swift
 //Replace with your own client id and secret
 let sdk = PaymentSDK(clientId: "IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28", clientSecret: "8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk=")
@@ -1120,6 +1151,7 @@ sdk.getPaymentStatus(transactionRef, amount: amount, completionHandler: {(paymen
 ```
 
 *Objective C*
+
 ```Objective-C
 //Replace with your own client id and secret
 PaymentSDK *sdk = [[PaymentSDK alloc] initWithClientId:@"IKIAD6F6ABB40ABE2CD1030E4F87C132CFD5EB3F6D28" clientSecret:@"8jPfKyXs9Pzll2BRDIj3O3N7Ljraz39IVrfBYNIsfDk="];
