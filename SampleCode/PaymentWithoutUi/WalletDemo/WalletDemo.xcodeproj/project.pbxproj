@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B3553FF21E365C82005621E9 /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34871CF605E400F35881 /* PaymentSDK.framework */; };
+		B3553FF31E365C82005621E9 /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34871CF605E400F35881 /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F39CF2831CC8E89F00E37551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39CF2821CC8E89F00E37551 /* AppDelegate.swift */; };
 		F39CF2851CC8E89F00E37551 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39CF2841CC8E89F00E37551 /* ViewController.swift */; };
 		F39CF2881CC8E89F00E37551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F39CF2861CC8E89F00E37551 /* Main.storyboard */; };
 		F39CF28B1CC8E89F00E37551 /* WalletDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F39CF2891CC8E89F00E37551 /* WalletDemo.xcdatamodeld */; };
 		F39CF28D1CC8E89F00E37551 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F39CF28C1CC8E89F00E37551 /* Assets.xcassets */; };
 		F39CF2901CC8E89F00E37551 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F39CF28E1CC8E89F00E37551 /* LaunchScreen.storyboard */; };
-		F3FD34881CF605E400F35881 /* PaymentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34871CF605E400F35881 /* PaymentSDK.framework */; };
-		F3FD34891CF605E400F35881 /* PaymentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F3FD34871CF605E400F35881 /* PaymentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF7788A0D08362E75F6E073D /* Pods_WalletDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2260FDD6FFB48FB05188F249 /* Pods_WalletDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F3BC64BD1CC8E9A0004DF809 /* Embed Frameworks */ = {
+		B3553FF41E365C82005621E9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F3FD34891CF605E400F35881 /* PaymentSDK.framework in Embed Frameworks */,
+				B3553FF31E365C82005621E9 /* PaymentSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3FD34881CF605E400F35881 /* PaymentSDK.framework in Frameworks */,
+				B3553FF21E365C82005621E9 /* PaymentSDK.framework in Frameworks */,
 				FF7788A0D08362E75F6E073D /* Pods_WalletDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,7 +123,8 @@
 				F39CF27D1CC8E89F00E37551 /* Resources */,
 				D86E2ECE592B16E3E8ED14B3 /* 📦 Embed Pods Frameworks */,
 				1EEC949A1D3740F6E3EB3C1D /* 📦 Copy Pods Resources */,
-				F3BC64BD1CC8E9A0004DF809 /* Embed Frameworks */,
+				B3553FF41E365C82005621E9 /* Embed Frameworks */,
+				B3553FE11E3606BE005621E9 /* Remove Unused Architecture */,
 			);
 			buildRules = (
 			);
@@ -146,6 +147,7 @@
 				TargetAttributes = {
 					F39CF27E1CC8E89F00E37551 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = M28B7CT6HR;
 					};
 				};
 			};
@@ -211,6 +213,20 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		B3553FE11E3606BE005621E9 /* Remove Unused Architecture */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Remove Unused Architecture";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone";
+		};
 		D86E2ECE592B16E3E8ED14B3 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,6 +280,7 @@
 		F39CF2921CC8E89F00E37551 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -310,6 +327,7 @@
 		F39CF2931CC8E89F00E37551 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -333,6 +351,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -343,6 +362,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -352,6 +372,8 @@
 			baseConfigurationReference = 6EFD155A0ED94A3EA099A747 /* Pods-WalletDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = M28B7CT6HR;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -360,7 +382,7 @@
 				INFOPLIST_FILE = WalletDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.WalletDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.walletdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 2.3;
 			};
@@ -371,16 +393,20 @@
 			baseConfigurationReference = FFA0A6FA0DFD93517AC44BB7 /* Pods-WalletDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = M28B7CT6HR;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 1;
 				INFOPLIST_FILE = WalletDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.WalletDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.interswitchng.walletdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
