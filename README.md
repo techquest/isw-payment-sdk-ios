@@ -1,8 +1,10 @@
-##Payment SDK for ​iOS
+## Payment SDK for ​iOS
 
 Interswitch payment SDK allows you to accept payments from customers within your mobile application.
 
 ### Outline
+- [Requirements](#Requirements)
+- [Migration Guide](#Migration)
 - [Before you begin](#BeforeYouBegin)
 - [Using the SDK in Sandbox Mode](#UsingSDKInSandboxMode)
 - [Using the SDK with UI](#UsingSDKWithUi)
@@ -19,6 +21,13 @@ Interswitch payment SDK allows you to accept payments from customers within your
     * [Authorize PayWithWallet using OTP](#AuthorizeWalletPurchaseWithoutUi)
     * [Checking Payment Status](#GetPaymentStatusWithoutUi)
 - [Uploading your App to Store](#UploadingToStore)
+
+### <a id='Requirements'></a>Requirements
+* iOS 9.0+ /macOS 10.10+
+* Xcode 8.3 +
+* Swift 3.0+
+### <a id='Migration'></a>Migration Guide
+* <a href = "migration.md">Interswitch SDK Migration Guide to Swift 3</a>
 
 ### <a id='BeforeYouBegin'></a>Before you begin
 
