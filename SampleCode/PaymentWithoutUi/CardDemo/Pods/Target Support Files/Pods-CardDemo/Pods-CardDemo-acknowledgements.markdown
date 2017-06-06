@@ -37,7 +37,7 @@ Permission is granted to anyone to use this software for any purpose,including c
 - Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 - This notice may not be removed or altered from any source or binary distribution.
 
-## OpenSSL
+## OpenSSL-Universal
 
 
   LICENSE ISSUES
@@ -53,7 +53,7 @@ Permission is granted to anyone to use this software for any purpose,including c
   ---------------
 
 /* ====================================================================
- * Copyright (c) 1998-2016 The OpenSSL Project.  All rights reserved.
+ * Copyright (c) 1998-2008 The OpenSSL Project.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -172,7 +172,7 @@ Permission is granted to anyone to use this software for any purpose,including c
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Ruoyu Fu
+Copyright (c) 2016 Ruoyu Fu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

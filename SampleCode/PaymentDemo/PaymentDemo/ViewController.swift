@@ -12,24 +12,22 @@ import PaymentSDK
 
 class ViewController: UIViewController {
     
-    let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
-    let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+    let yourClientId = "IKIA7B379B0114CA57FAF8E19F5CC5063ED2220057EF"
+    let yourClientSecret = "MiunSQ5S/N219UCVP1Lt2raPfwK9lMoiV/PdBX5v/R4="
     
     let theCustomerId = "07037122181"           // This should be a value that identifies your customer uniquely e.g email or phone number etc
     let paymentDescription = "Payment for goods"
-    let theAmount = "200"
+    let theAmount = "20"
     
-    let theToken = "5060990580000217499"       //This should be a valid token value that was stored after a previously successful payment
     let theCardType = "verve"                  //This should be a valid card type e.g mastercard, verve, visa etc
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Passport.overrideApiBase("https://qa.interswitchng.com/passport")
+        Payment.overrideApiBase("https://qa.interswitchng.com")
         
-        Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
-        Payment.overrideApiBase("https://sandbox.interswitchng.com")
-
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         
         let screenWidth = self.view.bounds.width
         let yTopMargin:CGFloat = 10.0        //Set header
@@ -42,80 +40,80 @@ class ViewController: UIViewController {
         let headerLabel = UILabel()
         headerLabel.text = "Payment demo"
         
-        headerLabel.frame = CGRectMake(XPosition, 60, 250, 40)
+        headerLabel.frame = CGRect(x: XPosition, y: 60, width: 250, height: 40)
         headerLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 16.0)
-        headerLabel.font = UIFont.boldSystemFontOfSize(16.0)
-        headerLabel.textAlignment = .Center
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        headerLabel.textAlignment = .center
         view.addSubview(headerLabel)
         
         
         //Pay with card button
-        let payWithCardOrWalletButton = UIButton(type: .System)
-        payWithCardOrWalletButton.frame = CGRectMake(XPosition, 100 + yTopMargin, buttonsWidth, buttonsHeight)
-        payWithCardOrWalletButton.setTitle("Pay With Card or Wallet", forState: .Normal)
+        let payWithCardOrWalletButton = UIButton(type: .system)
+        payWithCardOrWalletButton.frame = CGRect(x: XPosition, y: 100 + yTopMargin, width: buttonsWidth, height: buttonsHeight)
+        payWithCardOrWalletButton.setTitle("Pay With Card or Wallet", for: UIControlState())
         styleButton(payWithCardOrWalletButton)
         
-        payWithCardOrWalletButton.addTarget(self, action: #selector(ViewController.payWithCardOrWallet), forControlEvents: .TouchUpInside)
+        payWithCardOrWalletButton.addTarget(self, action: #selector(ViewController.payWithCardOrWallet), for: .touchUpInside)
         view.addSubview(payWithCardOrWalletButton)
         
         //Pay with card button
-        let payWithCardButton = UIButton(type: .System)
-        payWithCardButton.frame = CGRectMake(XPosition, 150 + yTopMargin, buttonsWidth, buttonsHeight)
-        payWithCardButton.setTitle("Pay With Card", forState: .Normal)
+        let payWithCardButton = UIButton(type: .system)
+        payWithCardButton.frame = CGRect(x: XPosition, y: 150 + yTopMargin, width: buttonsWidth, height: buttonsHeight)
+        payWithCardButton.setTitle("Pay With Card", for: UIControlState())
         styleButton(payWithCardButton)
         
-        payWithCardButton.addTarget(self, action: #selector(ViewController.payWithCard), forControlEvents: .TouchUpInside)
+        payWithCardButton.addTarget(self, action: #selector(ViewController.payWithCard), for: .touchUpInside)
         view.addSubview(payWithCardButton)
         
         
         //Pay with wallet button
-        let payWithWalletButton = UIButton(type: .System)
-        payWithWalletButton.frame = CGRectMake(XPosition, 190 + 2 * yTopMargin, buttonsWidth, buttonsHeight)
-        payWithWalletButton.setTitle("Pay With Wallet", forState: .Normal)
+        let payWithWalletButton = UIButton(type: .system)
+        payWithWalletButton.frame = CGRect(x: XPosition, y: 190 + 2 * yTopMargin, width: buttonsWidth, height: buttonsHeight)
+        payWithWalletButton.setTitle("Pay With Wallet", for: UIControlState())
         styleButton(payWithWalletButton)
         
-        payWithWalletButton.addTarget(self, action: #selector(ViewController.payWithWallet), forControlEvents: .TouchUpInside)
+        payWithWalletButton.addTarget(self, action: #selector(ViewController.payWithWallet), for: .touchUpInside)
         view.addSubview(payWithWalletButton)
         
         
         //Validate card button
-        let validateCardButton = UIButton(type: .System)
-        validateCardButton.frame = CGRectMake(XPosition, 230 + 3 * yTopMargin, buttonsWidth, buttonsHeight)
-        validateCardButton.setTitle("Validate Card", forState: .Normal)
+        let validateCardButton = UIButton(type: .system)
+        validateCardButton.frame = CGRect(x: XPosition, y: 230 + 3 * yTopMargin, width: buttonsWidth, height: buttonsHeight)
+        validateCardButton.setTitle("Validate Card", for: UIControlState())
         styleButton(validateCardButton)
         
-        validateCardButton.addTarget(self, action: #selector(ViewController.validateCard), forControlEvents: .TouchUpInside)
+        validateCardButton.addTarget(self, action: #selector(ViewController.validateCard), for: .touchUpInside)
         view.addSubview(validateCardButton)
         
         
         //Pay with token button
-        let payWithTokenButton = UIButton(type: .System)
-        payWithTokenButton.frame = CGRectMake(XPosition, 270 + 4 * yTopMargin, buttonsWidth, buttonsHeight)
-        payWithTokenButton.setTitle("Pay With Token", forState: .Normal)
+        let payWithTokenButton = UIButton(type: .system)
+        payWithTokenButton.frame = CGRect(x: XPosition, y: 270 + 4 * yTopMargin, width: buttonsWidth, height: buttonsHeight)
+        payWithTokenButton.setTitle("Pay With Token", for: UIControlState())
         styleButton(payWithTokenButton)
         
-        payWithTokenButton.addTarget(self, action: #selector(ViewController.payWithToken), forControlEvents: .TouchUpInside)
+        payWithTokenButton.addTarget(self, action: #selector(ViewController.payWithToken), for: .touchUpInside)
         view.addSubview(payWithTokenButton)
     }
     
-    func styleButton(theButton : UIButton) {
+    func styleButton(_ theButton : UIButton) {
         theButton.layer.cornerRadius = 5.0
-        theButton.backgroundColor  = UIColor.blackColor()
-        theButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        theButton.backgroundColor  = UIColor.black
+        theButton.setTitleColor(UIColor.white, for: UIControlState())
     }
 
     func payWithCardOrWallet(){
         let pwc = Pay(clientId: yourClientId, clientSecret: yourClientSecret,
                       customerId: theCustomerId, description: paymentDescription,
                       amount: theAmount, currency: "NGN")
-        let vc = pwc.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+        let vc = pwc.start({(purchaseResponse: PurchaseResponse?, error: Error?) in
             guard error == nil else {
                 self.showError((error?.localizedDescription)!)
                 return
             }
             
             guard let response = purchaseResponse else {
-                self.showError((error?.localizedFailureReason)!)
+                self.showError((error?.localizedDescription)!)
                 return
             }
             self.showSuccess("Ref: " + response.transactionIdentifier)
@@ -127,14 +125,14 @@ class ViewController: UIViewController {
         let payWithCard = PayWithCard(clientId: yourClientId, clientSecret: yourClientSecret,
                                       customerId: theCustomerId, description: paymentDescription,
                                       amount: theAmount, currency: "NGN")
-        let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+        let vc = payWithCard.start({(purchaseResponse: PurchaseResponse?, error: Error?) in
             guard error == nil else {
                 let errMsg = (error?.localizedDescription)!
                 self.showError(errMsg)
                 return
             }
             guard let response = purchaseResponse else {
-                let failureMsg = (error?.localizedFailureReason)!
+                let failureMsg = (error?.localizedDescription)!
                 self.showError(failureMsg)
                 return
             }
@@ -149,7 +147,7 @@ class ViewController: UIViewController {
         let payWithWallet = PayWithWallet(clientId: yourClientId, clientSecret: yourClientSecret,
                                           customerId: theCustomerId, description: paymentDescription,
                                           amount: theAmount, currency: "NGN")
-        let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+        let vc = payWithWallet.start({(purchaseResponse: PurchaseResponse?, error: Error?) in
             guard error == nil else {
                 let errMsg = (error?.localizedDescription)!
                 self.showError(errMsg)
@@ -157,7 +155,7 @@ class ViewController: UIViewController {
             }
             
             guard let response = purchaseResponse else {
-                let failureMsg = (error?.localizedFailureReason)!
+                let failureMsg = (error?.localizedDescription)!
                 self.showError(failureMsg)
                 return
             }
@@ -171,7 +169,7 @@ class ViewController: UIViewController {
     func validateCard() {
         let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
                                         customerId: theCustomerId)
-        let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: NSError?) in
+        let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: Error?) in
             guard error == nil else {
                 let errMsg = (error?.localizedDescription)!
                 self.showError(errMsg)
@@ -179,24 +177,26 @@ class ViewController: UIViewController {
             }
             
             guard let response = validateCardResponse else {
-                let failureMsg = (error?.localizedFailureReason)!
+                let failureMsg = (error?.localizedDescription)!
                 self.showError(failureMsg)
                 return
             }
             
             //Handling success
-            var msg = response.message
+            let msg = response.message
             self.showSuccess(msg)
         })
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    let theToken = "5060990580000217499"       //This should be a valid token value that was stored after a previously successful payment
     
     func payWithToken(){
         let payWithToken = PayWithToken(clientId: yourClientId, clientSecret: yourClientSecret,
                                         customerId: theCustomerId, description: paymentDescription,
                                         amount: theAmount, token: theToken, currency: "NGN",
                                         expiryDate: "2004", cardType: theCardType, last4Digits: "7499")
-        let vc = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: NSError?) in
+        let vc = payWithToken.start({(purchaseResponse: PurchaseResponse?, error: Error?) in
             guard error == nil else {
                 let errMsg = (error?.localizedDescription)!
                 self.showError(errMsg)
@@ -204,7 +204,7 @@ class ViewController: UIViewController {
             }
             
             guard let response = purchaseResponse else {
-                let failureMsg = (error?.localizedFailureReason)!
+                let failureMsg = (error?.localizedDescription)!
                 self.showError(failureMsg)
                 return
             }
@@ -214,20 +214,20 @@ class ViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showError(message: String){
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+    func showError(_ message: String){
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
         
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    func showSuccess(message: String){
-        let alert = UIAlertController(title: "Success", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+    func showSuccess(_ message: String){
+        let alert = UIAlertController(title: "Success", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
         
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     

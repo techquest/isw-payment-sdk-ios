@@ -4,10 +4,10 @@ use_frameworks!
 
 target 'CardDemo' do
 
-pod 'CryptoSwift'
-pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '3.5.0'
-pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '2.4.0'
-pod 'OpenSSL'
+pod 'CryptoSwift', '0.6.9'
+pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '4.4.0'
+pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '3.1.4'
+pod 'OpenSSL-Universal', '1.0.2.10'
 
 end
 
