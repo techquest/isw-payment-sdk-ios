@@ -18,12 +18,12 @@
 @implementation ViewController
 
 
-NSString *yourClientId = @"IKIAB9CAC83B8CB8D064799DB34A58D2C8A7026A203B";
-NSString *yourClientSecret = @"z+xzMgCB8cUu1XRlzj06/TiFgT9p2wuA6q5wiZc5HZo=";
+NSString *yourClientId = @"IKIA7B379B0114CA57FAF8E19F5CC5063ED2220057EF";
+NSString *yourClientSecret = @"MiunSQ5S/N219UCVP1Lt2raPfwK9lMoiV/PdBX5v/R4=";
 
 NSString *theCustomerId = @"9689808900";     // This should be a value that identifies your customer uniquely e.g email or phone number etc
 NSString *paymentDescription = @"Payment for goods";
-NSString *theAmount = @"200";
+NSString *theAmount = @"20";
 NSString *theCurrency = @"NGN";
 
 NSString *theToken = @"5060990580000217499"; //This should be a valid token value that was stored after a previously successful payment
@@ -37,8 +37,8 @@ NSString *panLast4Digits = @"7499";
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [Payment overrideApiBase: @"https://sandbox.interswitchng.com"];
-    [Passport overrideApiBase: @"https://sandbox.interswitchng.com/passport"];
+    [Payment overrideApiBase: @"https://qa.interswitchng.com"];
+    [Passport overrideApiBase: @"https://qa.interswitchng.com/passport"];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];

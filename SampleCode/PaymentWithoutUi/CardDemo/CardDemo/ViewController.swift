@@ -21,8 +21,8 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     var activityIndicator: UIActivityIndicatorView
     var otpTransactionIdentifier: String = ""
     
-    let clientId = "IKIAB9CAC83B8CB8D064799DB34A58D2C8A7026A203B"
-    let clientSecret = "z+xzMgCB8cUu1XRlzj06/TiFgT9p2wuA6q5wiZc5HZo="
+    let clientId = "IKIA7B379B0114CA57FAF8E19F5CC5063ED2220057EF"
+    let clientSecret = "MiunSQ5S/N219UCVP1Lt2raPfwK9lMoiV/PdBX5v/R4="
     
     let yourRequestorId = "12345678901"     //Specify your own requestorId here
     
@@ -49,10 +49,10 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Passport.overrideApiBase("https://sandbox.interswitchng.com/passport")
-        Payment.overrideApiBase("https://sandbox.interswitchng.com")
-
-        view.backgroundColor = UIColor.whiteColor()
+        Passport.overrideApiBase("https://qa.interswitchng.com/passport")
+        Payment.overrideApiBase("https://qa.interswitchng.com")
+        
+        view.backgroundColor = UIColor.white
         
         let screenWidth = self.view.bounds.width
         let yTopMargin : CGFloat = 10.0
@@ -65,75 +65,75 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         let headerLabel = UILabel()
         headerLabel.text = "Card payment demo"
         
-        headerLabel.frame = CGRectMake(XPosition, 50, 250, 40)
+        headerLabel.frame = CGRect(x: XPosition, y: 50, width: 250, height: 40)
         headerLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 16.0)
-        headerLabel.font = UIFont.boldSystemFontOfSize(16.0)
-        headerLabel.textAlignment = .Center
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        headerLabel.textAlignment = .center
         view.addSubview(headerLabel)
         
         customerId.frame = CGRect(x: XPosition, y: 130, width: textfieldsWidth, height: textfieldsHeight)
         customerId.placeholder = "Customer ID"
-        customerId.borderStyle = UITextBorderStyle.Line
+        customerId.borderStyle = UITextBorderStyle.line
         customerId.text = "1407002510"   // This should be a value that identifies your customer uniquely e.g email or phone number etc
         view.addSubview(customerId)
         
         amount.frame = CGRect(x: XPosition, y: 170 + yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         amount.placeholder = "Amount"
-        amount.borderStyle = UITextBorderStyle.Line
-        amount.keyboardType = .DecimalPad
+        amount.borderStyle = UITextBorderStyle.line
+        amount.keyboardType = .decimalPad
         amount.text = "100"
         view.addSubview(amount)
         
         pan.frame = CGRect(x: XPosition, y: 210 + 2 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         pan.placeholder = "Card Number"
-        pan.borderStyle = UITextBorderStyle.Line
-        pan.keyboardType = .NumberPad
+        pan.borderStyle = UITextBorderStyle.line
+        pan.keyboardType = .numberPad
         pan.text = "5060990580000217499"
         view.addSubview(pan)
         
         
         cvv2Field.frame = CGRect(x: XPosition, y: 250 + 3 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         cvv2Field.placeholder = "CVV"
-        cvv2Field.borderStyle = UITextBorderStyle.Line
-        cvv2Field.keyboardType = .NumberPad
+        cvv2Field.borderStyle = UITextBorderStyle.line
+        cvv2Field.keyboardType = .numberPad
         cvv2Field.text = "111"
         view.addSubview(cvv2Field)
         
         pin.frame = CGRect(x: XPosition, y: 290 + 4 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         pin.placeholder = "Card PIN"
-        pin.borderStyle = UITextBorderStyle.Line
-        pin.keyboardType = .NumberPad
+        pin.borderStyle = UITextBorderStyle.line
+        pin.keyboardType = .numberPad
         pin.text = "1111"
         view.addSubview(pin)
         
         expiry.frame = CGRect(x: XPosition, y: 330 + 5 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         expiry.placeholder = "Expiry (format: YYMM)"
-        expiry.borderStyle = UITextBorderStyle.Line
-        expiry.keyboardType = .NumberPad
+        expiry.borderStyle = UITextBorderStyle.line
+        expiry.keyboardType = .numberPad
         expiry.text = "2004"
         view.addSubview(expiry)
         
         
-        let payNow = UIButton(type: UIButtonType.RoundedRect)
+        let payNow = UIButton(type: UIButtonType.roundedRect)
         payNow.frame = CGRect(x: XPosition, y: 380 + 6 * yTopMargin, width: textfieldsWidth, height: textfieldsHeight)
         //payNow.frame = CGRect(x: 20, y: 300, width: 40, height: 40)
-        payNow.setTitle("Pay", forState: UIControlState.Normal)
-        payNow.titleLabel?.font = UIFont.boldSystemFontOfSize(22)
+        payNow.setTitle("Pay", for: UIControlState())
+        payNow.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         styleButton(payNow)
         
-        payNow.addTarget(self, action: #selector(ViewController.pay), forControlEvents: UIControlEvents.TouchUpInside)
+        payNow.addTarget(self, action: #selector(ViewController.pay), for: UIControlEvents.touchUpInside)
         view.addSubview(payNow)
         
         activityIndicator.frame = CGRect(x: (screenWidth - 40)/2, y: 500, width: 40, height: textfieldsHeight)
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
-        activityIndicator.bringSubviewToFront(view)
+        activityIndicator.bringSubview(toFront: view)
     }
     
-    func styleButton(theButton : UIButton) {
+    func styleButton(_ theButton : UIButton) {
         theButton.layer.cornerRadius = 5.0
-        theButton.backgroundColor  = UIColor.blackColor()
-        theButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        theButton.backgroundColor  = UIColor.black
+        theButton.setTitleColor(UIColor.white, for: UIControlState())
     }
     
     func pay(){
@@ -142,26 +142,26 @@ class ViewController: UIViewController, UIAlertViewDelegate {
                                           pin: pin.text!, expiryDate: expiry.text!, cvv2: cvv2Field.text!,
                                           transactionRef: Payment.randomStringWithLength(12), requestorId: yourRequestorId)
             
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             activityIndicator.startAnimating()
             
-            sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: NSError?) in
+            sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: Error?) in
                 guard error == nil else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
                     self.showError((error?.localizedDescription)!)
                     return
                 }
                 
                 guard let response = purchaseResponse else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
-                    self.showError((error?.localizedFailureReason)!)
+                    self.showError((error?.localizedDescription)!)
                     return
                 }
                 
                 guard let responseCode = response.responseCode else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
                     self.showSuccess("Ref: " + response.transactionIdentifier)
                     return
@@ -170,11 +170,11 @@ class ViewController: UIViewController, UIAlertViewDelegate {
                 if responseCode == PaymentSDK.SAFE_TOKEN_RESPONSE_CODE {
                     self.handleOTP(response.message, authData: request.authData, purchaseResponse: response)
                 } else if (responseCode == PaymentSDK.CARDINAL_RESPONSE_CODE) {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
                     self.handleCardinal(request.authData, purchaseResponse: response)
                 } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
                 }
             })
@@ -184,15 +184,15 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     func isOkToMakePaymentRequest() -> Bool {
         var isOk = false
         
-        if !customerId.hasText() {
+        if !customerId.hasText {
             showError("Customer ID is required")
-        } else if !amount.hasText() {
+        } else if !amount.hasText {
             showError("Amount is required")
-        } else if !pan.hasText() {
+        } else if !pan.hasText {
             showError("PAN is required")
-        } else if !cvv2Field.hasText() {
+        } else if !cvv2Field.hasText {
             showError("CVV is required")
-        } else if !pin.hasText() {
+        } else if !pin.hasText {
             showError("PIN is required")
         } else {
             isOk = true
@@ -200,28 +200,28 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         return isOk
     }
     
-    func handleOTP(message: String, authData: String, purchaseResponse: PurchaseResponse){
-        let alert = UIAlertController(title: "OTP", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+    func handleOTP(_ message: String, authData: String, purchaseResponse: PurchaseResponse){
+        let alert = UIAlertController(title: "OTP", message: message, preferredStyle: UIAlertControllerStyle.alert)
         
-        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+        alert.addTextField { (textField) -> Void in
             textField.placeholder = "Enter OTP"
         }
-        let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(cancel)
         
-        let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
-            if ((alert.textFields?.first?.hasText()) != nil){
+        let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(action) -> Void in
+            if ((alert.textFields?.first?.hasText) != nil){
                 let otp = alert.textFields?.first?.text
                 let otpReq = AuthorizePurchaseRequest()
                 otpReq.paymentId = purchaseResponse.paymentId!
                 otpReq.otp = otp!
                 otpReq.authData = authData
                 
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                UIApplication.shared.isNetworkActivityIndicatorVisible = true
                 self.activityIndicator.startAnimating()
                 
-                self.sdk.authorizePurchase(otpReq, completionHandler: {(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.sdk.authorizePurchase(otpReq, completionHandler: {(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: Error?) in
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self.activityIndicator.stopAnimating()
                     
                     guard error == nil else {
@@ -236,18 +236,18 @@ class ViewController: UIViewController, UIAlertViewDelegate {
                     self.showSuccess("Payment successful!\n Transation Id: \(authPurchaseResponse.transactionIdentifier)")
                 })
             } else {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.activityIndicator.stopAnimating()
             }
         })
         alert.addAction(ok)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     
-    func handleCardinal(authData: String, purchaseResponse: PurchaseResponse) {
+    func handleCardinal(_ authData: String, purchaseResponse: PurchaseResponse) {
         let authorizeHandler = {() -> Void in
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
             
             let authorizeCardinalRequest = AuthorizePurchaseRequest()
             authorizeCardinalRequest.authData = authData
@@ -255,11 +255,11 @@ class ViewController: UIViewController, UIAlertViewDelegate {
             authorizeCardinalRequest.transactionId = purchaseResponse.transactionId
             authorizeCardinalRequest.eciFlag = purchaseResponse.eciFlag!
             
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             self.activityIndicator.startAnimating()
             
-            self.sdk.authorizePurchase(authorizeCardinalRequest, completionHandler:{(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: NSError?) in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.sdk.authorizePurchase(authorizeCardinalRequest, completionHandler:{(authorizePurchaseResponse: AuthorizePurchaseResponse?, error: Error?) in
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.activityIndicator.stopAnimating()
                 
                 guard error == nil else {
@@ -278,19 +278,19 @@ class ViewController: UIViewController, UIAlertViewDelegate {
     }
 
     
-    func showError(message: String){
+    func showError(_ message: String){
         let alertView = UIAlertView()
         alertView.title = "Error"
-        alertView.addButtonWithTitle("OK")
+        alertView.addButton(withTitle: "OK")
         alertView.message = message
         
         alertView.show()
     }
     
-    func showSuccess(message: String){
+    func showSuccess(_ message: String){
         let alertView = UIAlertView()
         alertView.title = "Success"
-        alertView.addButtonWithTitle("OK")
+        alertView.addButton(withTitle: "OK")
         alertView.message = message
         
         alertView.show()

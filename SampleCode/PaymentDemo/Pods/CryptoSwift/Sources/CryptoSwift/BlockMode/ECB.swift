@@ -1,5 +1,5 @@
 //
-//  CipherBlockMode.swift
+//  BlockMode.swift
 //  CryptoSwift
 //
 //  Created by Marcin Krzyzanowski on 27/12/14.
@@ -8,30 +8,22 @@
 //  Electronic codebook (ECB)
 //
 
-struct ECBModeEncryptGenerator: BlockModeGenerator {
+struct ECBModeWorker: BlockModeWorker {
     typealias Element = Array<UInt8>
-    let options: BlockModeOptions = [.InitializationVectorRequired, .PaddingRequired]
+    let cipherOperation: CipherOperationOnBlock
 
-    private let iv: Element
-    private let inputGenerator: AnyGenerator<Element>
-
-    private let cipherOperation: CipherOperationOnBlock
-
-    init(iv: Array<UInt8>, cipherOperation: CipherOperationOnBlock, inputGenerator: AnyGenerator<Array<UInt8>>) {
-        self.iv = iv
+    init(iv: Array<UInt8>, cipherOperation: @escaping CipherOperationOnBlock) {
         self.cipherOperation = cipherOperation
-        self.inputGenerator = inputGenerator
     }
 
-    mutating func next() -> Element? {
-        guard let plaintext = inputGenerator.next(),
-              let encrypted = cipherOperation(block: plaintext)
-        else {
-            return nil
+    mutating func encrypt(_ plaintext: ArraySlice<UInt8>) -> Array<UInt8> {
+        guard let ciphertext = cipherOperation(Array(plaintext)) else {
+            return Array(plaintext)
         }
+        return ciphertext
+    }
 
-        return encrypted
+    mutating func decrypt(_ ciphertext: ArraySlice<UInt8>) -> Array<UInt8> {
+        return encrypt(ciphertext)
     }
 }
-
-typealias ECBModeDecryptGenerator = ECBModeEncryptGenerator

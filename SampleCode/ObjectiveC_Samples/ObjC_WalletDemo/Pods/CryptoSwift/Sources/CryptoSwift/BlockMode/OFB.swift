@@ -8,59 +8,32 @@
 // Output Feedback (OFB)
 //
 
-struct OFBModeEncryptGenerator: BlockModeGenerator {
+struct OFBModeWorker: BlockModeWorker {
     typealias Element = Array<UInt8>
-    let options: BlockModeOptions = [.InitializationVectorRequired, .PaddingRequired]
 
+    let cipherOperation: CipherOperationOnBlock
     private let iv: Element
-    private let inputGenerator: AnyGenerator<Element>
+    private var prev: Element?
 
-    private let cipherOperation: CipherOperationOnBlock
-    private var prevCiphertext: Element?
-
-    init(iv: Array<UInt8>, cipherOperation: CipherOperationOnBlock, inputGenerator: AnyGenerator<Array<UInt8>>) {
+    init(iv: Array<UInt8>, cipherOperation: @escaping CipherOperationOnBlock) {
         self.iv = iv
         self.cipherOperation = cipherOperation
-        self.inputGenerator = inputGenerator
     }
 
-    mutating func next() -> Element? {
-        guard let plaintext = inputGenerator.next(),
-            let ciphertext = cipherOperation(block: prevCiphertext ?? iv)
-            else {
-                return nil
+    mutating func encrypt(_ plaintext: ArraySlice<UInt8>) -> Array<UInt8> {
+        guard let ciphertext = cipherOperation(prev ?? iv) else {
+            return Array(plaintext)
         }
-
-        self.prevCiphertext = ciphertext
+        prev = ciphertext
         return xor(plaintext, ciphertext)
     }
-}
 
-struct OFBModeDecryptGenerator: BlockModeGenerator {
-    typealias Element = Array<UInt8>
-    let options: BlockModeOptions = [.InitializationVectorRequired, .PaddingRequired]
-
-    private let iv: Element
-    private let inputGenerator: AnyGenerator<Element>
-
-    private let cipherOperation: CipherOperationOnBlock
-    private var prevCiphertext: Element?
-
-    init(iv: Array<UInt8>, cipherOperation: CipherOperationOnBlock, inputGenerator: AnyGenerator<Element>) {
-        self.iv = iv
-        self.cipherOperation = cipherOperation
-        self.inputGenerator = inputGenerator
-    }
-
-    mutating func next() -> Element? {
-        guard let ciphertext = inputGenerator.next(),
-            let decrypted = cipherOperation(block: self.prevCiphertext ?? iv)
-            else {
-                return nil
+    mutating func decrypt(_ ciphertext: ArraySlice<UInt8>) -> Array<UInt8> {
+        guard let decrypted = cipherOperation(prev ?? iv) else {
+            return Array(ciphertext)
         }
-
         let plaintext = xor(decrypted, ciphertext)
-        self.prevCiphertext = decrypted
+        self.prev = decrypted
         return plaintext
     }
 }
