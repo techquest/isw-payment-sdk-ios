@@ -20,6 +20,7 @@ Interswitch payment SDK allows you to accept payments from customers within your
     * [Authorize Card Validation](#AuthorizeCardValidationWithoutUi)
     * [Authorize PayWithWallet using OTP](#AuthorizeWalletPurchaseWithoutUi)
     * [Checking Payment Status](#GetPaymentStatusWithoutUi)
+- [Configure Split Settlement Accounts](#ConfigureSplit)
 - [Uploading your App to Store](#UploadingToStore)
 
 ### <a id='Requirements'></a>Requirements
@@ -1185,6 +1186,42 @@ NSString *amount = @"100";
 ```
 
 
+## <a id='ConfigureSplit'></a>Configure Split Settlement Accounts(Receive settlement into multiple accounts)
+You can now receive your settlement into multiple accounts. In order to do this, you'll need to configure those accounts so that settlements can be split into them. Pass in settlement parameters to the pay function. An example is provided below.
+
+```swift
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+let theCustomerId = "9689808900" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let paymentDescription = "Payment for goods"
+let theAmount = "200"
+let splitSettlementInformation = [SplitSettlementAccount("fbn acct", "0000000001", "100"), SplitSettlementAccount("uba acct", "0000000002", "100")]
+//array of split accounts in this format- SplitSettlementAccount("account alias", "account number", "amount")
+
+let payWithCardOrWallet = Pay(clientId: yourClientId, clientSecret: yourClientSecret,
+                              customerId: theCustomerId, description: paymentDescription,
+                              amount: theAmount, currency: "NGN", splitSettlementInformation:splitSettlementInformation)
+let vc = payWithCardOrWallet.start({(purchaseResponse: PurchaseResponse?, error: Error?) in
+    guard error == nil else {
+        //let errMsg = (error?.localizedDescription)!
+        // Handle error.
+        // Payment not successful.
+
+        return
+    }
+    guard let response = purchaseResponse else {
+        //let failureMsg = (error?.localizedDescription)!
+        // Handle error.
+        // Payment not successful.
+
+        return
+    }
+    /*  Handle success
+        Payment successful. The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits and transactionRef.
+        Save the token, tokenExpiryDate and panLast4Digits in order to pay with the token in the future.
+     */
+})
+```
 ## <a id='UploadingToStore'></a>Uploading to Store (Preparing for Release)
 Because the SDK Framework is compiled to include the files for the Simulator Architecture (x86_64, i386), you will be required to strip out the unused architecture(s) when archiving your app for release.
 To do this, you will need to add a Run Script step to your Build Phases. The script (Credit to: [Daniel Kennett](http://ikennd.ac/blog/2015/02/stripping-unwanted-architectures-from-dynamic-libraries-in-xcode/)) will be as thus:
