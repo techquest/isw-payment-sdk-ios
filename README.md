@@ -20,7 +20,7 @@ Interswitch payment SDK allows you to accept payments from customers within your
     * [Authorize Card Validation](#AuthorizeCardValidationWithoutUi)
     * [Authorize PayWithWallet using OTP](#AuthorizeWalletPurchaseWithoutUi)
     * [Checking Payment Status](#GetPaymentStatusWithoutUi)
-- [Configuring Split Parameters](#ConfigureSplit)
+- [Configure Split Settlement Accounts](#ConfigureSplit)
 - [Uploading your App to Store](#UploadingToStore)
 
 ### <a id='Requirements'></a>Requirements
@@ -1186,8 +1186,8 @@ NSString *amount = @"100";
 ```
 
 
-## <a id='ConfigureSplit'></a>Configure Split (Make Payment to Split accounts)
-You can now split payments into multiple accounts. In order to do this, you'll need to pass in settlement parameters to the pay function. An example is provided below.
+## <a id='ConfigureSplit'></a>Configure Split Settlement Accounts(Receive settlement into multiple accounts)
+You can now receive your settlement into multiple accounts. In order to do this, you'll need to configure those accounts so that settlements can be split into them. Pass in settlement parameters to the pay function. An example is provided below.
 
 ```swift
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
