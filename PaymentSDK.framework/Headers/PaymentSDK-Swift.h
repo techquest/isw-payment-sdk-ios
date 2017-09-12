@@ -357,12 +357,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
-@class SplitSettlementAccount;
 
 SWIFT_CLASS("_TtC10PaymentSDK3Pay")
 @interface Pay : NSObject
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency;
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency OBJC_DESIGNATED_INITIALIZER;
 - (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
@@ -370,8 +368,7 @@ SWIFT_CLASS("_TtC10PaymentSDK3Pay")
 
 SWIFT_CLASS("_TtC10PaymentSDK11PayWithCard")
 @interface PayWithCard : NSObject
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency;
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency OBJC_DESIGNATED_INITIALIZER;
 - (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
@@ -379,8 +376,7 @@ SWIFT_CLASS("_TtC10PaymentSDK11PayWithCard")
 
 SWIFT_CLASS("_TtC10PaymentSDK12PayWithToken")
 @interface PayWithToken : NSObject
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount token:(NSString * _Nonnull)token currency:(NSString * _Nonnull)currency expiryDate:(NSString * _Nonnull)expiryDate cardType:(NSString * _Nonnull)cardType last4Digits:(NSString * _Nonnull)last4Digits;
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount token:(NSString * _Nonnull)token currency:(NSString * _Nonnull)currency expiryDate:(NSString * _Nonnull)expiryDate cardType:(NSString * _Nonnull)cardType last4Digits:(NSString * _Nonnull)last4Digits splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount token:(NSString * _Nonnull)token currency:(NSString * _Nonnull)currency expiryDate:(NSString * _Nonnull)expiryDate cardType:(NSString * _Nonnull)cardType last4Digits:(NSString * _Nonnull)last4Digits OBJC_DESIGNATED_INITIALIZER;
 - (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
@@ -388,8 +384,7 @@ SWIFT_CLASS("_TtC10PaymentSDK12PayWithToken")
 
 SWIFT_CLASS("_TtC10PaymentSDK13PayWithWallet")
 @interface PayWithWallet : NSObject
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency;
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount currency:(NSString * _Nonnull)currency OBJC_DESIGNATED_INITIALIZER;
 - (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
@@ -399,8 +394,14 @@ SWIFT_CLASS("_TtC10PaymentSDK7Payment")
 @interface Payment : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull liveApiBase;)
 + (NSString * _Nonnull)liveApiBase SWIFT_WARN_UNUSED_RESULT;
-/// (FOR TESTING ONLY) If you’d like your API requests to hit your own
-/// (mocked) server, you can set this up here by overriding the base api URL.
+/// <ul>
+///   <li>
+///     (FOR TESTING ONLY) If you’d like your API requests to hit your own
+///   </li>
+///   <li>
+///     (mocked) server, you can set this up here by overriding the base api URL.
+///   </li>
+/// </ul>
 + (void)overrideApiBase:(NSString * _Nonnull)overriddenApiBase;
 + (NSString * _Nonnull)getApiBase SWIFT_WARN_UNUSED_RESULT;
 + (NSString * _Nonnull)formatAuthData:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 SWIFT_WARN_UNUSED_RESULT;
@@ -453,18 +454,10 @@ SWIFT_CLASS("_TtC10PaymentSDK21PaymentStatusResponse")
 SWIFT_CLASS("_TtC10PaymentSDK15PurchaseRequest")
 @interface PurchaseRequest : NSObject
 @property (nonatomic, copy) NSString * _Nonnull authData;
-- (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId amount:(NSString * _Nonnull)amount pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef currency:(NSString * _Nonnull)currency requestorId:(NSString * _Nullable)requestorId;
-- (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId amount:(NSString * _Nonnull)amount pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef currency:(NSString * _Nonnull)currency requestorId:(NSString * _Nullable)requestorId splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId amount:(NSString * _Nonnull)amount pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef currency:(NSString * _Nonnull)currency requestorId:(NSString * _Nullable)requestorId OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
-
-
-SWIFT_CLASS("_TtC10PaymentSDK22SplitSettlementAccount")
-@interface SplitSettlementAccount : NSObject
-- (nonnull instancetype)init:(NSString * _Nonnull)accountIdentifier :(NSString * _Nonnull)amount OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-@end
 
 
 @interface UIColor (SWIFT_EXTENSION(PaymentSDK))
