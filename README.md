@@ -12,6 +12,7 @@ Interswitch payment SDK allows you to accept payments from customers within your
   *  [Pay With Wallet](#PayWithWalletWithUi)
   *  [Validate Card](#ValidateCardWithUi)
   *  [Pay with Token](#PayWithTokenWithUi)
+  *  [Recurrent Payment](#RecurrentPayment)
 - [Using the SDK without UI](#UsingSDKWithoutUi)
     * [Pay with Card / Token](#PayWithCardOrTokenWithoutUi)
     * [Pay with Wallet](#PayWithWalletWithoutUi)
@@ -559,6 +560,94 @@ UIViewController *vc = [pwt start:^(PurchaseResponse *purchaseResponse, NSError 
     }
 }];
 ```
+
+### <a id='RecurrentPayment'></a>Recurrent Payment
+
+To allow for Recurrent Payment with token gotten after card validation.
+This feature makes use of the validate and pay with token functions. This time however, you have to pass in a new parameter "isRecurrent". Check the snippets below.
+
+* Firstly, Validate card is used to check if a card is a valid card. It returns the token and token expiry date.
+
+* To validate a card for recurrent purchase, use the below code.
+
+Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+
+*Swift*
+
+```swift
+let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
+let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
+let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+
+let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
+                       customerId: theCustomerId, isRecurrent:true)
+let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: Error?) in
+    guard error == nil else {
+        //let errMsg = (error?.localizedDescription)!
+        // Handle error.
+        // Card validation not successful
+
+        return
+    }
+
+    guard let response = validateCardResponse else {
+        //let failureMsg = (error?.localizedDescription)!
+        // Handle error.
+        // Card validation not successful
+
+        return
+    }
+
+    /*  Handle success.
+        Card validation successful. The response object contains fields token, tokenExpiryDate, panLast4Digits and transactionRef.
+        Save the token and tokenExpiryDate in order to make a recurrent payment with the token in the future.
+    */
+})
+```
+
+* Lastly, save the token and tokenExpiryDate values returned in the ValidateCardResponse. This will be used for the recurrent purchase. Card details will not be needed this time. Here's how to make a recurrent purchase call with the token and expiry.
+Also note that recurrent purchase doesn't require a UI to be presented to the user. The UI is only used in the validate card phase for collecting user card details.
+
+*Swift*
+
+```swift
+let sdk = PaymentSDK(clientId: "IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E", clientSecret: "SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+
+let customerId = "1407002510"                               // Optional email, mobile number, BVN etc to uniquely identify the customer.
+let amount = "100"                                          // Amount in Naira
+let payableId = "123456789"                                 //Payment item ID
+let transactionRef = Payment.randomStringWithLength(12)     // Generate a unique transaction reference.
+let token = validateCardResponse.token!                         //token value retrieved from validate card response (first call)
+let tokenExpiryDate = validateCardResponse.tokenExpiryDate!     //token expiry date returned in the validate card response
+
+let request = PurchaseRequest(customerId: customerId, amount: amount, transactionRef: transactionRef, payableId:payableId, tokenExpiryDate:tokenExpiryDate, token:token, splitSettlementInformation:nil, isRecurrent:true)
+
+sdk.purchase(request, completionHandler:{(purchaseResponse: PurchaseResponse?, error: Error?) in
+    guard error == nil else {
+        //handle error
+        return
+    }
+
+    guard let response = purchaseResponse else {
+        //handle error
+        return
+    }
+    guard let responseCode = response.responseCode else {
+        // OTP not required, payment successful.
+        // The response object contains fields transactionIdentifier, message,
+        // amount and transactionRef
+        // Save the token, tokenExpiryDate, cardType in order to pay with the token in the future.
+        return
+    }
+    self.purchaseResponse = response
+
+    // At this point, further authorization is required depending on the value of responseCode
+    // Please see below: Authorize PayWithCard
+})
+```
+
+
 
 
 ## <a id='UsingSDKWithoutUi'></a>Using the SDK without UI (In PCI-DSS Scope: Yes)
