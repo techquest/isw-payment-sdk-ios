@@ -380,6 +380,7 @@ SWIFT_CLASS("_TtC10PaymentSDK11PayWithCard")
 SWIFT_CLASS("_TtC10PaymentSDK12PayWithToken")
 @interface PayWithToken : NSObject
 - (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount token:(NSString * _Nonnull)token currency:(NSString * _Nonnull)currency expiryDate:(NSString * _Nonnull)expiryDate cardType:(NSString * _Nonnull)cardType last4Digits:(NSString * _Nonnull)last4Digits;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount token:(NSString * _Nonnull)token currency:(NSString * _Nonnull)currency expiryDate:(NSString * _Nonnull)expiryDate cardType:(NSString * _Nonnull)cardType last4Digits:(NSString * _Nonnull)last4Digits isRecurrent:(BOOL)isRecurrent;
 - (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId description:(NSString * _Nonnull)description amount:(NSString * _Nonnull)amount token:(NSString * _Nonnull)token currency:(NSString * _Nonnull)currency expiryDate:(NSString * _Nonnull)expiryDate cardType:(NSString * _Nonnull)cardType last4Digits:(NSString * _Nonnull)last4Digits splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation OBJC_DESIGNATED_INITIALIZER;
 - (UIViewController * _Nonnull)start:(void (^ _Nonnull)(PurchaseResponse * _Nullable, NSError * _Nullable))completionHandler SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -454,6 +455,7 @@ SWIFT_CLASS("_TtC10PaymentSDK15PurchaseRequest")
 @interface PurchaseRequest : NSObject
 @property (nonatomic, copy) NSString * _Nonnull authData;
 - (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId amount:(NSString * _Nonnull)amount pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef currency:(NSString * _Nonnull)currency requestorId:(NSString * _Nullable)requestorId;
+- (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId amount:(NSString * _Nonnull)amount tokenExpiryDate:(NSString * _Nonnull)tokenExpiryDate payableId:(NSString * _Nonnull)payableId transactionRef:(NSString * _Nonnull)transactionRef currency:(NSString * _Nonnull)currency token:(NSString * _Nonnull)token splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation isRecurrent:(BOOL)isRecurrent;
 - (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId amount:(NSString * _Nonnull)amount pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef currency:(NSString * _Nonnull)currency requestorId:(NSString * _Nullable)requestorId splitSettlementInformation:(NSArray<SplitSettlementAccount *> * _Nullable)splitSettlementInformation OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
@@ -473,7 +475,8 @@ SWIFT_CLASS("_TtC10PaymentSDK22SplitSettlementAccount")
 
 SWIFT_CLASS("_TtC10PaymentSDK12ValidateCard")
 @interface ValidateCard : NSObject
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId;
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId clientSecret:(NSString * _Nonnull)clientSecret customerId:(NSString * _Nonnull)customerId isRecurrent:(BOOL)isRecurrent OBJC_DESIGNATED_INITIALIZER;
 - (UIViewController * _Nonnull)start:(void (^ _Nonnull)(ValidateCardResponse * _Nullable, NSError * _Nullable))completionHandler SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
@@ -482,7 +485,7 @@ SWIFT_CLASS("_TtC10PaymentSDK12ValidateCard")
 SWIFT_CLASS("_TtC10PaymentSDK19ValidateCardRequest")
 @interface ValidateCardRequest : NSObject
 @property (nonatomic, copy) NSString * _Nonnull authData;
-- (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef requestorId:(NSString * _Nullable)requestorId OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCustomerId:(NSString * _Nullable)customerId pan:(NSString * _Nonnull)pan pin:(NSString * _Nonnull)pin expiryDate:(NSString * _Nonnull)expiryDate cvv2:(NSString * _Nonnull)cvv2 transactionRef:(NSString * _Nonnull)transactionRef requestorId:(NSString * _Nullable)requestorId isRecurrent:(BOOL)isRecurrent OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
