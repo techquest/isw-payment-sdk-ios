@@ -132,8 +132,11 @@ Go to https://github.com/AyoGitNg/isw-payment-sdk-ios/releases
 and find the appropriate Framework File for your swift version and download.Extract it from the zip and drag it.
 
 For Swift 2.3, you can just use the Current one in the master branch.
+
 For Swift 3, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.2
+
 For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.3
+
 For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.4
 
 In the dialog that appears, make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
