@@ -133,13 +133,13 @@ and find the appropriate Framework File for your swift version and download.Extr
 
 For Swift 2.3, you can just use the Current one in the master branch.
 
-For Swift 3, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.2
+For Swift 3, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.2/PaymentSDK.framework.zip
 
-For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.3
+For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.3/PaymentSDK.framework.zip
 
-For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.4
+For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.4/PaymentSDK.framework.zip
 
-For Swift 4.0.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.5
+For Swift 4.0.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.5/PaymentSDK.framework.zip
 
 In the dialog that appears, make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
 
