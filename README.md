@@ -92,7 +92,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 * Add the following to your Podfile, inside the first target block:
 
 	```
-	pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift.git', :tag => '0.6.9'
+	pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift.git', :tag => '0.7.1'
 	pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '4.4.0'
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '3.1.4'
 	pod 'OpenSSL-Universal', '1.0.2.10'
@@ -111,7 +111,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 	Pre-downloading: `SwiftyJSON` from `https://github.com/SwiftyJSON/SwiftyJSON.git`
 	Downloading dependencies
 	Installing Alamofire (4.4.0)
-	Installing CryptoSwift (0.6.9)
+	Installing CryptoSwift (0.7.1)
 	Installing OpenSSL (1.0.2.10)
 	Installing SwiftyJSON (2.4.0)
 	Generating Pods project
