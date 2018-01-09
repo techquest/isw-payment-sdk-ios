@@ -139,6 +139,8 @@ For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/
 
 For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.4
 
+For Swift 4.0.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/tag/v.0.0.0.5
+
 In the dialog that appears, make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
 
 
