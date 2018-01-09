@@ -97,6 +97,11 @@ If you haven’t registered your app on DevConsole register the app and get your
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '3.1.4'
 	pod 'OpenSSL-Universal', '1.0.2.10'
 	```
+	
+	For swift 4, change CryptoSwift version from 0.6.9 to 0.7.1
+	```
+	pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift.git', :tag => '0.7.1'
+	```
 
 * Enter the following command:
 	​```terminal
