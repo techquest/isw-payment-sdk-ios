@@ -48,14 +48,23 @@ Interswitch payment SDK allows you to accept payments from customers within your
 
 ###Step 1. Download the SDK
 
-Download the SDK from the link below and unzip the archive to **~/Documents/PaymentSDK**.
+Download the Payment SDK Framework for your swift version from the link below and unzip the archive to **~/Documents/PaymentSDK**.
 
-https://github.com/techquest/isw-payment-sdk-ios/releases
+https://github.com/AyoGitNg/isw-payment-sdk-ios/releases
 
+For Swift 2.3, you can just use the Current one in the master branch.
+
+For Swift 3, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.2/PaymentSDK.framework.zip
+
+For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.3/PaymentSDK.framework.zip
+
+For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.4/PaymentSDK.framework.zip
+
+For Swift 4.0.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.5/PaymentSDK.framework.zip
 
 ###Step 2. Create a Swift 3 Payment App
 
-Create a payment app using **Xcode** with Swift 3.1 as the language.
+Create a payment app using **Xcode** with Swift as the programming language.
 
 Alternatively, you can also create an Objective-C project.
 
@@ -132,19 +141,6 @@ If you haven’t registered your app on DevConsole register the app and get your
 Open the **~/Documents/PaymentSDK** directory
 
 Drag the ​ **PaymentSDK.framework** file to the ``Embedded Binaries`` section of your app's **TARGETS** settings(`General` tab).
-
-Go to https://github.com/AyoGitNg/isw-payment-sdk-ios/releases
-and find the appropriate Framework File for your swift version and download.Extract it from the zip and drag it.
-
-For Swift 2.3, you can just use the Current one in the master branch.
-
-For Swift 3, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.2/PaymentSDK.framework.zip
-
-For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.3/PaymentSDK.framework.zip
-
-For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.4/PaymentSDK.framework.zip
-
-For Swift 4.0.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.5/PaymentSDK.framework.zip
 
 In the dialog that appears, make sure ‘Copy items if needed’ is checked in the ‘Choose options for adding these files’
 
