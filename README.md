@@ -101,7 +101,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 * Add the following to your Podfile, inside the first target block:
 
 	```
-	pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift.git', :tag => '0.7.1'
+	pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift.git', :tag => '0.6.9'
 	pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '4.4.0'
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '3.1.4'
 	pod 'OpenSSL-Universal', '1.0.2.10'
