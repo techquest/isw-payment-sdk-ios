@@ -47,20 +47,8 @@ Interswitch payment SDK allows you to accept payments from customers within your
 * **Note: Only iOS 9 and later are supported by the SDK**
 
 ###Step 1. Download the SDK
-
+Inside the Framework folder on the master branch, find your swift version.
 Download the Payment SDK Framework for your swift version from the link below and unzip the archive to **~/Documents/PaymentSDK**.
-
-https://github.com/AyoGitNg/isw-payment-sdk-ios/releases
-
-For Swift 2.3, you can just use the Current one in the master branch.
-
-For Swift 3, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.2/PaymentSDK.framework.zip
-
-For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.3/PaymentSDK.framework.zip
-
-For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.4/PaymentSDK.framework.zip
-
-For Swift 4.0.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.5/PaymentSDK.framework.zip
 
 ###Step 2. Create a Swift 3 Payment App
 
