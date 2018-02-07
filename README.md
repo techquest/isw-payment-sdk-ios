@@ -47,6 +47,7 @@ Interswitch payment SDK allows you to accept payments from customers within your
 * **Note: Only iOS 9 and later are supported by the SDK**
 
 ###Step 1. Download the SDK
+
 Inside the Framework folder on the master branch, find your swift version.
 Download the Payment SDK Framework for your swift version from the link below and unzip the archive to **~/Documents/PaymentSDK**.
 
