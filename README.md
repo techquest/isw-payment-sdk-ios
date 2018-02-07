@@ -48,14 +48,23 @@ Interswitch payment SDK allows you to accept payments from customers within your
 
 ###Step 1. Download the SDK
 
-Download the SDK from the link below and unzip the archive to **~/Documents/PaymentSDK**.
+Download the Payment SDK Framework for your swift version from the link below and unzip the archive to **~/Documents/PaymentSDK**.
 
-https://github.com/techquest/isw-payment-sdk-ios/releases
+https://github.com/AyoGitNg/isw-payment-sdk-ios/releases
 
+For Swift 2.3, you can just use the Current one in the master branch.
+
+For Swift 3, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.2/PaymentSDK.framework.zip
+
+For Swift 3.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.3/PaymentSDK.framework.zip
+
+For Swift 4, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.4/PaymentSDK.framework.zip
+
+For Swift 4.0.2, use https://github.com/AyoGitNg/isw-payment-sdk-ios/releases/download/v.0.0.0.5/PaymentSDK.framework.zip
 
 ###Step 2. Create a Swift 3 Payment App
 
-Create a payment app using **Xcode** with Swift 3.1 as the language.
+Create a payment app using **Xcode** with Swift as the programming language.
 
 Alternatively, you can also create an Objective-C project.
 
@@ -97,6 +106,11 @@ If you haven’t registered your app on DevConsole register the app and get your
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :tag => '3.1.4'
 	pod 'OpenSSL-Universal', '1.0.2.10'
 	```
+	
+	For swift 4, change CryptoSwift version from 0.6.9 to 0.7.1
+	```
+	pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift.git', :tag => '0.7.1'
+	```
 
 * Enter the following command:
 	​```terminal
@@ -111,7 +125,7 @@ If you haven’t registered your app on DevConsole register the app and get your
 	Pre-downloading: `SwiftyJSON` from `https://github.com/SwiftyJSON/SwiftyJSON.git`
 	Downloading dependencies
 	Installing Alamofire (4.4.0)
-	Installing CryptoSwift (0.6.9)
+	Installing CryptoSwift (0.7.1)
 	Installing OpenSSL (1.0.2.10)
 	Installing SwiftyJSON (2.4.0)
 	Generating Pods project
