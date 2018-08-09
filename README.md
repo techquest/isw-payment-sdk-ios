@@ -423,10 +423,10 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
 let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
-let theRequestorId = "" // This should be the value of your requestorId
+let yourRequestorId = "" // This should be the value of your requestorId
 
 let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
-                       customerId: theCustomerId, requestorId: theRequestorId)
+                       customerId: theCustomerId, requestorId: yourRequestorId)
 let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: Error?) in
     guard error == nil else {
         //let errMsg = (error?.localizedDescription)!
@@ -583,9 +583,10 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 let yourClientId = "IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276"
 let yourClientSecret = "Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A="
 let theCustomerId = "" // This should be a value that identifies your customer uniquely e.g email or phone number etc
+let yourRequestorId = "" // This should be the value of your requestorId
 
 let validateCard = ValidateCard(clientId: yourClientId, clientSecret: yourClientSecret,
-                       customerId: theCustomerId, isRecurrent:true)
+                       customerId: theCustomerId, isRecurrent:true, requestorId: yourRequestorId)
 let vc = validateCard.start({(validateCardResponse: ValidateCardResponse?, error: Error?) in
     guard error == nil else {
         //let errMsg = (error?.localizedDescription)!
