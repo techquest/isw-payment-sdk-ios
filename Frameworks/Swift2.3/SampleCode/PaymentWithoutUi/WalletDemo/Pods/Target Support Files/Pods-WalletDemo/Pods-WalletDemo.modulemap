@@ -1,6 +1,0 @@
-framework module Pods_WalletDemo {
-  umbrella header "Pods-WalletDemo-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -13,8 +13,8 @@ This guide is provided in order to ease the transition of existing applications 
 
 ### <a id='Requirements'></a>Requirements
 * iOS 9.0+ /macOS 10.10+
-* Xcode 8.3 +
-* Swift 3.0+
+* Xcode 10.0 +
+* Swift 4.2+
 
 ### <a id='Benefits'></a>Benefits of Upgrading
 * **Complete Swift 3 Compatibility** includes the full adoption of the new <a href = "https://swift.org/documentation/api-design-guidelines/">API Design Guidelines</a>
