@@ -24,9 +24,9 @@ Interswitch payment SDK allows you to accept payments from customers within your
 - [Uploading your App to Store](#UploadingToStore)
 
 ### <a id='Requirements'></a>Requirements
-* iOS 9.0+ /macOS 10.10+
-* Xcode 8.3 +
-* Swift 3.0+
+* iOS 12+ /macOS 10.10+
+* Xcode 10.0 +
+* Swift 4.2+
 ### <a id='Migration'></a>Migration Guide
 * <a href = "migration.md">Interswitch SDK Migration Guide to Swift 3</a>
 
